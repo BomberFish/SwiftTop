@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D66BC66A2B2B7A54003D8A8E /* String+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66BC6672B2B7A53003D8A8E /* String+LocalizedError.swift */; };
+		D66BC66B2B2B7A54003D8A8E /* Alert++.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66BC6682B2B7A53003D8A8E /* Alert++.swift */; };
+		D66BC66C2B2B7A54003D8A8E /* Haptic++.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66BC6692B2B7A53003D8A8E /* Haptic++.swift */; };
+		D66BC66F2B2B85EF003D8A8E /* proc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66BC66E2B2B85EF003D8A8E /* proc.swift */; };
 		D67D2A142B2B3FB400EA8D6E /* SwiftTopApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67D2A132B2B3FB400EA8D6E /* SwiftTopApp.swift */; };
 		D67D2A162B2B3FB400EA8D6E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67D2A152B2B3FB400EA8D6E /* ContentView.swift */; };
 		D67D2A182B2B3FB900EA8D6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D67D2A172B2B3FB900EA8D6E /* Assets.xcassets */; };
@@ -14,6 +18,14 @@
 		D67D2A252B2B3FB900EA8D6E /* SwiftTopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67D2A242B2B3FB900EA8D6E /* SwiftTopTests.swift */; };
 		D67D2A2F2B2B3FBA00EA8D6E /* SwiftTopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67D2A2E2B2B3FBA00EA8D6E /* SwiftTopUITests.swift */; };
 		D67D2A312B2B3FBA00EA8D6E /* SwiftTopUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67D2A302B2B3FBA00EA8D6E /* SwiftTopUITestsLaunchTests.swift */; };
+		D67D2A3F2B2B408100EA8D6E /* proc.m in Sources */ = {isa = PBXBuildFile; fileRef = D67D2A3E2B2B408100EA8D6E /* proc.m */; };
+		D67D2A432B2B44C700EA8D6E /* ProcessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67D2A422B2B44C700EA8D6E /* ProcessView.swift */; };
+		D67D2A4D2B2B528D00EA8D6E /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67D2A4C2B2B528D00EA8D6E /* AboutView.swift */; };
+		D67D2A502B2B53A300EA8D6E /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = D67D2A4F2B2B53A300EA8D6E /* CachedAsyncImage */; };
+		D67D2A542B2B678500EA8D6E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D67D2A532B2B678400EA8D6E /* Foundation.framework */; };
+		D67D2A562B2B678E00EA8D6E /* libswiftFoundation.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D67D2A552B2B678900EA8D6E /* libswiftFoundation.tbd */; };
+		D67D2A582B2B679300EA8D6E /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D67D2A572B2B679300EA8D6E /* CoreFoundation.framework */; };
+		D67D2A5A2B2B67A300EA8D6E /* libswiftCoreFoundation.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D67D2A592B2B679C00EA8D6E /* libswiftCoreFoundation.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +46,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D66BC6672B2B7A53003D8A8E /* String+LocalizedError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+LocalizedError.swift"; sourceTree = "<group>"; };
+		D66BC6682B2B7A53003D8A8E /* Alert++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alert++.swift"; sourceTree = "<group>"; };
+		D66BC6692B2B7A53003D8A8E /* Haptic++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Haptic++.swift"; sourceTree = "<group>"; };
+		D66BC66E2B2B85EF003D8A8E /* proc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = proc.swift; sourceTree = "<group>"; };
 		D67D2A102B2B3FB400EA8D6E /* SwiftTop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftTop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D67D2A132B2B3FB400EA8D6E /* SwiftTopApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftTopApp.swift; sourceTree = "<group>"; };
 		D67D2A152B2B3FB400EA8D6E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -44,6 +60,16 @@
 		D67D2A2A2B2B3FB900EA8D6E /* SwiftTopUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftTopUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D67D2A2E2B2B3FBA00EA8D6E /* SwiftTopUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftTopUITests.swift; sourceTree = "<group>"; };
 		D67D2A302B2B3FBA00EA8D6E /* SwiftTopUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftTopUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		D67D2A3D2B2B408000EA8D6E /* SwiftTop-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftTop-Bridging-Header.h"; sourceTree = "<group>"; };
+		D67D2A3E2B2B408100EA8D6E /* proc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = proc.m; sourceTree = "<group>"; };
+		D67D2A402B2B41B700EA8D6E /* proc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = proc.h; sourceTree = "<group>"; };
+		D67D2A412B2B420E00EA8D6E /* SwiftTop.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftTop.entitlements; sourceTree = "<group>"; };
+		D67D2A422B2B44C700EA8D6E /* ProcessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessView.swift; sourceTree = "<group>"; };
+		D67D2A4C2B2B528D00EA8D6E /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		D67D2A532B2B678400EA8D6E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		D67D2A552B2B678900EA8D6E /* libswiftFoundation.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libswiftFoundation.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/usr/lib/swift/libswiftFoundation.tbd; sourceTree = DEVELOPER_DIR; };
+		D67D2A572B2B679300EA8D6E /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		D67D2A592B2B679C00EA8D6E /* libswiftCoreFoundation.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libswiftCoreFoundation.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/usr/lib/swift/libswiftCoreFoundation.tbd; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +77,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D67D2A582B2B679300EA8D6E /* CoreFoundation.framework in Frameworks */,
+				D67D2A5A2B2B67A300EA8D6E /* libswiftCoreFoundation.tbd in Frameworks */,
+				D67D2A502B2B53A300EA8D6E /* CachedAsyncImage in Frameworks */,
+				D67D2A542B2B678500EA8D6E /* Foundation.framework in Frameworks */,
+				D67D2A562B2B678E00EA8D6E /* libswiftFoundation.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +109,7 @@
 				D67D2A232B2B3FB900EA8D6E /* SwiftTopTests */,
 				D67D2A2D2B2B3FBA00EA8D6E /* SwiftTopUITests */,
 				D67D2A112B2B3FB400EA8D6E /* Products */,
+				D67D2A522B2B678400EA8D6E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -96,8 +128,16 @@
 			children = (
 				D67D2A132B2B3FB400EA8D6E /* SwiftTopApp.swift */,
 				D67D2A152B2B3FB400EA8D6E /* ContentView.swift */,
+				D67D2A4C2B2B528D00EA8D6E /* AboutView.swift */,
+				D67D2A452B2B4F5A00EA8D6E /* Extensions */,
+				D67D2A422B2B44C700EA8D6E /* ProcessView.swift */,
+				D67D2A412B2B420E00EA8D6E /* SwiftTop.entitlements */,
+				D67D2A3E2B2B408100EA8D6E /* proc.m */,
+				D66BC66E2B2B85EF003D8A8E /* proc.swift */,
+				D67D2A402B2B41B700EA8D6E /* proc.h */,
 				D67D2A172B2B3FB900EA8D6E /* Assets.xcassets */,
 				D67D2A192B2B3FB900EA8D6E /* Preview Content */,
+				D67D2A3D2B2B408000EA8D6E /* SwiftTop-Bridging-Header.h */,
 			);
 			path = SwiftTop;
 			sourceTree = "<group>";
@@ -127,6 +167,27 @@
 			path = SwiftTopUITests;
 			sourceTree = "<group>";
 		};
+		D67D2A452B2B4F5A00EA8D6E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D66BC6682B2B7A53003D8A8E /* Alert++.swift */,
+				D66BC6692B2B7A53003D8A8E /* Haptic++.swift */,
+				D66BC6672B2B7A53003D8A8E /* String+LocalizedError.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		D67D2A522B2B678400EA8D6E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D67D2A592B2B679C00EA8D6E /* libswiftCoreFoundation.tbd */,
+				D67D2A572B2B679300EA8D6E /* CoreFoundation.framework */,
+				D67D2A552B2B678900EA8D6E /* libswiftFoundation.tbd */,
+				D67D2A532B2B678400EA8D6E /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -143,6 +204,9 @@
 			dependencies = (
 			);
 			name = SwiftTop;
+			packageProductDependencies = (
+				D67D2A4F2B2B53A300EA8D6E /* CachedAsyncImage */,
+			);
 			productName = SwiftTop;
 			productReference = D67D2A102B2B3FB400EA8D6E /* SwiftTop.app */;
 			productType = "com.apple.product-type.application";
@@ -195,6 +259,7 @@
 				TargetAttributes = {
 					D67D2A0F2B2B3FB400EA8D6E = {
 						CreatedOnToolsVersion = 15.0.1;
+						LastSwiftMigration = 1500;
 					};
 					D67D2A1F2B2B3FB900EA8D6E = {
 						CreatedOnToolsVersion = 15.0.1;
@@ -215,6 +280,9 @@
 				Base,
 			);
 			mainGroup = D67D2A072B2B3FB400EA8D6E;
+			packageReferences = (
+				D67D2A4E2B2B53A300EA8D6E /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
+			);
 			productRefGroup = D67D2A112B2B3FB400EA8D6E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -257,7 +325,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D66BC66C2B2B7A54003D8A8E /* Haptic++.swift in Sources */,
+				D67D2A4D2B2B528D00EA8D6E /* AboutView.swift in Sources */,
+				D66BC66A2B2B7A54003D8A8E /* String+LocalizedError.swift in Sources */,
 				D67D2A162B2B3FB400EA8D6E /* ContentView.swift in Sources */,
+				D67D2A3F2B2B408100EA8D6E /* proc.m in Sources */,
+				D66BC66F2B2B85EF003D8A8E /* proc.swift in Sources */,
+				D66BC66B2B2B7A54003D8A8E /* Alert++.swift in Sources */,
+				D67D2A432B2B44C700EA8D6E /* ProcessView.swift in Sources */,
 				D67D2A142B2B3FB400EA8D6E /* SwiftTopApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -419,26 +494,39 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = SwiftTop/SwiftTop.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftTop/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = SwiftTop;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarHidden = NO;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = ca.bomberfish.SwiftTop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "SwiftTop/SwiftTop-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Debug;
 		};
@@ -447,26 +535,38 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = SwiftTop/SwiftTop.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftTop/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = SwiftTop;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarHidden = NO;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = ca.bomberfish.SwiftTop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "SwiftTop/SwiftTop-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Release;
 		};
@@ -582,6 +682,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D67D2A4E2B2B53A300EA8D6E /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lorenzofiamingo/swiftui-cached-async-image";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D67D2A4F2B2B53A300EA8D6E /* CachedAsyncImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D67D2A4E2B2B53A300EA8D6E /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
+			productName = CachedAsyncImage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D67D2A082B2B3FB400EA8D6E /* Project object */;
 }
