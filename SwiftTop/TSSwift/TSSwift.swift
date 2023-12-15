@@ -107,4 +107,12 @@ public class TrollStoreRootHelper {
         let code = TrollStoreUtils.spawnAsRoot(rootHelperPath!, ["kill", "\(pid)", "\(signal)"])
         guard code == 0 else { throw "roothelper.kill: returned a non-zero code \(code)" }
     }
+    
+    static func pkill(proc: String) throws {
+        if rootHelperPath == nil {
+            throw "roothelper does not exist!"
+        }
+        let code = TrollStoreUtils.spawnAsRoot(rootHelperPath!, ["pkill", proc])
+        guard code == 0 else { throw "roothelper.kill: returned a non-zero code \(code)" }
+    }
 }

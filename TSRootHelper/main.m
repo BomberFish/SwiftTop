@@ -161,7 +161,7 @@ int main(int argc, char *argv[], char *envp[]) {
                 NSLog(@"[RootHelper] Killing pid %d returned code %d", pid, ret);
                 RLog(@"[RootHelper] Killing pid %d returned code %d", pid, ret);
 				if (ret != 0) {
-					return errno;
+					return 6;
 				}
                 return ret;
 			} else if (argc == 2) {
@@ -169,26 +169,26 @@ int main(int argc, char *argv[], char *envp[]) {
                 NSLog(@"[RootHelper] Killing pid %d returned code %d", pid, ret);
                 RLog(@"[RootHelper] Killing pid %d returned code %d", pid, ret);
 				if (ret != 0) {
-					return errno;
+					return 6;
 				}
                 return ret;
 			} else {
 				NSLog(@"[RootHelper] Invalid number of arguments: %d", argc);
                 RLog(@"[RootHelper] Invalid number of arguments: %d", argc);
-				return -1;
+				return 4;
 			}
         } else if ([action isEqual: @"pkill"]) {
             if (argc < 2) {
                 NSLog(@"[RootHelper] Invalid number of arguments: %d", argc);
                 RLog(@"[RootHelper] Invalid number of arguments: %d", argc);
-                return -1;
+                return 4;
             } else {
                 killall(source, true);
             }
         }else {
 			NSLog(@"[RootHelper] Unknown action: %@", action);
             RLog(@"[RootHelper] Unknown action: %@", action);
-			return -1;
+			return 4;
 		}
 
         return 0;

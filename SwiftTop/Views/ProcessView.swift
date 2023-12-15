@@ -27,6 +27,12 @@ struct ProcessView: View {
                 }) {
                     Label("Kill process", systemImage: "xmark")
                 }
+                
+                Button(role: .destructive, action: {
+                    killall(proc["proc_name"] as? String)
+                }) {
+                    Label("Kill process by process name", systemImage: "xmark")
+                }
 
                 Button(role: .destructive, action: {
                     do {
@@ -35,7 +41,17 @@ struct ProcessView: View {
                         UIApplication.shared.alert(body: error.localizedDescription)
                     }
                 }) {
-                    Label("Kill process as root", systemImage: "xmark")
+                    Label("Kill process (root)", systemImage: "xmark")
+                }
+                
+                Button(role: .destructive, action: {
+                    do {
+                        try TrollStoreRootHelper.pkill(proc: proc["proc_name"] as! String)
+                    } catch {
+                        UIApplication.shared.alert(body: error.localizedDescription)
+                    }
+                }) {
+                    Label("Kill process by process name (root)", systemImage: "xmark")
                 }
             }
         }
