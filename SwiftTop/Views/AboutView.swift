@@ -65,6 +65,7 @@ struct AboutView: View {
                 }
             }
             .toolbar {
+                #if !os(macOS)
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         dismiss()
@@ -72,6 +73,15 @@ struct AboutView: View {
                         CloseButton()
                     }
                 }
+                #else
+                ToolbarItem {
+                    Button {
+                        dismiss()
+                    } label: {
+                        CloseButton()
+                    }
+                }
+                #endif
             }
             .background(Color(UIColor.systemGroupedBackground))
         }

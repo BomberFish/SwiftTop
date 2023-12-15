@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D64D3D232B2C9F6C00EBEDCB /* UIColorAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64D3D222B2C9F6C00EBEDCB /* UIColorAdapter.swift */; };
+		D64D3D262B2C9FEC00EBEDCB /* MarqueeText in Frameworks */ = {isa = PBXBuildFile; productRef = D64D3D252B2C9FEC00EBEDCB /* MarqueeText */; };
 		D66BC66A2B2B7A54003D8A8E /* String+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66BC6672B2B7A53003D8A8E /* String+LocalizedError.swift */; };
 		D66BC66B2B2B7A54003D8A8E /* Alert++.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66BC6682B2B7A53003D8A8E /* Alert++.swift */; };
 		D66BC66C2B2B7A54003D8A8E /* Haptic++.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66BC6692B2B7A53003D8A8E /* Haptic++.swift */; };
@@ -14,9 +16,7 @@
 		D66BC6C22B2B8AC0003D8A8E /* TSUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = D66BC6BC2B2B8AC0003D8A8E /* TSUtil.m */; };
 		D66BC6C42B2B8AC0003D8A8E /* TSSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66BC6BE2B2B8AC0003D8A8E /* TSSwift.swift */; };
 		D66BC6C62B2BBC9D003D8A8E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66BC6C52B2BBC9D003D8A8E /* Utils.swift */; };
-		D66BC6CC2B2C85DB003D8A8E /* MarqueeText in Frameworks */ = {isa = PBXBuildFile; productRef = D66BC6CB2B2C85DB003D8A8E /* MarqueeText */; };
 		D66BC6D02B2C8E22003D8A8E /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D66BC6CF2B2C8E22003D8A8E /* CoreServices.framework */; };
-		D66BC6D22B2C8E26003D8A8E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D66BC6D12B2C8E26003D8A8E /* MobileCoreServices.framework */; };
 		D66BC6D62B2C9218003D8A8E /* LSApplicationProxy+AltList.m in Sources */ = {isa = PBXBuildFile; fileRef = D66BC6D52B2C9218003D8A8E /* LSApplicationProxy+AltList.m */; };
 		D67D2A142B2B3FB400EA8D6E /* SwiftTopApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67D2A132B2B3FB400EA8D6E /* SwiftTopApp.swift */; };
 		D67D2A162B2B3FB400EA8D6E /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67D2A152B2B3FB400EA8D6E /* MainView.swift */; };
@@ -53,6 +53,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D64D3D222B2C9F6C00EBEDCB /* UIColorAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorAdapter.swift; sourceTree = "<group>"; };
 		D66BC6672B2B7A53003D8A8E /* String+LocalizedError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+LocalizedError.swift"; sourceTree = "<group>"; };
 		D66BC6682B2B7A53003D8A8E /* Alert++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alert++.swift"; sourceTree = "<group>"; };
 		D66BC6692B2B7A53003D8A8E /* Haptic++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Haptic++.swift"; sourceTree = "<group>"; };
@@ -94,12 +95,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D66BC6CC2B2C85DB003D8A8E /* MarqueeText in Frameworks */,
+				D64D3D262B2C9FEC00EBEDCB /* MarqueeText in Frameworks */,
 				D67D2A582B2B679300EA8D6E /* CoreFoundation.framework in Frameworks */,
 				D67D2A5A2B2B67A300EA8D6E /* libswiftCoreFoundation.tbd in Frameworks */,
 				D67D2A502B2B53A300EA8D6E /* CachedAsyncImage in Frameworks */,
 				D67D2A542B2B678500EA8D6E /* Foundation.framework in Frameworks */,
-				D66BC6D22B2C8E26003D8A8E /* MobileCoreServices.framework in Frameworks */,
 				D66BC6D02B2C8E22003D8A8E /* CoreServices.framework in Frameworks */,
 				D67D2A562B2B678E00EA8D6E /* libswiftFoundation.tbd in Frameworks */,
 			);
@@ -222,6 +222,7 @@
 		D67D2A452B2B4F5A00EA8D6E /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				D64D3D222B2C9F6C00EBEDCB /* UIColorAdapter.swift */,
 				D66BC6682B2B7A53003D8A8E /* Alert++.swift */,
 				D66BC6692B2B7A53003D8A8E /* Haptic++.swift */,
 				D66BC6672B2B7A53003D8A8E /* String+LocalizedError.swift */,
@@ -260,7 +261,7 @@
 			name = SwiftTop;
 			packageProductDependencies = (
 				D67D2A4F2B2B53A300EA8D6E /* CachedAsyncImage */,
-				D66BC6CB2B2C85DB003D8A8E /* MarqueeText */,
+				D64D3D252B2C9FEC00EBEDCB /* MarqueeText */,
 			);
 			productName = SwiftTop;
 			productReference = D67D2A102B2B3FB400EA8D6E /* SwiftTop.app */;
@@ -337,7 +338,7 @@
 			mainGroup = D67D2A072B2B3FB400EA8D6E;
 			packageReferences = (
 				D67D2A4E2B2B53A300EA8D6E /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
-				D66BC6CA2B2C85DB003D8A8E /* XCRemoteSwiftPackageReference "marqueetext" */,
+				D64D3D242B2C9FEC00EBEDCB /* XCRemoteSwiftPackageReference "MarqueeText" */,
 			);
 			productRefGroup = D67D2A112B2B3FB400EA8D6E /* Products */;
 			projectDirPath = "";
@@ -392,6 +393,7 @@
 				D66BC66F2B2B85EF003D8A8E /* proc.swift in Sources */,
 				D66BC66B2B2B7A54003D8A8E /* Alert++.swift in Sources */,
 				D67D2A432B2B44C700EA8D6E /* ProcessView.swift in Sources */,
+				D64D3D232B2C9F6C00EBEDCB /* UIColorAdapter.swift in Sources */,
 				D67D2A142B2B3FB400EA8D6E /* SwiftTopApp.swift in Sources */,
 				D66BC6C62B2BBC9D003D8A8E /* Utils.swift in Sources */,
 			);
@@ -555,7 +557,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = SwiftTop/SwiftTop.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftTop/Preview Content\"";
@@ -576,11 +577,12 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = ca.bomberfish.SwiftTop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "SwiftTop/SwiftTop-Bridging-Header.h";
@@ -596,7 +598,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = SwiftTop/SwiftTop.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftTop/Preview Content\"";
@@ -617,11 +618,12 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = ca.bomberfish.SwiftTop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "SwiftTop/SwiftTop-Bridging-Header.h";
@@ -744,9 +746,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D66BC6CA2B2C85DB003D8A8E /* XCRemoteSwiftPackageReference "marqueetext" */ = {
+		D64D3D242B2C9FEC00EBEDCB /* XCRemoteSwiftPackageReference "MarqueeText" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/joekndy/marqueetext";
+			repositoryURL = "https://github.com/BomberFish/MarqueeText";
 			requirement = {
 				branch = master;
 				kind = branch;
@@ -763,9 +765,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D66BC6CB2B2C85DB003D8A8E /* MarqueeText */ = {
+		D64D3D252B2C9FEC00EBEDCB /* MarqueeText */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D66BC6CA2B2C85DB003D8A8E /* XCRemoteSwiftPackageReference "marqueetext" */;
+			package = D64D3D242B2C9FEC00EBEDCB /* XCRemoteSwiftPackageReference "MarqueeText" */;
 			productName = MarqueeText;
 		};
 		D67D2A4F2B2B53A300EA8D6E /* CachedAsyncImage */ = {

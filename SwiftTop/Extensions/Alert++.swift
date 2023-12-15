@@ -5,14 +5,15 @@
 //  Created by Hariz Shirazi on 2023-02-04.
 //
 
+fileprivate let errorString = NSLocalizedString("Error", comment: "")
+fileprivate let okString = NSLocalizedString("OK", comment: "")
+fileprivate let cancelString = NSLocalizedString("Cancel", comment: "")
+
+#if canImport(UIKit)
 import UIKit
 
 // Thanks suslocation!
 var currentUIAlertController: UIAlertController?
-
-fileprivate let errorString = NSLocalizedString("Error", comment: "")
-fileprivate let okString = NSLocalizedString("OK", comment: "")
-fileprivate let cancelString = NSLocalizedString("Cancel", comment: "")
 
 extension UIApplication {
     func dismissAlert(animated: Bool) {
@@ -127,3 +128,22 @@ extension UIApplication {
         }
     }
 }
+#else
+import AppKit
+
+typealias UIApplication = NSApplication // for pre-existing code
+extension NSApplication {
+    func alert(title: String = errorString, body: String, animated: Bool = true, withButton: Bool = true) {
+        DispatchQueue.main.async {
+            let currentNSAlert = NSAlert()
+            currentNSAlert.messageText = title
+            currentNSAlert.informativeText = body
+            if withButton {
+                currentNSAlert.addButton(withTitle: okString)
+            }
+            
+            currentNSAlert.runModal()
+        }
+    }
+}
+#endif

@@ -3,7 +3,9 @@
 // created on 2023-12-14
 
 import SwiftUI
+#if canImport(UIKit)
 import MarqueeText
+#endif
 
 struct ProcessView: View {
     public var proc: NSDictionary
@@ -50,10 +52,16 @@ struct InfoCell: View {
                 .multilineTextAlignment(.leading)
                 .padding(.trailing, 14)
             Spacer()
+#if canImport(UIKit)
                 MarqueeText(text: value, font: .systemFont(ofSize: UIFont.systemFontSize), leftFade: 16, rightFade: 16, startDelay: 2.0)
                     .multilineTextAlignment(.trailing)
                     .textSelection(.enabled)
                     .foregroundColor(.secondary)
+            #else
+                Text(value)
+                    .multilineTextAlignment(.trailing)
+                    .foregroundColor(.secondary)
+            #endif
         }
     }
 }

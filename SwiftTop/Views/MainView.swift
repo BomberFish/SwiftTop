@@ -92,9 +92,15 @@ struct MainView: View {
             }
             .navigationTitle("SwiftTop")
             .toolbar {
+                #if os(macOS)
+                ToolbarItem {
+                    toolbarItems
+                }
+                #else
                 ToolbarItem(placement: .navigationBarTrailing) {
                     toolbarItems
                 }
+                #endif
             }
             .sheet(isPresented: $settingsOpen) {
                 AboutView()
@@ -115,7 +121,9 @@ struct MainView: View {
                 }
             })
         }
+        #if !os(macOS)
         .navigationViewStyle(StackNavigationViewStyle())
+        #endif
     }
 
     func filterPS() {

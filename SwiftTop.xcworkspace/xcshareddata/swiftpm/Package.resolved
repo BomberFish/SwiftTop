@@ -3,10 +3,10 @@
     {
       "identity" : "marqueetext",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/joekndy/marqueetext",
+      "location" : "https://github.com/BomberFish/MarqueeText",
       "state" : {
         "branch" : "master",
-        "revision" : "e18d514455563ad00581e0d825146c6f15b1c6c4"
+        "revision" : "a7f841547cfa50cfb3b7d50a059c1aee6dd75138"
       }
     },
     {
