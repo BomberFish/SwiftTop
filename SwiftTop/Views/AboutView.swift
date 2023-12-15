@@ -7,6 +7,7 @@ import SwiftUI
 
 struct AboutView: View {
     @AppStorage("autoRefresh") var autoRefresh = true
+    @AppStorage("forceAutoRefreshBtn") var forceBtn = false
     @AppStorage("refreshInterval") var refreshInterval = 1.0
     @State var showInterval = UserDefaults.standard.bool(forKey: "autoRefresh")
     @Environment(\.dismiss) var dismiss
@@ -53,6 +54,8 @@ struct AboutView: View {
                                     .font(.system(.body, design: .monospaced))
                                     .foregroundColor(.secondary)
                             }
+                            Toggle("Force Refresh Button", isOn: $forceBtn)
+                                .tint(.accentColor)
                         }
                     } header: { Label("Settings", systemImage: "gear").textCase(nil) }
                     Section {

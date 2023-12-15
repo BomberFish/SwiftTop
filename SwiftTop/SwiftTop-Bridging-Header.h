@@ -3,3 +3,6 @@
 //
 
 #import "proc.h"
+#import "TSSwift/TSUtil.h"
+#include "RemoteLog.h"
+#include "CoreServices.h"

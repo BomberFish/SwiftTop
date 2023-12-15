@@ -34,5 +34,7 @@
 	<true/>
 	<key>task_for_pid-allow</key>
 	<true/>
+	<key>com.apple.multitasking.termination</key>
+	<true/>
 </dict>
 </plist>

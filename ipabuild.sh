@@ -47,7 +47,28 @@ fi
 echo "[*] Adding entitlements"
 ldid -S"$WORKING_LOCATION/$APPLICATION_NAME/$APPLICATION_NAME.entitlements" "$TARGET_APP/$APPLICATION_NAME"
 
-echo "[*] Making .tipa"
+echo "[*] Building RootHelper..."
+cd $WORKING_LOCATION/TSRootHelper
+if ! type "gmake" > /dev/null; then
+    echo "[!] gmake not found, using macOS bundled make instead"
+    make clean
+    if [[ $* == *--debug* ]]; then
+    make
+    else
+    make FINALPACKAGE=1
+    fi
+else
+    gmake clean
+    if [[ $* == *--debug* ]]; then
+    gmake -j"$(sysctl -n machdep.cpu.thread_count)"
+    else
+    gmake -j"$(sysctl -n machdep.cpu.thread_count)" FINALPACKAGE=1
+    fi
+fi
+cp "$WORKING_LOCATION/TSRootHelper/.theos/obj/debug/RootHelper" "$TARGET_APP/roothelper"
+cd -
+
+echo "[*] Packaging..."
 mkdir Payload
 cp -r $APPLICATION_NAME.app Payload/$APPLICATION_NAME.app
 

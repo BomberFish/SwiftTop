@@ -1,0 +1,9 @@
+Package: net.sourceloc.roothelper
+Name: roothelper
+Version: 1.1
+Architecture: iphoneos-arm64
+Description: roothelper
+Maintainer: sourcelocation
+Author: sourcelocation
+Section: System
+Tag: role::hacker

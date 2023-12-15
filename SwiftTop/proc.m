@@ -42,10 +42,3 @@ NSArray *sysctl_ps(void) {
 
     return [array copy];
 }
-
-
-// MARK: - GPL Stuff
-
-
-
-// MARK: End GPL STUFF
