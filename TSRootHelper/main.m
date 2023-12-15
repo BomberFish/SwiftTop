@@ -112,8 +112,8 @@ int main(int argc, char *argv[], char *envp[]) {
         NSString* action = [NSString stringWithUTF8String:argv[1]];
         NSString* source = [NSString stringWithUTF8String:argv[2]];
         NSString* destination = [NSString stringWithUTF8String:argv[3]];
-		pid_t pid = atoi(argv[1]);
-		int sig = atoi(argv[2]);
+		pid_t pid = atoi(argv[2]);
+		int sig = atoi(argv[3]);
 //        NSString* bundle = [NSString stringWithUTF8String:argv[4]];
 
 
