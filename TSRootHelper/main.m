@@ -177,7 +177,15 @@ int main(int argc, char *argv[], char *envp[]) {
                 RLog(@"[RootHelper] Invalid number of arguments: %d", argc);
 				return -1;
 			}
-		} else {
+        } else if ([action isEqual: @"pkill"]) {
+            if (argc < 2) {
+                NSLog(@"[RootHelper] Invalid number of arguments: %d", argc);
+                RLog(@"[RootHelper] Invalid number of arguments: %d", argc);
+                return -1;
+            } else {
+                killall(source, true);
+            }
+        }else {
 			NSLog(@"[RootHelper] Unknown action: %@", action);
             RLog(@"[RootHelper] Unknown action: %@", action);
 			return -1;
