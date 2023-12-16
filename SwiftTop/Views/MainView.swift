@@ -255,12 +255,15 @@ struct MainView: View {
     }
 
     func filterPS() {
-        
         if searchText.isEmpty {
             psFiltered = ps
         } else {
             psFiltered = ps.filter {
-                ($0["proc_name"] as! String).localizedCaseInsensitiveContains(searchText) || ($0["pid"] as! String).localizedStandardContains(searchText) || (getAppInfoFromExecutablePath($0["proc_path"] as! String)?.bundleIdentifier.localizedCaseInsensitiveContains(searchText) ?? false)
+                if titleDisplayMode == 1 {
+                    ($0["proc_name"] as! String).localizedCaseInsensitiveContains(searchText) || ($0["pid"] as! String).localizedStandardContains(searchText) || (getAppInfoFromExecutablePath($0["proc_path"] as! String)?.bundleIdentifier.localizedCaseInsensitiveContains(searchText) ?? false)
+                } else {
+                    ($0["proc_name"] as! String).localizedCaseInsensitiveContains(searchText) || ($0["pid"] as! String).localizedStandardContains(searchText)
+                }
             }
         }
         
@@ -278,11 +281,11 @@ struct MainView: View {
         case 2:
             if sortDirection == 1 {
                 psFiltered.sort {
-                    ($0["pid"] as! String) > ($1["pid"] as! String)
+                    Int($0["pid"] as! String)! > Int($1["pid"] as! String)!
                 }
             } else {
                 psFiltered.sort {
-                    ($0["pid"] as! String) < ($1["pid"] as! String)
+                    Int($0["pid"] as! String)! < Int($1["pid"] as! String)!
                 }
             }
         default:
@@ -319,21 +322,21 @@ struct ProcessCell: View {
                     Image(uiImage: iconImage)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 30, height: 30)
-                        .cornerRadius(6)
+                        .frame(width: 32, height: 32)
+                        .cornerRadius(8)
                 } else {
                     Image(systemName: "app.dashed")
                         .foregroundColor(Color(UIColor.label))
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 30, height: 30)
-                        .font(.system(size: 30))
+                        .frame(width: 32, height: 32)
+                        .font(.system(size: 32))
                 }
             } else {
                 Image(systemName: "terminal")
                     .foregroundColor(Color(UIColor.label))
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 30, height: 30)
-                    .font(.system(size: 20))
+                    .frame(width: 32, height: 32)
+                    .font(.system(size: 24))
             }
             VStack(alignment: .leading) {
                 Text(app != nil ? (titleDisplayMode == 0 ? name : (titleDisplayMode == 2 ? app!.name : app!.bundleIdentifier)) : name) // ternary black magic
