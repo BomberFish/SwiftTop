@@ -24,6 +24,7 @@ func getProcesses() throws -> [NSDictionary] {
     return procs
 }
 
+// FIXME: Most likely broken on macOS, needs testing!
 /// What did you think this would do?
 func getAppInfoFromExecutablePath(_ path: String) -> SBApp? {
     os_log("[AppInfo] Getting info for \(path)")

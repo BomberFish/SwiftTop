@@ -16,6 +16,104 @@ struct MainView: View {
     @State var settingsOpen: Bool = false
     @State var timer = Timer.publish(every: UserDefaults.standard.double(forKey: "refreshInterval"), on: .main, in: .common).autoconnect()
 
+    /// 0: none, 1: name, 2: pid
+    @State var sortType = 0
+    /// 0: ascending, 1: descending
+    @State var sortDirection = 0
+    
+    @ViewBuilder
+    var processNameMenu: some View {
+        Menu(content: {
+            Button(action: {
+                Haptic.shared.selection()
+                sortType = 1
+                sortDirection = 0
+                filterPS()
+            }, label: {
+                HStack {
+                    Label("Ascending", systemImage: "arrow.up")
+                    if sortType == 1 && sortDirection == 0 {
+                        Image(systemName: "checkmark")
+                    }
+                }
+            })
+            Button(action: {
+                Haptic.shared.selection()
+                sortType = 1
+                sortDirection = 1
+                filterPS()
+            }, label: {
+                HStack {
+                    Label("Descending", systemImage: "arrow.down")
+                    if sortType == 1 && sortDirection == 1 {
+                        Image(systemName: "checkmark")
+                    }
+                }
+            })
+        }, label: {
+            Label("Process Name", systemImage: "terminal")
+        })
+    }
+    
+    @ViewBuilder
+    var pidMenu: some View {
+        Menu(content: {
+            Button(action: {
+                Haptic.shared.selection()
+                sortType = 2
+                sortDirection = 0
+                filterPS()
+            }, label: {
+                HStack {
+                    Label("Ascending", systemImage: "arrow.up")
+                    if sortType == 2 && sortDirection == 0 {
+                        Image(systemName: "checkmark")
+                    }
+                }
+            })
+            Button(action: {
+                Haptic.shared.selection()
+                sortType = 2
+                sortDirection = 1
+                filterPS()
+            }, label: {
+                HStack {
+                    Label("Descending", systemImage: "arrow.down")
+                    if sortType == 2 && sortDirection == 1 {
+                        Image(systemName: "checkmark")
+                    }
+                }
+            })
+        }, label: {
+            Label("PID", systemImage: "number")
+        })
+    }
+    
+    @ViewBuilder
+    var sortMenu: some View {
+        Menu(content: {
+            Button(action: {
+                Haptic.shared.selection()
+                sortType = 0
+                sortDirection = 0
+                filterPS()
+            }, label: {
+                HStack {
+                    Label("None", systemImage: "minus")
+                    if sortType == 0 && sortDirection == 0 {
+                        Image(systemName: "checkmark")
+                    }
+                }
+            })
+            
+            processNameMenu
+            pidMenu
+            
+        }, label: {
+            Image(systemName: sortType == 0 ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
+        })
+    }
+    
     @ViewBuilder
     var list: some View {
         List {
@@ -100,12 +198,23 @@ struct MainView: View {
             .navigationTitle("SwiftTop")
             .toolbar {
                 #if os(macOS)
-                ToolbarItem {
+                ToolbarItem(placement: .topBarTrailing) {
                     toolbarItems
                 }
+                
+                ToolbarItem(placement: .topBarLeading) {
+                    sortMenu
+                }
                 #else
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     toolbarItems
+                }
+                
+                ToolbarItem(placement: .topBarLeading) {
+                    sortMenu
+                        .onTapGesture {
+                            Haptic.shared.play(.light)
+                        }
                 }
                 #endif
             }
@@ -146,12 +255,38 @@ struct MainView: View {
     }
 
     func filterPS() {
+        
         if searchText.isEmpty {
             psFiltered = ps
         } else {
             psFiltered = ps.filter {
-                ($0["proc_name"] as! String).localizedCaseInsensitiveContains(searchText) || ($0["pid"] as! String).localizedStandardContains(searchText)
+                ($0["proc_name"] as! String).localizedCaseInsensitiveContains(searchText) || ($0["pid"] as! String).localizedStandardContains(searchText) || (getAppInfoFromExecutablePath($0["proc_path"] as! String)?.bundleIdentifier.localizedCaseInsensitiveContains(searchText) ?? false)
             }
+        }
+        
+        switch sortType {
+        case 1:
+            if sortDirection == 1 {
+                psFiltered.sort {
+                    ($0["proc_name"] as! String) > ($1["proc_name"] as! String)
+                }
+            } else {
+                psFiltered.sort {
+                    ($0["proc_name"] as! String) < ($1["proc_name"] as! String)
+                }
+            }
+        case 2:
+            if sortDirection == 1 {
+                psFiltered.sort {
+                    ($0["pid"] as! String) > ($1["pid"] as! String)
+                }
+            } else {
+                psFiltered.sort {
+                    ($0["pid"] as! String) < ($1["pid"] as! String)
+                }
+            }
+        default:
+            print("not filtering")
         }
     }
 }

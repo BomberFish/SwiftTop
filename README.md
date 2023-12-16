@@ -8,6 +8,7 @@ An elegant task manager for iOS. Works on iOS and macOS
 - Snappy
 - List processes
 - Kill processes
+- Show process details, including the app bundle the executable belongs to
 
 ## Tested on 
 
@@ -17,7 +18,8 @@ An elegant task manager for iOS. Works on iOS and macOS
 ## TODO
 
 - Privileged kill with spawn_root (just doesn't work right now')
-- More process details
+- More process details (threads, open files, open ports, mapped modules, etc)
+- Implement other features from CocoaTop
 
 ## Building for iOS
 

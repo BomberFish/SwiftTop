@@ -13,5 +13,6 @@ struct UIColor {
     static var systemGroupedBackground: NSColor = .windowBackgroundColor
     static var secondarySystemGroupedBackground: NSColor = .underPageBackgroundColor
     static var systemGray: NSColor = .systemGray
+    static var systemRed: NSColor = .systemRed
 }
 #endif

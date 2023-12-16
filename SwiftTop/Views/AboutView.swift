@@ -61,7 +61,7 @@ struct AboutView: View {
                                     .font(.system(.body, design: .monospaced))
                                     .foregroundColor(.secondary)
                             }
-                            Toggle("Force Refresh Button", isOn: $forceBtn)
+                            Toggle("Show Refresh Button", isOn: $forceBtn)
                                 .tint(.accentColor)
                         }
                     } header: { Label("Settings", systemImage: "gear").textCase(nil) }
@@ -94,7 +94,7 @@ struct AboutView: View {
 //            .background(Color(UIColor.systemGroupedBackground))
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(UIColor.systemGroupedBackground))
+        .background(Color(UIColor.systemBackground))
     }
 }
 

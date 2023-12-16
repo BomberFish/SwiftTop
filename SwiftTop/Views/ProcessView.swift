@@ -26,12 +26,14 @@ struct ProcessView: View {
                     }
                 }) {
                     Label("Kill process", systemImage: "xmark")
+                        .foregroundColor(Color(UIColor.systemRed))
                 }
                 
                 Button(role: .destructive, action: {
                     killall(proc["proc_name"] as? String)
                 }) {
                     Label("Kill process by process name", systemImage: "xmark")
+                        .foregroundColor(Color(UIColor.systemRed))
                 }
 
                 Button(role: .destructive, action: {
@@ -42,6 +44,7 @@ struct ProcessView: View {
                     }
                 }) {
                     Label("Kill process (root)", systemImage: "xmark")
+                        .foregroundColor(Color(UIColor.systemRed))
                 }
                 
                 Button(role: .destructive, action: {
@@ -52,6 +55,7 @@ struct ProcessView: View {
                     }
                 }) {
                     Label("Kill process by process name (root)", systemImage: "xmark")
+                        .foregroundColor(Color(UIColor.systemRed))
                 }
             }
         }
