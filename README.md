@@ -1,6 +1,8 @@
 # SwiftTop
 
-An elegant task manager for iOS. Works on iOS and macOS
+An elegant task manager written in SwiftUI. Works on iOS and macOS\*. Inspired by [CocoaTop](https://github.com/D0m0/CocoaTop).
+
+> \* macOS support is experimental and not guaranteed to work. It's also not very useful, since you can just use Activity Monitor.
 
 ## Features
 
@@ -15,11 +17,16 @@ An elegant task manager for iOS. Works on iOS and macOS
 - iPhone Xʀ, iOS 16.1 (20B82)
 - MacBookPro16,2, macOS 14.1 (23B74) **with SIP disabled and AMFI partially disabled**
 
+## Installing
+
+For iOS, you'll need an iPhone, iPad, or iPod Touch with TrollStore installed. Download the latest `.tipa` from the [Releases section](https://github.com/BomberFish/SwiftTop/releases) (eta son) and install it with TrollStore.
+
 ## TODO
 
 - Privileged kill with spawn_root (just doesn't work right now')
 - More process details (threads, open files, open ports, mapped modules, etc)
 - Implement other features from CocoaTop
+- Test more on macOS
 
 ## Building for iOS
 
