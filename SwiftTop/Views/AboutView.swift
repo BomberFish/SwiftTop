@@ -9,6 +9,8 @@ struct AboutView: View {
     @AppStorage("autoRefresh") var autoRefresh = true
     @AppStorage("forceAutoRefreshBtn") var forceBtn = false
     @AppStorage("refreshInterval") var refreshInterval = 1.0
+    /// 0: process name, 1: bundle id (when available), 2: app name (when available)
+    @AppStorage("titleDisplayMode") var titleDisplayMode = 0
     @State var showInterval = UserDefaults.standard.bool(forKey: "autoRefresh")
     @Environment(\.dismiss) var dismiss
     @Environment(\.colorScheme) var cs
@@ -32,6 +34,11 @@ struct AboutView: View {
                     .font(.subheadline)
                 List {
                     Section {
+                        Picker("Process Title", selection: $titleDisplayMode) {
+                            Text("Process Name").tag(0)
+                            Text("Bundle ID").tag(1)
+                            Text("App Name").tag(2)
+                        }
                         Toggle(isOn: $autoRefresh) {
                             Label("Auto-Refresh", systemImage: "arrow.clockwise")
                         }
@@ -63,6 +70,7 @@ struct AboutView: View {
                         LinkCell(title: "Donato Fiore", detail: "Processes Syscall method", link: "https://github.com/donato-fiore", imageURL: "https://cdn.discordapp.com/avatars/396496265430695947/0904860dfb31d8b1f39f0e7dc4832b1e.webp?size=160")
                     } header: { Label("Credits", systemImage: "heart").textCase(nil) }
                 }
+                .listStyle(.inset)
             }
             .toolbar {
                 #if !os(macOS)
@@ -83,7 +91,7 @@ struct AboutView: View {
                 }
                 #endif
             }
-            .background(Color(UIColor.systemGroupedBackground))
+//            .background(Color(UIColor.systemGroupedBackground))
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(UIColor.systemGroupedBackground))

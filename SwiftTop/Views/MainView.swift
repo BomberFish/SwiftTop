@@ -5,22 +5,24 @@
 import SwiftUI
 
 struct MainView: View {
-    @State var ps: [NSDictionary]? = sysctl_ps() as? [NSDictionary]
+    @State var ps: [NSDictionary] = []
     @State var psFiltered: [NSDictionary] = []
     @AppStorage("autoRefresh") var autoRefresh = true
     @AppStorage("refreshInterval") var refreshInterval = 1.0
     @AppStorage("forceAutoRefreshBtn") var forceBtn = false
+    /// 0: process name, 1: bundle id (when available), 2: app name (when available)
+    @AppStorage("titleDisplayMode") var titleDisplayMode = 0
     @State private var searchText = ""
     @State var settingsOpen: Bool = false
-    var timer = Timer.publish(every: UserDefaults.standard.double(forKey: "refreshInterval"), on: .main, in: .common).autoconnect()
+    @State var timer = Timer.publish(every: UserDefaults.standard.double(forKey: "refreshInterval"), on: .main, in: .common).autoconnect()
 
     @ViewBuilder
     var list: some View {
-        if ps != nil {
-            List {
+        List {
+            Section(content: {
                 ForEach(psFiltered, id: \.self) { proc in
                     NavigationLink(destination: ProcessView(proc: proc)) {
-                        ProcessCell(proc: proc)
+                        ProcessCell(proc: proc, titleDisplayMode: $titleDisplayMode)
                             .contextMenu {
                                 Button(role: .destructive, action: {
                                     do {
@@ -44,24 +46,26 @@ struct MainView: View {
                             }
                     }
                 }
-            }
-            .onChange(of: ps) { _ in
-                filterPS()
-            }
-            .onChange(of: searchText) { _ in
-                filterPS()
-            }
-            .onAppear {
-                filterPS()
-            }
-            .refreshable {
-                ps = []
-                ps = sysctl_ps() as? [NSDictionary]
-            }
-            .searchable(text: $searchText, prompt: "Search by executable name or PID")
-        } else {
-            Text("Error while getting processes.")
+            }, header: {
+                Label("\(ps.count) Processes \(searchText.isEmpty ? "" : "(\(psFiltered.count) filtered)")", systemImage: "terminal").textCase(nil)
+            })
         }
+        .listStyle(.plain)
+        .onChange(of: ps) { _ in
+            filterPS()
+        }
+        .onChange(of: searchText) { _ in
+            filterPS()
+        }
+        .onAppear {
+            refreshPS()
+            filterPS()
+        }
+        .refreshable {
+            ps = []
+            refreshPS()
+        }
+        .searchable(text: $searchText, prompt: "Search by executable name, bundle ID, or PID")
     }
 
     @ViewBuilder
@@ -69,15 +73,18 @@ struct MainView: View {
         HStack {
             if !autoRefresh || forceBtn {
                 Button(action: {
-                    Haptic.shared.selection()
-                    ps = []
-                    ps = sysctl_ps() as? [NSDictionary]
-                    Haptic.shared.play(.light)
+                    Task {
+                        Haptic.shared.selection()
+                        ps = []
+                        refreshPS()
+                        Haptic.shared.play(.light)
+                    }
                 }) {
                     Image(systemName: "arrow.clockwise")
                 }
             }
             Button(action: {
+                Haptic.shared.play(.light)
                 settingsOpen = true
             }) {
                 Image(systemName: "gear")
@@ -105,19 +112,21 @@ struct MainView: View {
             .sheet(isPresented: $settingsOpen) {
                 AboutView()
             }
-            .onChange(of: autoRefresh) {new in
+            .onChange(of: autoRefresh) { new in
                 if !new {
                     timer.upstream.connect().cancel()
+                } else {
+                    timer = Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()
                 }
             }
             .onChange(of: refreshInterval) { _ in
                 timer.upstream.connect().cancel()
-                let _ = timer.upstream.connect()
+                timer = Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()
             }
             .onReceive(timer, perform: { _ in
                 if autoRefresh {
-                    Haptic.shared.selection()
-                    ps = sysctl_ps() as? [NSDictionary]
+//                    Haptic.shared.selection()
+                    refreshPS()
                 }
             })
         }
@@ -126,33 +135,84 @@ struct MainView: View {
         #endif
     }
 
+    func refreshPS() {
+        Task {
+            do {
+                ps = try getProcesses()
+            } catch {
+                await UIApplication.shared.alert(body: error.localizedDescription)
+            }
+        }
+    }
+
     func filterPS() {
         if searchText.isEmpty {
-            psFiltered = ps ?? []
+            psFiltered = ps
         } else {
-            psFiltered = ps?.filter {
+            psFiltered = ps.filter {
                 ($0["proc_name"] as! String).localizedCaseInsensitiveContains(searchText) || ($0["pid"] as! String).localizedStandardContains(searchText)
-            } ?? (ps ?? [])
+            }
         }
     }
 }
 
 struct ProcessCell: View {
-    var proc: NSDictionary
+    public var proc: NSDictionary
+    /// 0: process name, 1: bundle id (when available), 2: app name (when available)
+    @Binding public var titleDisplayMode: Int
     var body: some View {
+        let name: String = proc["proc_name"] as? String ?? "Unknown"
+        let path: String = proc["proc_path"] as! String
+        let pid: String = proc["pid"] as! String
+        let app: SBApp? = getAppInfoFromExecutablePath(path)
         HStack {
-            Image(systemName: "apple.terminal")
+            var iconImage: UIImage? {
+//                if let app {
+                    if let iconFileName = app?.pngIconPaths[safe: 0] {
+                        let iconPath = app!.bundleURL.path + "/" + iconFileName
+                        return .init(contentsOfFile: iconPath)
+                    } else {
+                        return nil
+                    }
+//                } else {
+//                    return nil
+//                }
+            }
+            
+            if let app {
+                if let iconImage {
+                    Image(uiImage: iconImage)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 30, height: 30)
+                        .cornerRadius(6)
+                } else {
+                    Image(systemName: "app.dashed")
+                        .foregroundColor(Color(UIColor.label))
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 30, height: 30)
+                        .font(.system(size: 30))
+                }
+            } else {
+                Image(systemName: "terminal")
+                    .foregroundColor(Color(UIColor.label))
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 30, height: 30)
+                    .font(.system(size: 20))
+            }
             VStack(alignment: .leading) {
-                Text(proc["proc_name"] as? String ?? "Unknown")
-                Text(proc["proc_path"] as? String ?? "Unknown")
+                Text(app != nil ? (titleDisplayMode == 0 ? name : (titleDisplayMode == 2 ? app!.name : app!.bundleIdentifier)) : name) // ternary black magic
+                    .font(.headline)
+                    .lineLimit(1)
+                Text(path)
                     .lineLimit(1)
                     .truncationMode(.tail)
-                    .font(.footnote)
+                    .font(.callout)
             }
             Spacer()
-            Text(proc["pid"] as! String)
+            Text(pid)
                 .foregroundColor(.secondary)
-                .font(.callout)
+                .font(.system(.callout, design: .monospaced))
         }
     }
 }

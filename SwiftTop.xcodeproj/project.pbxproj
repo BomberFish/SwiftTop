@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D64D3D232B2C9F6C00EBEDCB /* UIColorAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64D3D222B2C9F6C00EBEDCB /* UIColorAdapter.swift */; };
 		D64D3D262B2C9FEC00EBEDCB /* MarqueeText in Frameworks */ = {isa = PBXBuildFile; productRef = D64D3D252B2C9FEC00EBEDCB /* MarqueeText */; };
+		D65C3A2D2B2D2C96007B3C76 /* Collection+SafeIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65C3A2C2B2D2C96007B3C76 /* Collection+SafeIndex.swift */; };
 		D66BC66A2B2B7A54003D8A8E /* String+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66BC6672B2B7A53003D8A8E /* String+LocalizedError.swift */; };
 		D66BC66B2B2B7A54003D8A8E /* Alert++.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66BC6682B2B7A53003D8A8E /* Alert++.swift */; };
 		D66BC66C2B2B7A54003D8A8E /* Haptic++.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66BC6692B2B7A53003D8A8E /* Haptic++.swift */; };
@@ -54,6 +55,7 @@
 
 /* Begin PBXFileReference section */
 		D64D3D222B2C9F6C00EBEDCB /* UIColorAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorAdapter.swift; sourceTree = "<group>"; };
+		D65C3A2C2B2D2C96007B3C76 /* Collection+SafeIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+SafeIndex.swift"; sourceTree = "<group>"; };
 		D66BC6672B2B7A53003D8A8E /* String+LocalizedError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+LocalizedError.swift"; sourceTree = "<group>"; };
 		D66BC6682B2B7A53003D8A8E /* Alert++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alert++.swift"; sourceTree = "<group>"; };
 		D66BC6692B2B7A53003D8A8E /* Haptic++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Haptic++.swift"; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 				D66BC6682B2B7A53003D8A8E /* Alert++.swift */,
 				D66BC6692B2B7A53003D8A8E /* Haptic++.swift */,
 				D66BC6672B2B7A53003D8A8E /* String+LocalizedError.swift */,
+				D65C3A2C2B2D2C96007B3C76 /* Collection+SafeIndex.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -392,6 +395,7 @@
 				D66BC6D62B2C9218003D8A8E /* LSApplicationProxy+AltList.m in Sources */,
 				D66BC66F2B2B85EF003D8A8E /* proc.swift in Sources */,
 				D66BC66B2B2B7A54003D8A8E /* Alert++.swift in Sources */,
+				D65C3A2D2B2D2C96007B3C76 /* Collection+SafeIndex.swift in Sources */,
 				D67D2A432B2B44C700EA8D6E /* ProcessView.swift in Sources */,
 				D64D3D232B2C9F6C00EBEDCB /* UIColorAdapter.swift in Sources */,
 				D67D2A142B2B3FB400EA8D6E /* SwiftTopApp.swift in Sources */,

@@ -15,6 +15,39 @@
 #import <SpringBoardServices/SpringBoardServices.h>
 #import <Security/Security.h>
 
+void Log(NSString* logMessage)
+{
+    NSLog(@"%@", logMessage);
+    RLog(logMessage);
+    
+    // I love Copilot
+    // Get the Document directory path.
+    NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+    // Append the log file name to the document directory path.
+    NSString *logFilePath = [docDir stringByAppendingPathComponent:@"logjam.log"];
+
+    // Get current date and time for timestamp.
+    NSDate *currentDate = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *dateString = [dateFormatter stringFromDate:currentDate];
+
+    // Prepare the log message with timestamp.
+    NSString *logMessageWithTimestamp = [NSString stringWithFormat:@"%@: %@", dateString, logMessage];
+
+    // Check if file exists.
+    if([[NSFileManager defaultManager] fileExistsAtPath:logFilePath]) {
+        // If file exists, append the log message.
+        NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:logFilePath];
+        [fileHandle seekToEndOfFile];
+        [fileHandle writeData:[logMessageWithTimestamp dataUsingEncoding:NSUTF8StringEncoding]];
+        [fileHandle closeFile];
+    } else {
+        // If file doesn't exist, create a new file and write the log message.
+        [logMessageWithTimestamp writeToFile:logFilePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+    }
+}
+
 NSSet<NSString*>* immutableAppBundleIdentifiers(void)
 {
 	NSMutableSet* systemAppIdentifiers = [NSMutableSet new];
@@ -103,93 +136,96 @@ void cleanRestrictions(void)
 	[clientTruthDictionaryM writeToURL:clientTruthURL error:nil];
 }
 
-
 int main(int argc, char *argv[], char *envp[]) {
-	@autoreleasepool {
+    @autoreleasepool {
+        NSString *logMessage1 = [NSString stringWithFormat:@"[RootHelper] RootHelper called"];
+        Log(logMessage1);
         [[NSFileManager defaultManager] createDirectoryAtPath:@"/var/mobile/testrebuild" withIntermediateDirectories:true attributes:nil error:nil];
 
-		// loadMCMFramework();
         NSString* action = [NSString stringWithUTF8String:argv[1]];
         NSString* source = [NSString stringWithUTF8String:argv[2]];
         NSString* destination = [NSString stringWithUTF8String:argv[3]];
-		pid_t pid = atoi(argv[2]);
-		int sig = atoi(argv[3]);
-//        NSString* bundle = [NSString stringWithUTF8String:argv[4]];
-
+        pid_t pid = atoi(argv[2]);
+        int sig = atoi(argv[3]);
 
         if ([action isEqual: @"write"]) {
-            RLog(@"[RootHelper] Writing %@ to %@", source, destination);
-            RLog(@"[RootHelper] Writing %@ to %@", source, destination);
-			[source writeToFile:destination atomically:YES encoding:NSUTF8StringEncoding error:nil];
+            NSString *logMessage2 = [NSString stringWithFormat:@"[RootHelper] Writing %@ to %@", source, destination];
+            Log(logMessage2);
+            [source writeToFile:destination atomically:YES encoding:NSUTF8StringEncoding error:nil];
         } else if ([action isEqual: @"mv"]) {
-            NSLog(@"[RootHelper] Moving %@ to %@", source, destination);
-            RLog(@"[RootHelper] Moving %@ to %@", source, destination);
+            NSString *logMessage3 = [NSString stringWithFormat:@"[RootHelper] Moving %@ to %@", source, destination];
+            Log(logMessage3);
             [[NSFileManager defaultManager] moveItemAtPath:source toPath:destination error:nil];
         } else if ([action isEqual: @"cp"]) {
-            RLog(@"[RootHelper] Copying %@ to %@", source, destination);
+            NSString *logMessage4 = [NSString stringWithFormat:@"[RootHelper] Copying %@ to %@", source, destination];
+            Log(logMessage4);
             [[NSFileManager defaultManager] copyItemAtPath:source toPath:destination error:nil];
         } else if ([action isEqual: @"mkdir"]) {
-            NSLog(@"[RootHelper] Making directory %@", source);
-            RLog(@"[RootHelper] Making directory %@", source);
+            NSString *logMessage5 = [NSString stringWithFormat:@"[RootHelper] Making directory %@", source];
+            Log(logMessage5);
             [[NSFileManager defaultManager] createDirectoryAtPath:source withIntermediateDirectories:true attributes:nil error:nil];
         } else if ([action isEqual: @"rm"]) {
-            NSLog(@"[RootHelper] Removing %@", source);
-            RLog(@"[RootHelper] Removing %@", source);
+            NSString *logMessage6 = [NSString stringWithFormat:@"[RootHelper] Removing %@", source];
+            Log(logMessage6);
             [[NSFileManager defaultManager] removeItemAtPath:source error:nil];
         } else if ([action isEqual: @"chmod"]) {
-            NSLog(@"[RootHelper] Changing perms of %@", source);
-            RLog(@"[RootHelper] Changing perms of %@", source);
+            NSString *logMessage7 = [NSString stringWithFormat:@"[RootHelper] Changing perms of %@", source];
+            Log(logMessage7);
             NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
             [dict setObject:[NSNumber numberWithInt:511]  forKey:NSFilePosixPermissions];
             [[NSFileManager defaultManager] setAttributes:dict ofItemAtPath:source error:nil];
         } else if ([action isEqual: @"rebuildiconcache"]) {
-            NSLog(@"[RootHelper] Rebuilding iconcache");
-            RLog(@"[RootHelper] Rebuilding iconcache");
+            NSString *logMessage8 = [NSString stringWithFormat:@"[RootHelper] Rebuilding iconcache"];
+            Log(logMessage8);
             cleanRestrictions();
             [[LSApplicationWorkspace defaultWorkspace] _LSPrivateRebuildApplicationDatabasesForSystemApps:YES internal:YES user:YES];
             refreshAppRegistrations();
             killall(@"backboardd", true);
-        } else if ([action isEqual: @"refregapp"]) {
-//            refreshAppRegistration(bundle);
         } else if ([action isEqual: @"ln"]) {
-            NSLog(@"[RootHelper] Linking %@ to %@", source, destination);
-            RLog(@"[RootHelper] Linking %@ to %@", source, destination);
+            NSString *logMessage9 = [NSString stringWithFormat:@"[RootHelper] Linking %@ to %@", source, destination];
+            Log(logMessage9);
             [[NSFileManager defaultManager] createSymbolicLinkAtPath:destination withDestinationPath:source error:nil];
         } else if ([action isEqual: @"pidkill"]) {
-			if (argc == 3) {
-				int ret = kill(pid, sig);
-                NSLog(@"[RootHelper] Killing pid %d returned code %d", pid, ret);
-                RLog(@"[RootHelper] Killing pid %d returned code %d", pid, ret);
-				if (ret != 0) {
-					return 6;
-				}
+            NSString *logMessage10, *logMessage11, *logMessage12;
+            if (argc == 3) {
+                int ret = kill(pid, sig);
+                logMessage10 = [NSString stringWithFormat:@"[RootHelper] Killing pid %d returned code %d", pid, ret];
+                Log(logMessage10);
+                if (ret != 0) {
+//                    logMessage11 = [NSString stringWithFormat:@"[RootHelper] Errno %d", errno];
+                    Log(logMessage11);
+                    return 6;
+                }
                 return ret;
-			} else if (argc == 2) {
-				int ret = kill(pid, SIGKILL);
-                NSLog(@"[RootHelper] Killing pid %d returned code %d", pid, ret);
-                RLog(@"[RootHelper] Killing pid %d returned code %d", pid, ret);
-				if (ret != 0) {
-					return 6;
-				}
+            } else if (argc == 2) {
+                int ret = kill(pid, SIGKILL);
+                logMessage10 = [NSString stringWithFormat:@"[RootHelper] Killing pid %d returned code %d", pid, ret];
+                Log(logMessage10);
+                if (ret != 0) {
+//                    logMessage11 = [NSString stringWithFormat:@"[RootHelper] Errno %d", errno];
+                    Log(logMessage11);
+                    return 6;
+                }
                 return ret;
-			} else {
-				NSLog(@"[RootHelper] Invalid number of arguments: %d", argc);
-                RLog(@"[RootHelper] Invalid number of arguments: %d", argc);
-				return 4;
-			}
+            } else {
+                logMessage12 = [NSString stringWithFormat:@"[RootHelper] Invalid number of arguments: %d", argc];
+                Log(logMessage12);
+                return 4;
+            }
         } else if ([action isEqual: @"pkill"]) {
+            NSString *logMessage13;
             if (argc < 2) {
-                NSLog(@"[RootHelper] Invalid number of arguments: %d", argc);
-                RLog(@"[RootHelper] Invalid number of arguments: %d", argc);
+                logMessage13 = [NSString stringWithFormat:@"[RootHelper] Invalid number of arguments: %d", argc];
+                Log(logMessage13);
                 return 4;
             } else {
                 killall(source, true);
             }
-        }else {
-			NSLog(@"[RootHelper] Unknown action: %@", action);
-            RLog(@"[RootHelper] Unknown action: %@", action);
-			return 4;
-		}
+        } else {
+            NSString *logMessage14 = [NSString stringWithFormat:@"[RootHelper] Unknown action: %@", action];
+            Log(logMessage14);
+            return 4;
+        }
 
         return 0;
     }
