@@ -17,9 +17,9 @@ struct MainView: View {
     @State var timer = Timer.publish(every: UserDefaults.standard.double(forKey: "refreshInterval"), on: .main, in: .common).autoconnect()
 
     /// 0: none, 1: name, 2: pid
-    @State var sortType = 0
+    @AppStorage("procSortType") var sortType = 0
     /// 0: ascending, 1: descending
-    @State var sortDirection = 0
+    @AppStorage("procSortDirection") var sortDirection = 0
     
     @ViewBuilder
     var processNameMenu: some View {
@@ -163,7 +163,7 @@ struct MainView: View {
             ps = []
             refreshPS()
         }
-        .searchable(text: $searchText, prompt: "Search by executable name, bundle ID, or PID")
+        .searchable(text: $searchText, prompt: titleDisplayMode == 1 ? "Search by executable name, bundle ID, or PID" : "Search by executable name or PID")
     }
 
     @ViewBuilder

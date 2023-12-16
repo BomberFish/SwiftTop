@@ -9,15 +9,18 @@ import MarqueeText
 
 struct ProcessView: View {
     public var proc: NSDictionary
+    @State private var openedSections: [Bool] = [true, false, false, false, false, false]
     var body: some View {
         List {
-            Section("General Info") {
+            DisclosureGroup("Info", isExpanded: $openedSections[0]) {
                 InfoCell(title: "Name", value: proc["proc_name"] as? String ?? "Unknown")
                 InfoCell(title: "Path", value: proc["proc_path"] as? String ?? "Unknown")
                 InfoCell(title: "PID", value: proc["pid"] as! String)
+            } .onTapGesture {
+                openSection(0)
             }
             
-            Section("Quick Actions") {
+            DisclosureGroup("Quick Actions", isExpanded: $openedSections[1]) {
                 Button(role: .destructive, action: {
                     do {
                         try killProcess(Int32(proc["pid"] as! String)!) // idk if i can typecast in one shot
@@ -26,13 +29,6 @@ struct ProcessView: View {
                     }
                 }) {
                     Label("Kill process", systemImage: "xmark")
-                        .foregroundColor(Color(UIColor.systemRed))
-                }
-                
-                Button(role: .destructive, action: {
-                    killall(proc["proc_name"] as? String)
-                }) {
-                    Label("Kill process by process name", systemImage: "xmark")
                         .foregroundColor(Color(UIColor.systemRed))
                 }
 
@@ -46,20 +42,45 @@ struct ProcessView: View {
                     Label("Kill process (root)", systemImage: "xmark")
                         .foregroundColor(Color(UIColor.systemRed))
                 }
-                
-                Button(role: .destructive, action: {
-                    do {
-                        try TrollStoreRootHelper.pkill(proc: proc["proc_name"] as! String)
-                    } catch {
-                        UIApplication.shared.alert(body: error.localizedDescription)
-                    }
-                }) {
-                    Label("Kill process by process name (root)", systemImage: "xmark")
-                        .foregroundColor(Color(UIColor.systemRed))
-                }
+            } .onTapGesture {
+                openSection(1)
             }
+            
+            DisclosureGroup("Threads", isExpanded: $openedSections[2]) {
+                
+            } .onTapGesture {
+                openSection(2)
+            }
+            
+            DisclosureGroup("Open files", isExpanded: $openedSections[3]) {
+                
+            } .onTapGesture {
+                openSection(3)
+            }
+            
+            DisclosureGroup("Open ports", isExpanded: $openedSections[4]) {
+                
+            } .onTapGesture {
+                openSection(4)
+            }
+            
+            DisclosureGroup("Mapped modules", isExpanded: $openedSections[5]) {
+                
+            } .onTapGesture {
+                openSection(5)
+            }
+            
         }
+//        .onAppear {
+//            openSection(0)
+//        }
+        .headerProminence(.increased)
+        .listStyle(.plain)
         .navigationTitle(proc["proc_name"] as? String ?? "Unknown")
+    }
+    func openSection(_ index: Int) {
+        openedSections = [Bool](repeating: false, count: openedSections.count)
+        openedSections[index] = true
     }
 }
 
