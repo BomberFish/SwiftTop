@@ -4,6 +4,8 @@
 <dict>
 	<key>com.apple.managedconfiguration.profiled-access</key>
 	<true/>
+	<key>com.apple.multitasking.termination</key>
+	<true/>
 	<key>com.apple.private.network.statistics</key>
 	<true/>
 	<key>com.apple.private.security.container-required</key>
@@ -33,8 +35,6 @@
 	<key>proc_info-allow</key>
 	<true/>
 	<key>task_for_pid-allow</key>
-	<true/>
-	<key>com.apple.multitasking.termination</key>
 	<true/>
 </dict>
 </plist>
