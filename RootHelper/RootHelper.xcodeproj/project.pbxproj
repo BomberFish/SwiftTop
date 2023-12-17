@@ -1,0 +1,160 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXFileReference section */
+		D65C3A352B2E1CBE007B3C76 /* .DS_Store */ = {isa = PBXFileReference; lastKnownFileType = file; path = .DS_Store; sourceTree = "<group>"; };
+		D65C3A362B2E1CBE007B3C76 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		D65C3A372B2E1CBE007B3C76 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		D65C3A382B2E1CBE007B3C76 /* RootHelper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RootHelper.entitlements; sourceTree = "<group>"; };
+		D65C3A392B2E1CBE007B3C76 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		D65C3A3A2B2E1CBE007B3C76 /* control */ = {isa = PBXFileReference; lastKnownFileType = text; path = control; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		D65C3A2F2B2E1CBE007B3C76 = {
+			isa = PBXGroup;
+			children = (
+				D65C3A352B2E1CBE007B3C76 /* .DS_Store */,
+				D65C3A362B2E1CBE007B3C76 /* Makefile */,
+				D65C3A372B2E1CBE007B3C76 /* .gitignore */,
+				D65C3A382B2E1CBE007B3C76 /* RootHelper.entitlements */,
+				D65C3A392B2E1CBE007B3C76 /* main.swift */,
+				D65C3A3A2B2E1CBE007B3C76 /* control */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		D65C3A342B2E1CBE007B3C76 /* RootHelper */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION) -j$(sysctl -n machdep.cpu.thread_count)";
+			buildConfigurationList = D65C3A3B2B2E1CBE007B3C76 /* Build configuration list for PBXLegacyTarget "RootHelper" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = /Users/hariz/SwiftTop/RootHelper;
+			dependencies = (
+			);
+			name = RootHelper;
+			passBuildSettingsInEnvironment = 1;
+			productName = RootHelper;
+		};
+/* End PBXLegacyTarget section */
+
+/* Begin PBXProject section */
+		D65C3A302B2E1CBE007B3C76 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+			};
+			buildConfigurationList = D65C3A332B2E1CBE007B3C76 /* Build configuration list for PBXProject "RootHelper" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D65C3A2F2B2E1CBE007B3C76;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D65C3A342B2E1CBE007B3C76 /* RootHelper */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		D65C3A312B2E1CBE007B3C76 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx10.6;
+			};
+			name = Debug;
+		};
+		D65C3A322B2E1CBE007B3C76 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				SDKROOT = macosx10.6;
+			};
+			name = Release;
+		};
+		D65C3A3C2B2E1CBE007B3C76 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					arm64,
+					arm64e,
+					x64_64,
+					x64_64h,
+				);
+				COPY_PHASE_STRIP = NO;
+				DEBUGGING_SYMBOLS = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = RootHelper;
+			};
+			name = Debug;
+		};
+		D65C3A3D2B2E1CBE007B3C76 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					arm64,
+					arm64e,
+					x64_64,
+					x64_64h,
+				);
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = RootHelper;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D65C3A332B2E1CBE007B3C76 /* Build configuration list for PBXProject "RootHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D65C3A312B2E1CBE007B3C76 /* Debug */,
+				D65C3A322B2E1CBE007B3C76 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D65C3A3B2B2E1CBE007B3C76 /* Build configuration list for PBXLegacyTarget "RootHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D65C3A3C2B2E1CBE007B3C76 /* Debug */,
+				D65C3A3D2B2E1CBE007B3C76 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D65C3A302B2E1CBE007B3C76 /* Project object */;
+}

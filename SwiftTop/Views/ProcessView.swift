@@ -10,6 +10,7 @@ import MarqueeText
 struct ProcessView: View {
     public var proc: NSDictionary
     @State private var openedSections: [Bool] = [true, false, false, false, false, false]
+    @State var loadedModules: [String] = []
     var body: some View {
         List {
             DisclosureGroup("Info", isExpanded: $openedSections[0]) {
@@ -34,7 +35,7 @@ struct ProcessView: View {
 
                 Button(role: .destructive, action: {
                     do {
-                        try TrollStoreRootHelper.kill(pid: Int(proc["pid"] as! String)!) // idk if i can typecast in one shot
+                        try kill_priviledged(Int32(proc["pid"] as! String)!) // idk if i can typecast in one shot
                     } catch {
                         UIApplication.shared.alert(body: error.localizedDescription)
                     }
@@ -71,16 +72,19 @@ struct ProcessView: View {
             }
             
         }
-//        .onAppear {
-//            openSection(0)
-//        }
+        .onAppear {
+            loadedModules = getLoadedModules(Int32(proc["pid"] as! String)!)
+        }
         .headerProminence(.increased)
         .listStyle(.plain)
         .navigationTitle(proc["proc_name"] as? String ?? "Unknown")
     }
     func openSection(_ index: Int) {
-        openedSections = [Bool](repeating: false, count: openedSections.count)
-        openedSections[index] = true
+        withAnimation(.snappy) {
+            openedSections = [Bool](repeating: false, count: openedSections.count)
+            openedSections = [Bool](repeating: false, count: openedSections.count)
+            openedSections[index] = true
+        }
     }
 }
 

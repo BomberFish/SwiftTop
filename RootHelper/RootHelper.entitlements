@@ -41,5 +41,7 @@
 	<true/>
 	<key>com.apple.mobile.deleted.AllowFreeSpace</key>
 	<true/>
+	<key>research.com.apple.license-to-operate</key>
+	<true/>
 </dict>
 </plist>

@@ -4,7 +4,23 @@
    <FileRef
       location = "container:SwiftTop.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:TSRootHelper/TSRootHelper.xcodeproj">
-   </FileRef>
+   <Group
+      location = "group:RootHelper"
+      name = "RootHelper">
+      <FileRef
+         location = "group:Makefile">
+      </FileRef>
+      <FileRef
+         location = "group:RootHelper.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:RootHelper.entitlements">
+      </FileRef>
+      <FileRef
+         location = "group:main.swift">
+      </FileRef>
+      <FileRef
+         location = "group:control">
+      </FileRef>
+   </Group>
 </Workspace>

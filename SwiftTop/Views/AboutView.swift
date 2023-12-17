@@ -34,6 +34,11 @@ struct AboutView: View {
                     .font(.subheadline)
                 List {
                     Section {
+                        Button("Attempt to restart SwiftTop as root", action: {
+                            let _ = spawnAsRoot(Bundle.main.path(forResource: "SwiftTop", ofType: nil)!, CommandLine.arguments)
+                        })
+                    }
+                    Section {
                         Picker("Process Title", selection: $titleDisplayMode) {
                             Text("Process Name").tag(0)
                             Text("Bundle ID").tag(1)

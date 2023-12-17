@@ -121,7 +121,16 @@ struct MainView: View {
                 ForEach(psFiltered, id: \.self) { proc in
                     NavigationLink(destination: ProcessView(proc: proc)) {
                         ProcessCell(proc: proc, titleDisplayMode: $titleDisplayMode)
-                            .contextMenu {
+                            .swipeActions {
+                                Button(role: .destructive, action: {
+                                    do {
+                                        try kill_priviledged(Int32(proc["pid"] as! String)!) // idk if i can typecast in one shot
+                                    } catch {
+                                        UIApplication.shared.alert(body: error.localizedDescription)
+                                    }
+                                }) {
+                                    Label("Kill process as root", systemImage: "xmark")
+                                }
                                 Button(role: .destructive, action: {
                                     do {
                                         try killProcess(Int32(proc["pid"] as! String)!) // idk if i can typecast in one shot
@@ -130,16 +139,6 @@ struct MainView: View {
                                     }
                                 }) {
                                     Label("Kill process", systemImage: "xmark")
-                                }
-
-                                Button(role: .destructive, action: {
-                                    do {
-                                        try TrollStoreRootHelper.kill(pid: Int(proc["pid"] as! String)!) // idk if i can typecast in one shot
-                                    } catch {
-                                        UIApplication.shared.alert(body: error.localizedDescription)
-                                    }
-                                }) {
-                                    Label("Kill process as root", systemImage: "xmark")
                                 }
                             }
                     }
@@ -163,7 +162,7 @@ struct MainView: View {
             ps = []
             refreshPS()
         }
-        .searchable(text: $searchText, prompt: titleDisplayMode == 1 ? "Search by executable name, bundle ID, or PID" : "Search by executable name or PID")
+        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: titleDisplayMode == 1 ? "Search by executable name, bundle ID, or PID" : "Search by executable name or PID")
     }
 
     @ViewBuilder

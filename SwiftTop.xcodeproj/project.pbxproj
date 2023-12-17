@@ -15,7 +15,6 @@
 		D66BC66C2B2B7A54003D8A8E /* Haptic++.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66BC6692B2B7A53003D8A8E /* Haptic++.swift */; };
 		D66BC66F2B2B85EF003D8A8E /* proc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66BC66E2B2B85EF003D8A8E /* proc.swift */; };
 		D66BC6C22B2B8AC0003D8A8E /* TSUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = D66BC6BC2B2B8AC0003D8A8E /* TSUtil.m */; };
-		D66BC6C42B2B8AC0003D8A8E /* TSSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66BC6BE2B2B8AC0003D8A8E /* TSSwift.swift */; };
 		D66BC6C62B2BBC9D003D8A8E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66BC6C52B2BBC9D003D8A8E /* Utils.swift */; };
 		D66BC6D02B2C8E22003D8A8E /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D66BC6CF2B2C8E22003D8A8E /* CoreServices.framework */; };
 		D66BC6D62B2C9218003D8A8E /* LSApplicationProxy+AltList.m in Sources */ = {isa = PBXBuildFile; fileRef = D66BC6D52B2C9218003D8A8E /* LSApplicationProxy+AltList.m */; };
@@ -54,14 +53,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D60E2EA72B2F3D0E007891F4 /* mach.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mach.h; sourceTree = "<group>"; };
 		D64D3D222B2C9F6C00EBEDCB /* UIColorAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorAdapter.swift; sourceTree = "<group>"; };
 		D65C3A2C2B2D2C96007B3C76 /* Collection+SafeIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+SafeIndex.swift"; sourceTree = "<group>"; };
+		D65C3A4A2B2E39BA007B3C76 /* bootstrap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bootstrap.h; sourceTree = "<group>"; };
+		D65C3A512B2E5957007B3C76 /* dyld64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dyld64.h; sourceTree = "<group>"; };
+		D65C3A522B2E596C007B3C76 /* proc_info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = proc_info.h; sourceTree = "<group>"; };
+		D65C3A532B2E596E007B3C76 /* libproc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libproc.h; sourceTree = "<group>"; };
+		D65C3A542B2E596F007B3C76 /* resource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = resource.h; sourceTree = "<group>"; };
+		D65C3A552B2E5970007B3C76 /* kern_control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kern_control.h; sourceTree = "<group>"; };
+		D65C3A562B2E5971007B3C76 /* sys_domain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sys_domain.h; sourceTree = "<group>"; };
 		D66BC6672B2B7A53003D8A8E /* String+LocalizedError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+LocalizedError.swift"; sourceTree = "<group>"; };
 		D66BC6682B2B7A53003D8A8E /* Alert++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alert++.swift"; sourceTree = "<group>"; };
 		D66BC6692B2B7A53003D8A8E /* Haptic++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Haptic++.swift"; sourceTree = "<group>"; };
 		D66BC66E2B2B85EF003D8A8E /* proc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = proc.swift; sourceTree = "<group>"; };
 		D66BC6BC2B2B8AC0003D8A8E /* TSUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSUtil.m; sourceTree = "<group>"; };
-		D66BC6BE2B2B8AC0003D8A8E /* TSSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSSwift.swift; sourceTree = "<group>"; };
 		D66BC6BF2B2B8AC0003D8A8E /* TSUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSUtil.h; sourceTree = "<group>"; };
 		D66BC6C52B2BBC9D003D8A8E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		D66BC6C82B2BD704003D8A8E /* RemoteLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemoteLog.h; sourceTree = "<group>"; };
@@ -124,20 +130,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D66BC6BB2B2B8AC0003D8A8E /* TSSwift */ = {
+		D65C3A2E2B2E1B00007B3C76 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		D65C3A4C2B2E58C8007B3C76 /* ObjC */ = {
 			isa = PBXGroup;
 			children = (
 				D66BC6BC2B2B8AC0003D8A8E /* TSUtil.m */,
-				D66BC6BE2B2B8AC0003D8A8E /* TSSwift.swift */,
 				D66BC6BF2B2B8AC0003D8A8E /* TSUtil.h */,
 			);
-			path = TSSwift;
+			path = ObjC;
+			sourceTree = "<group>";
+		};
+		D65C3A502B2E5942007B3C76 /* sys */ = {
+			isa = PBXGroup;
+			children = (
+				D65C3A512B2E5957007B3C76 /* dyld64.h */,
+				D65C3A552B2E5970007B3C76 /* kern_control.h */,
+				D65C3A532B2E596E007B3C76 /* libproc.h */,
+				D65C3A522B2E596C007B3C76 /* proc_info.h */,
+				D65C3A542B2E596F007B3C76 /* resource.h */,
+				D65C3A562B2E5971007B3C76 /* sys_domain.h */,
+			);
+			path = sys;
 			sourceTree = "<group>";
 		};
 		D66BC6D42B2C91FF003D8A8E /* Private APIs */ = {
 			isa = PBXGroup;
 			children = (
+				D65C3A502B2E5942007B3C76 /* sys */,
 				D66BC6D32B2C906F003D8A8E /* CoreServices.h */,
+				D60E2EA72B2F3D0E007891F4 /* mach.h */,
+				D65C3A4A2B2E39BA007B3C76 /* bootstrap.h */,
 				D66BC6D52B2C9218003D8A8E /* LSApplicationProxy+AltList.m */,
 				D66BC6D72B2C924B003D8A8E /* LSApplicationProxy+AltList.h */,
 			);
@@ -179,10 +207,12 @@
 			isa = PBXGroup;
 			children = (
 				D67D2A132B2B3FB400EA8D6E /* SwiftTopApp.swift */,
+				D65C3A4C2B2E58C8007B3C76 /* ObjC */,
+				D65C3A2E2B2E1B00007B3C76 /* Helpers */,
 				D66BC6E42B2C98DE003D8A8E /* Views */,
 				D66BC6C82B2BD704003D8A8E /* RemoteLog.h */,
+				D67D2A3D2B2B408000EA8D6E /* SwiftTop-Bridging-Header.h */,
 				D66BC6D42B2C91FF003D8A8E /* Private APIs */,
-				D66BC6BB2B2B8AC0003D8A8E /* TSSwift */,
 				D67D2A452B2B4F5A00EA8D6E /* Extensions */,
 				D66BC6C52B2BBC9D003D8A8E /* Utils.swift */,
 				D67D2A412B2B420E00EA8D6E /* SwiftTop.entitlements */,
@@ -191,7 +221,6 @@
 				D67D2A402B2B41B700EA8D6E /* proc.h */,
 				D67D2A172B2B3FB900EA8D6E /* Assets.xcassets */,
 				D67D2A192B2B3FB900EA8D6E /* Preview Content */,
-				D67D2A3D2B2B408000EA8D6E /* SwiftTop-Bridging-Header.h */,
 			);
 			path = SwiftTop;
 			sourceTree = "<group>";
@@ -385,7 +414,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D66BC6C42B2B8AC0003D8A8E /* TSSwift.swift in Sources */,
 				D66BC6C22B2B8AC0003D8A8E /* TSUtil.m in Sources */,
 				D66BC66C2B2B7A54003D8A8E /* Haptic++.swift in Sources */,
 				D67D2A4D2B2B528D00EA8D6E /* AboutView.swift in Sources */,

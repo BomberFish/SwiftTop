@@ -42,3 +42,8 @@ NSArray *sysctl_ps(void) {
 
     return [array copy];
 }
+
+NSArray *getLoadedModules(pid_t pid) {
+    // i have officially given up on this
+    return NULL;
+}

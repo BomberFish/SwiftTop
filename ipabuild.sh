@@ -48,7 +48,7 @@ echo "[*] Adding entitlements"
 ldid -S"$WORKING_LOCATION/$APPLICATION_NAME/$APPLICATION_NAME.entitlements" "$TARGET_APP/$APPLICATION_NAME"
 
 echo "[*] Building RootHelper..."
-cd $WORKING_LOCATION/TSRootHelper
+cd $WORKING_LOCATION/RootHelper
 if ! type "gmake" > /dev/null; then
     echo "[!] gmake not found, using macOS bundled make instead"
     make clean
@@ -65,7 +65,7 @@ else
     gmake -j"$(sysctl -n machdep.cpu.thread_count)" FINALPACKAGE=1
     fi
 fi
-cp "$WORKING_LOCATION/TSRootHelper/.theos/obj/debug/RootHelper" "$TARGET_APP/roothelper"
+cp "$WORKING_LOCATION/RootHelper/.theos/obj/debug/RootHelper" "$TARGET_APP/roothelper"
 cd -
 
 echo "[*] Packaging..."

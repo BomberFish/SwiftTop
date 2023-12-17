@@ -28,6 +28,10 @@
 	</array>
 	<key>com.apple.system-task-ports</key>
 	<true/>
+	<key>com.apple.private.debug_port</key>
+	<true/>
+	<key>research.com.apple.license-to-operate</key>
+	<true/>
 	<key>get-task-allow</key>
 	<true/>
 	<key>platform-application</key>

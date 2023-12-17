@@ -113,3 +113,39 @@ struct SBApp {
         }
     }
 }
+
+func kill_priviledged(_ pid: Int32, _ sig: Signal = .KILL) throws {
+    let ret = spawnAsRoot(helperPath, [pid, sig])
+    
+    if ret != 0 {
+        throw "Priviledged kill helper returned non-zero exit code \(ret)."
+    }
+}
+
+// TODO: IMPLEMENT THIS IN SWIFT!!!!!
+// can't implement this in swift rn
+//func getLoadedModules(_ pid: pid_t) -> [String] {
+//    defer { ptrace(PT_DETACH, pid, nil, 0) } // detach if attached
+//    // attach to pid
+//    if (ptrace(PT_ATTACH, pid, nil, 0) == -1) {
+//        os_log("[getLoadedModules] Failed to PT_ATTACH to \(pid). Is the process using PT_DENY_ATTACH?")
+//        return []
+//    }
+//    
+//    var task: mach_port_t = 0
+//    if (task_for_pid(mach_task_self_, pid, &task) == -1) {
+//        os_log("[getLoadedModules] Failed to get task for pid \(pid). Are we missing entitlements?")
+//        return []
+//    }
+//    
+//    
+//    return []
+//}
+
+public var helperPath: String = Bundle.main.url(forResource: "RootHelper", withExtension: nil)!.path
+public func spawnAsRoot(_ path: String, _ args: [Any]) -> Int {
+    let mod = chmod(path, 0755)
+    let own = chown(path, 0, 0)
+    os_log("[SpawnRoot] \(mod) \(own)")
+    return Int(spawnRoot(path, args, nil, nil))
+}
