@@ -73,7 +73,7 @@ struct ProcessView: View {
             
         }
         .onAppear {
-            loadedModules = getLoadedModules(Int32(proc["pid"] as! String)!)
+//            loadedModules = getLoadedModules(Int32(proc["pid"] as! String)!)
         }
         .headerProminence(.increased)
         .listStyle(.plain)

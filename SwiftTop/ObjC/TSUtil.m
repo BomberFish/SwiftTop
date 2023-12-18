@@ -4,7 +4,6 @@
 #import <spawn.h>
 #import <sys/sysctl.h>
 #import <mach-o/fixup-chains.h>
-int64_t sandbox_extension_consume(const char* token);
 
 @interface PSAppDataUsagePolicyCache : NSObject
 + (instancetype)sharedInstance;

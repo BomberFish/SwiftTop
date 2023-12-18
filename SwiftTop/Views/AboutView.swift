@@ -6,12 +6,14 @@ import CachedAsyncImage
 import SwiftUI
 
 struct AboutView: View {
+    @AppStorage("debugMode") var debugMode = false
     @AppStorage("autoRefresh") var autoRefresh = true
     @AppStorage("forceAutoRefreshBtn") var forceBtn = false
     @AppStorage("refreshInterval") var refreshInterval = 1.0
     /// 0: process name, 1: bundle id (when available), 2: app name (when available)
     @AppStorage("titleDisplayMode") var titleDisplayMode = 0
     @State var showInterval = UserDefaults.standard.bool(forKey: "autoRefresh")
+    @State var showDebug = UserDefaults.standard.bool(forKey: "debugMode")
     @Environment(\.dismiss) var dismiss
     @Environment(\.colorScheme) var cs
     var body: some View {
@@ -33,10 +35,18 @@ struct AboutView: View {
                 Text("Version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown")")
                     .font(.subheadline)
                 List {
-                    Section {
-                        Button("Attempt to restart SwiftTop as root", action: {
-                            let _ = spawnAsRoot(Bundle.main.path(forResource: "SwiftTop", ofType: nil)!, CommandLine.arguments)
-                        })
+                    if showDebug {
+                        Section(header: Label("Debug Settings", systemImage: "ladybug.fill")) {
+                            Button("Attempt to restart SwiftTop as root", action: {
+                                let ret = spawnAsRoot(Bundle.main.path(forResource: "SwiftTop", ofType: nil)!, CommandLine.arguments)
+                                if (ret != 0) {
+                                    UIApplication.shared.alert(body: "ret \(ret)")
+                                }
+                            })
+                            Button("Reset UserDefaults") {
+                                UserDefaults.standard.register(defaults: [:])
+                            }
+                        }
                     }
                     Section {
                         Picker("Process Title", selection: $titleDisplayMode) {
@@ -50,6 +60,14 @@ struct AboutView: View {
                         .onChange(of: autoRefresh) { new in
                             withAnimation(.snappy) {
                                 showInterval = new
+                            }
+                        }
+                        Toggle(isOn: $debugMode) {
+                            Label("Debug Mode", systemImage: "ladybug")
+                        }
+                        .onChange(of: debugMode) { new in
+                            withAnimation(.snappy) {
+                                showDebug = new
                             }
                         }
                         .tint(.accentColor)
@@ -73,7 +91,7 @@ struct AboutView: View {
                     Section {
                         LinkCell(title: "BomberFish", detail: "Author", link: "https://bomberfish.ca", imageURL: "https://bomberfish.ca/misc/pfps/bomberfish-picasso.png")
                         LinkCell(title: "Donato Fiore", detail: "Processes Syscall method", link: "https://github.com/donato-fiore", imageURL: "https://cdn.discordapp.com/avatars/396496265430695947/0904860dfb31d8b1f39f0e7dc4832b1e.webp?size=160")
-                    } header: { Label("Credits", systemImage: "heart").textCase(nil) }
+                    } header: { Label("Credits", systemImage: "heart.fill").textCase(nil) }
                 }
                 .listStyle(.inset)
             }
