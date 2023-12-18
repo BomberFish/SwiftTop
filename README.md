@@ -23,7 +23,6 @@ For iOS, you'll need an iPhone, iPad, or iPod Touch with TrollStore installed. D
 
 ## TODO
 
-- Privileged kill with spawn_root (just doesn't work right now')
 - More process details (threads, open files, open ports, mapped modules, etc)
 - Implement other features from CocoaTop
 - Test more on macOS
