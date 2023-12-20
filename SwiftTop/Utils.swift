@@ -13,7 +13,7 @@ func killProcess(_ pid: Int32, _ sig: Signal = .KILL) throws {
 
 func log(_ objs: Any...) { // stolen from cardculator :trol:
     let string = objs.map { String(describing: $0) }.joined(separator: "; ")
-    let args: [CVarArg] = [ "[Cardculator-\(Date().description)] \(string)" ]
+    let args: [CVarArg] = [ "[SwiftTop-\(Date().description)] \(string)" ]
     withVaList(args) { RLogv("%@", $0) }
 }
 

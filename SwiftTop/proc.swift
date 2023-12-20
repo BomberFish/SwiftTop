@@ -115,10 +115,13 @@ struct SBApp {
 }
 
 func kill_priviledged(_ pid: Int32, _ sig: Signal = .KILL) throws {
-    let ret = spawnAsRoot(helperPath, [pid, sig])
-    
-    if ret != 0 {
-        throw "Priviledged kill helper returned non-zero exit code \(ret)."
+    if let helperPath {
+        let ret = spawnAsRoot(helperPath, [pid, sig.rawValue])
+        if ret != 0 {
+            throw "Priviledged kill helper returned non-zero exit code \(ret)."
+        }
+    } else {
+        throw "Could not find kill helper in bundle."
     }
 }
 
@@ -164,7 +167,7 @@ func parseMachO(_ path: String) -> MachOFileType? {
         
         switch magic {
         case Data([]):
-            throw "File was empty" 
+            throw "File was empty"
         case Data([0xCE, 0xFA, 0xED, 0xFE]):
             return .thirtytwoLE
         case Data([0xCF, 0xFA, 0xED, 0xFE]):
@@ -204,7 +207,7 @@ func parseMachO(_ path: String) -> MachOFileType? {
 //    return []
 //}
 
-public var helperPath: String = Bundle.main.url(forResource: "RootHelper", withExtension: nil)!.path
+public let helperPath: String? = Bundle.main.url(forResource: "roothelper", withExtension: nil)?.path
 public func spawnAsRoot(_ path: String, _ args: [Any]) -> Int {
     let mod = chmod(path, 0755)
     let own = chown(path, 0, 0)
