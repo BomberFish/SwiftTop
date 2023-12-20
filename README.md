@@ -30,7 +30,7 @@ For iOS, you'll need an iPhone, iPad, or iPod Touch with TrollStore installed. D
 
 ## Building for iOS
 
-Run `./ipabuild.sh`. It's that easy. If you want a debug build, append the `--debug` argument.
+Run `./ipabuild.sh`. It's that easy. If you want a debug build, append the `--debug` argument. You will need at least Xcode 14 (for the main app), a recent version of ldid (for fakesigning), and Theos (for the roothelper) installed.
 
 ## Building for macOS
 
