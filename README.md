@@ -15,6 +15,7 @@ An elegant task manager written in SwiftUI. Works on iOS and macOS\*. Inspired b
 ## Tested on 
 
 - iPhone Xʀ, iOS 16.1 (20B82)
+- The same iPhone Xʀ, iOS 17.0 (21A329)
 - MacBookPro16,2, macOS 14.1 (23B74) **with SIP disabled and AMFI partially disabled**
 
 ## Installing
