@@ -122,6 +122,68 @@ func kill_priviledged(_ pid: Int32, _ sig: Signal = .KILL) throws {
     }
 }
 
+enum MachOFileType: String {
+    case thirtytwoLE = "Mach-O 32-bit Little Endian"
+    case sixtyFourLE = "Mach-O 64-bit Little Endian"
+    case thirtytwoBE = "Mach-O 32-bit Big Endian"
+    case sixtyFourBE = "Mach-O 64-bit Big Endian"
+    case fat = "Mach-O Universal Binary"
+}
+
+func parseMachO(_ file: URL) -> MachOFileType? {
+    do {
+        let data: Data = try .init(contentsOf: file)
+        let magic = data.subdata(in: 0..<4)
+        
+        switch magic {
+        case Data([]):
+            throw "File was empty"
+        case Data([0xCE, 0xFA, 0xED, 0xFE]):
+            return .thirtytwoLE
+        case Data([0xCF, 0xFA, 0xED, 0xFE]):
+            return .sixtyFourLE
+        case Data([0xFE, 0xED, 0xFA, 0xCE]):
+            return .thirtytwoBE
+        case Data([0xFE, 0xED, 0xFA, 0xCF]):
+            return .sixtyFourBE
+        case Data([0xCA, 0xFE, 0xBA, 0xBE]):
+            return .fat
+        default:
+            throw "File is not Mach-O"
+        }
+    } catch {
+        os_log("Error occurred checking: \(error). Silently failing.")
+        return nil
+    }
+}
+
+func parseMachO(_ path: String) -> MachOFileType? {
+    do {
+        let data: Data = try .init(contentsOf: .init(fileURLWithPath: path))
+        let magic = data.subdata(in: 0..<4)
+        
+        switch magic {
+        case Data([]):
+            throw "File was empty" 
+        case Data([0xCE, 0xFA, 0xED, 0xFE]):
+            return .thirtytwoLE
+        case Data([0xCF, 0xFA, 0xED, 0xFE]):
+            return .sixtyFourLE
+        case Data([0xFE, 0xED, 0xFA, 0xCE]):
+            return .thirtytwoBE
+        case Data([0xFE, 0xED, 0xFA, 0xCF]):
+            return .sixtyFourBE
+        case Data([0xCA, 0xFE, 0xBA, 0xBE]):
+            return .fat
+        default:
+            throw "File is not Mach-O"
+        }
+    } catch {
+        os_log("Error occurred checking: \(error). Silently failing.")
+        return nil
+    }
+}
+
 // TODO: IMPLEMENT THIS IN SWIFT!!!!!
 // can't implement this in swift rn
 //func getLoadedModules(_ pid: pid_t) -> [String] {

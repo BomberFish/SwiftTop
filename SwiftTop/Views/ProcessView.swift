@@ -14,9 +14,15 @@ struct ProcessView: View {
     var body: some View {
         List {
             DisclosureGroup("Info", isExpanded: $openedSections[0]) {
-                InfoCell(title: "Name", value: proc["proc_name"] as? String ?? "Unknown")
-                InfoCell(title: "Path", value: proc["proc_path"] as? String ?? "Unknown")
-                InfoCell(title: "PID", value: proc["pid"] as! String)
+                Section("Basic Info") {
+                    InfoCell(title: "Name", value: proc["proc_name"] as? String ?? "Unknown")
+                    InfoCell(title: "Path", value: proc["proc_path"] as? String ?? "Unknown")
+                    InfoCell(title: "PID", value: proc["pid"] as! String)
+                }
+                
+                Section("Advanced Info") {
+                    InfoCell(title: "Executable type", value: parseMachO(proc["pid"] as! String)?.rawValue ?? "Unknown")
+                }
             } .onTapGesture {
                 openSection(0)
             }
@@ -75,7 +81,7 @@ struct ProcessView: View {
         .onAppear {
 //            loadedModules = getLoadedModules(Int32(proc["pid"] as! String)!)
         }
-        .headerProminence(.increased)
+//        .headerProminence(.increased)
         .listStyle(.plain)
         .navigationTitle(proc["proc_name"] as? String ?? "Unknown")
     }
