@@ -212,5 +212,10 @@ public func spawnAsRoot(_ path: String, _ args: [Any]) -> Int {
     let mod = chmod(path, 0755)
     let own = chown(path, 0, 0)
     os_log("[SpawnRoot] \(mod) \(own)")
-    return Int(spawnRoot(path, args, nil, nil))
+    // FIXME: There has to be a better way to do this.......
+    var args_stringified: [String] = []
+    for arg in args {
+        args_stringified.append("\(arg)")
+    }
+    return Int(spawnRoot(path, args_stringified, nil, nil))
 }
