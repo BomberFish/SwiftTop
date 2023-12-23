@@ -14,6 +14,17 @@ else
     TARGET=Release
 fi
 
+if [[ $* == *--clean* ]]; then
+    echo "[*] Deleting previous packages..."
+    rm -rf "build/$APPLICATION_NAME.ipa"
+    rm -rf "build/$APPLICATION_NAME.tipa"
+fi
+
+if [[ $* == *--deepclean* ]]; then
+    echo "[*] Deleting build folder..."
+    rm -rf "build"
+fi
+
 echo "[*] Building $APPLICATION_NAME ($TARGET)..."
 
 if [ ! -d "build" ]; then
