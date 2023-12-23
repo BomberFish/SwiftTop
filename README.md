@@ -20,7 +20,7 @@ An elegant task manager written in SwiftUI. Works on iOS and macOS\*. Inspired b
 
 ## Installing
 
-For iOS, you'll need an iPhone, iPad, or iPod Touch with TrollStore installed. Download the latest `.tipa` from the [Releases section](https://github.com/BomberFish/SwiftTop/releases) (eta son) and install it with TrollStore.
+For iOS, you'll need an iPhone, iPad, or iPod Touch with TrollStore installed. Download the latest `.tipa` from the [Releases section](https://github.com/BomberFish/SwiftTop/releases) and install it with TrollStore.
 
 ## TODO
 
