@@ -171,7 +171,7 @@ struct MainView: View {
             if !autoRefresh || forceBtn {
                 Button(action: {
                     Task {
-                        Haptic.shared.selection()
+                        Haptic.shared.play(.medium)
                         ps = []
                         refreshPS()
                         Haptic.shared.play(.light)

@@ -99,6 +99,7 @@ struct AboutView: View {
                 #if !os(macOS)
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
+                        Haptic.shared.play(.light)
                         dismiss()
                     } label: {
                         CloseButton()

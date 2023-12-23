@@ -27,6 +27,7 @@ struct ProcessView: View {
             
             DisclosureGroup("Quick Actions", isExpanded: $openedSections[1]) {
                 Button(role: .destructive, action: {
+                    Haptic.shared.play(.heavy)
                     do {
                         try killProcess(Int32(proc["pid"] as! String)!) // idk if i can typecast in one shot
                     } catch {
@@ -38,6 +39,7 @@ struct ProcessView: View {
                 }
 
                 Button(role: .destructive, action: {
+                    Haptic.shared.play(.heavy)
                     do {
                         try kill_priviledged(Int32(proc["pid"] as! String)!) // idk if i can typecast in one shot
                     } catch {
