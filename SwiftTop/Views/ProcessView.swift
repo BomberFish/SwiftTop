@@ -9,7 +9,7 @@ import MarqueeText
 
 struct ProcessView: View {
     public var proc: NSDictionary
-    @State private var openedSections: [Bool] = [true, false, false, false, false, false]
+    @State private var openedSections: [Bool] = [true, true, false, false, false, false]
     @State var loadedModules: [String] = []
     var body: some View {
         List {
@@ -23,8 +23,6 @@ struct ProcessView: View {
                 Section("Advanced Info") {
                     InfoCell(title: "Executable type", value: parseMachO(proc["pid"] as! String)?.rawValue ?? "Unknown")
                 }
-            } .onTapGesture {
-                openSection(0)
             }
             
             DisclosureGroup("Quick Actions", isExpanded: $openedSections[1]) {
@@ -49,33 +47,31 @@ struct ProcessView: View {
                     Label("Kill process (root)", systemImage: "xmark")
                         .foregroundColor(Color(UIColor.systemRed))
                 }
-            } .onTapGesture {
-                openSection(1)
             }
             
-            DisclosureGroup("Threads", isExpanded: $openedSections[2]) {
-                
-            } .onTapGesture {
-                openSection(2)
-            }
-            
-            DisclosureGroup("Open files", isExpanded: $openedSections[3]) {
-                
-            } .onTapGesture {
-                openSection(3)
-            }
-            
-            DisclosureGroup("Open ports", isExpanded: $openedSections[4]) {
-                
-            } .onTapGesture {
-                openSection(4)
-            }
-            
-            DisclosureGroup("Mapped modules", isExpanded: $openedSections[5]) {
-                
-            } .onTapGesture {
-                openSection(5)
-            }
+//            DisclosureGroup("Threads", isExpanded: $openedSections[2]) {
+//                
+//            } .onTapGesture {
+//                openSection(2)
+//            }
+//            
+//            DisclosureGroup("Open files", isExpanded: $openedSections[3]) {
+//                
+//            } .onTapGesture {
+//                openSection(3)
+//            }
+//            
+//            DisclosureGroup("Open ports", isExpanded: $openedSections[4]) {
+//                
+//            } .onTapGesture {
+//                openSection(4)
+//            }
+//            
+//            DisclosureGroup("Mapped modules", isExpanded: $openedSections[5]) {
+//                
+//            } .onTapGesture {
+//                openSection(5)
+//            }
             
         }
         .onAppear {

@@ -17,7 +17,6 @@
 		D66BC6C22B2B8AC0003D8A8E /* TSUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = D66BC6BC2B2B8AC0003D8A8E /* TSUtil.m */; };
 		D66BC6C62B2BBC9D003D8A8E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66BC6C52B2BBC9D003D8A8E /* Utils.swift */; };
 		D66BC6D02B2C8E22003D8A8E /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D66BC6CF2B2C8E22003D8A8E /* CoreServices.framework */; };
-		D66BC6D62B2C9218003D8A8E /* LSApplicationProxy+AltList.m in Sources */ = {isa = PBXBuildFile; fileRef = D66BC6D52B2C9218003D8A8E /* LSApplicationProxy+AltList.m */; };
 		D67D2A142B2B3FB400EA8D6E /* SwiftTopApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67D2A132B2B3FB400EA8D6E /* SwiftTopApp.swift */; };
 		D67D2A162B2B3FB400EA8D6E /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67D2A152B2B3FB400EA8D6E /* MainView.swift */; };
 		D67D2A182B2B3FB900EA8D6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D67D2A172B2B3FB900EA8D6E /* Assets.xcassets */; };
@@ -74,8 +73,6 @@
 		D66BC6CF2B2C8E22003D8A8E /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/CoreServices.framework; sourceTree = DEVELOPER_DIR; };
 		D66BC6D12B2C8E26003D8A8E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/iOSSupport/System/Library/Frameworks/MobileCoreServices.framework; sourceTree = DEVELOPER_DIR; };
 		D66BC6D32B2C906F003D8A8E /* CoreServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreServices.h; sourceTree = "<group>"; };
-		D66BC6D52B2C9218003D8A8E /* LSApplicationProxy+AltList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "LSApplicationProxy+AltList.m"; sourceTree = "<group>"; };
-		D66BC6D72B2C924B003D8A8E /* LSApplicationProxy+AltList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LSApplicationProxy+AltList.h"; sourceTree = "<group>"; };
 		D67D2A102B2B3FB400EA8D6E /* SwiftTop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftTop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D67D2A132B2B3FB400EA8D6E /* SwiftTopApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftTopApp.swift; sourceTree = "<group>"; };
 		D67D2A152B2B3FB400EA8D6E /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -166,8 +163,6 @@
 				D66BC6D32B2C906F003D8A8E /* CoreServices.h */,
 				D60E2EA72B2F3D0E007891F4 /* mach.h */,
 				D65C3A4A2B2E39BA007B3C76 /* bootstrap.h */,
-				D66BC6D52B2C9218003D8A8E /* LSApplicationProxy+AltList.m */,
-				D66BC6D72B2C924B003D8A8E /* LSApplicationProxy+AltList.h */,
 			);
 			path = "Private APIs";
 			sourceTree = "<group>";
@@ -420,7 +415,6 @@
 				D66BC66A2B2B7A54003D8A8E /* String+LocalizedError.swift in Sources */,
 				D67D2A162B2B3FB400EA8D6E /* MainView.swift in Sources */,
 				D67D2A3F2B2B408100EA8D6E /* proc.m in Sources */,
-				D66BC6D62B2C9218003D8A8E /* LSApplicationProxy+AltList.m in Sources */,
 				D66BC66F2B2B85EF003D8A8E /* proc.swift in Sources */,
 				D66BC66B2B2B7A54003D8A8E /* Alert++.swift in Sources */,
 				D65C3A2D2B2D2C96007B3C76 /* Collection+SafeIndex.swift in Sources */,
@@ -589,6 +583,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -631,6 +626,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
