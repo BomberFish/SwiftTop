@@ -1,15 +1,6 @@
 {
   "pins" : [
     {
-      "identity" : "marqueetext",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/BomberFish/MarqueeText",
-      "state" : {
-        "branch" : "master",
-        "revision" : "a7f841547cfa50cfb3b7d50a059c1aee6dd75138"
-      }
-    },
-    {
       "identity" : "swiftui-cached-async-image",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/lorenzofiamingo/swiftui-cached-async-image",

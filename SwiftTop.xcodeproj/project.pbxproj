@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		D64D3D232B2C9F6C00EBEDCB /* UIColorAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64D3D222B2C9F6C00EBEDCB /* UIColorAdapter.swift */; };
-		D64D3D262B2C9FEC00EBEDCB /* MarqueeText in Frameworks */ = {isa = PBXBuildFile; productRef = D64D3D252B2C9FEC00EBEDCB /* MarqueeText */; };
 		D65C3A2D2B2D2C96007B3C76 /* Collection+SafeIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65C3A2C2B2D2C96007B3C76 /* Collection+SafeIndex.swift */; };
 		D66BC66A2B2B7A54003D8A8E /* String+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66BC6672B2B7A53003D8A8E /* String+LocalizedError.swift */; };
 		D66BC66B2B2B7A54003D8A8E /* Alert++.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66BC6682B2B7A53003D8A8E /* Alert++.swift */; };
@@ -100,7 +99,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D64D3D262B2C9FEC00EBEDCB /* MarqueeText in Frameworks */,
 				D67D2A582B2B679300EA8D6E /* CoreFoundation.framework in Frameworks */,
 				D67D2A5A2B2B67A300EA8D6E /* libswiftCoreFoundation.tbd in Frameworks */,
 				D67D2A502B2B53A300EA8D6E /* CachedAsyncImage in Frameworks */,
@@ -288,7 +286,6 @@
 			name = SwiftTop;
 			packageProductDependencies = (
 				D67D2A4F2B2B53A300EA8D6E /* CachedAsyncImage */,
-				D64D3D252B2C9FEC00EBEDCB /* MarqueeText */,
 			);
 			productName = SwiftTop;
 			productReference = D67D2A102B2B3FB400EA8D6E /* SwiftTop.app */;
@@ -365,7 +362,6 @@
 			mainGroup = D67D2A072B2B3FB400EA8D6E;
 			packageReferences = (
 				D67D2A4E2B2B53A300EA8D6E /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
-				D64D3D242B2C9FEC00EBEDCB /* XCRemoteSwiftPackageReference "MarqueeText" */,
 			);
 			productRefGroup = D67D2A112B2B3FB400EA8D6E /* Products */;
 			projectDirPath = "";
@@ -778,14 +774,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D64D3D242B2C9FEC00EBEDCB /* XCRemoteSwiftPackageReference "MarqueeText" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/BomberFish/MarqueeText";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 		D67D2A4E2B2B53A300EA8D6E /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/lorenzofiamingo/swiftui-cached-async-image";
@@ -797,11 +785,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D64D3D252B2C9FEC00EBEDCB /* MarqueeText */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D64D3D242B2C9FEC00EBEDCB /* XCRemoteSwiftPackageReference "MarqueeText" */;
-			productName = MarqueeText;
-		};
 		D67D2A4F2B2B53A300EA8D6E /* CachedAsyncImage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D67D2A4E2B2B53A300EA8D6E /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
