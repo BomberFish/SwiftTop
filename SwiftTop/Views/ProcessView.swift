@@ -21,7 +21,7 @@ struct ProcessView: View {
                 }
                 
                 Section("Advanced Info") {
-                    InfoCell(title: "Executable type", value: parseMachO(proc["pid"] as! String)?.rawValue ?? "Unknown")
+                    InfoCell(title: "Executable type", value: parseMachO(proc["proc_path"] as! String)?.rawValue ?? "Unknown")
                 }
             }
             
