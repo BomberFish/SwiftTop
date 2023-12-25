@@ -583,7 +583,7 @@
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = Preview;
+				CURRENT_PROJECT_VERSION = "Public Preview 1";
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftTop/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
@@ -627,7 +627,7 @@
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = Preview;
+				CURRENT_PROJECT_VERSION = "Public Preview 1";
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftTop/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
