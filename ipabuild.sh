@@ -76,7 +76,13 @@ else
     gmake -j"$(sysctl -n machdep.cpu.thread_count)" FINALPACKAGE=1
     fi
 fi
-cp "$WORKING_LOCATION/RootHelper/.theos/obj/debug/RootHelper" "$TARGET_APP/roothelper"
+
+if [[ $* == *--debug* ]]; then
+    cp "$WORKING_LOCATION/RootHelper/.theos/obj/debug/RootHelper" "$TARGET_APP/roothelper"
+else
+    cp "$WORKING_LOCATION/RootHelper/.theos/obj/RootHelper" "$TARGET_APP/roothelper"
+fi
+
 cd -
 
 echo "[*] Packaging..."
