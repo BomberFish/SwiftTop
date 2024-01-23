@@ -1,4 +1,5 @@
 @import Foundation;
+NS_ASSUME_NONNULL_BEGIN // :trolley:
 extern NSString *LSInstallTypeKey;
 
 @interface LSBundleProxy
@@ -67,9 +68,10 @@ extern NSString *LSInstallTypeKey;
 @property (nonatomic,readonly) NSDictionary * pluginKitDictionary;
 + (instancetype)pluginKitProxyForIdentifier:(NSString*)arg1;
 @end
-
+NS_ASSUME_NONNULL_END
+NS_ASSUME_NONNULL_BEGIN
 @interface MCMContainer : NSObject
-+ (id)containerWithIdentifier:(id)arg1 createIfNecessary:(BOOL)arg2 existed:(BOOL*)arg3 error:(id*)arg4;
++ (id)containerWithIdentifier:(id)arg1 createIfNecessary:(BOOL)arg2 existed:(BOOL*)arg3 error:(id _Nullable *_Nullable)arg4;
 @property (nonatomic,readonly) NSURL * url;
 @end
 
@@ -90,3 +92,4 @@ extern NSString *LSInstallTypeKey;
 
 @interface MCMSharedDataContainer : MCMContainer
 @end
+NS_ASSUME_NONNULL_END

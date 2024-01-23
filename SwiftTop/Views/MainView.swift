@@ -122,14 +122,14 @@ struct MainView: View {
                     NavigationLink(destination: ProcessView(proc: proc)) {
                         ProcessCell(proc: proc, titleDisplayMode: $titleDisplayMode)
                             .swipeActions {
-                                Button(role: .destructive, action: {
+                                Button(role: .cancel, action: {
                                     do {
                                         try kill_priviledged(Int32(proc["pid"] as! String)!) // idk if i can typecast in one shot
                                     } catch {
                                         UIApplication.shared.alert(body: error.localizedDescription)
                                     }
                                 }) {
-                                    Label("Kill process as root", systemImage: "xmark")
+                                    Text("Kill as Root")
                                 }
                                 Button(role: .destructive, action: {
                                     do {
@@ -138,7 +138,7 @@ struct MainView: View {
                                         UIApplication.shared.alert(body: error.localizedDescription)
                                     }
                                 }) {
-                                    Label("Kill process", systemImage: "xmark")
+                                    Text("Kill")
                                 }
                             }
                     }
@@ -237,6 +237,12 @@ struct MainView: View {
                     refreshPS()
                 }
             })
+            .onAppear {
+                timer = Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()
+            }
+            .onDisappear {
+                timer.upstream.connect().cancel()
+            }
         }
         #if !os(macOS)
         .navigationViewStyle(StackNavigationViewStyle())
@@ -316,9 +322,10 @@ struct ProcessCell: View {
 //                }
             }
             
-            if let app {
+            if app != nil {
                 if let iconImage {
                     Image(uiImage: iconImage)
+                        .interpolation(.none)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 32, height: 32)

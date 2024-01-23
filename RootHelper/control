@@ -2,9 +2,9 @@ Package: ca.bomberfish.SwiftTop.RootHelper
 Name: RootHelper
 Version: 0.0.1
 Architecture: iphoneos-arm
-Description: An awesome tool of some sort!!
+Description: SwiftTop Priviledged Helper
 Maintainer: BomberFish Industries
-Author: BomberFish Industries
+Author: BomberFish
 Section: System
 Tag: role::hacker
 Depends: firmware (>= 12.2) | ${LIBSWIFT}

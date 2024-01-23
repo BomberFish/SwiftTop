@@ -17,6 +17,12 @@
          location = "group:RootHelper.entitlements">
       </FileRef>
       <FileRef
+         location = "group:Makefile">
+      </FileRef>
+      <FileRef
+         location = "group:RootHelper-Bridging-Header.h">
+      </FileRef>
+      <FileRef
          location = "group:main.swift">
       </FileRef>
       <FileRef

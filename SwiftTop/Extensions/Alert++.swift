@@ -118,7 +118,7 @@ extension UIApplication {
     }
     
     func present(alert: UIAlertController) {
-        if var topController = windows[0].rootViewController {
+        if var topController = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows[0].rootViewController {
             while let presentedViewController = topController.presentedViewController {
                 topController = presentedViewController
             }

@@ -2,16 +2,20 @@
 // AboutView.swift – SwiftTop
 // created on 2023-12-14
 
-import CachedAsyncImage
+//import CachedAsyncImage
 import SwiftUI
+//import LocalConsole
 
 struct AboutView: View {
+    @AppStorage("showConsole") var showConsole = false
+    
     @AppStorage("debugMode") var debugMode = false
     @AppStorage("autoRefresh") var autoRefresh = true
     @AppStorage("forceAutoRefreshBtn") var forceBtn = false
     @AppStorage("refreshInterval") var refreshInterval = 1.0
     /// 0: process name, 1: bundle id (when available), 2: app name (when available)
     @AppStorage("titleDisplayMode") var titleDisplayMode = 0
+    @AppStorage("iHaveTFP0") var iHaveTFP0 = false
     @State var showInterval = UserDefaults.standard.bool(forKey: "autoRefresh")
     @State var showDebug = UserDefaults.standard.bool(forKey: "debugMode")
     @Environment(\.dismiss) var dismiss
@@ -37,6 +41,9 @@ struct AboutView: View {
                 List {
                     if showDebug {
                         Section(header: Label("Debug Settings", systemImage: "ladybug.fill")) {
+                            NavigationLink("Logs") {
+                                LogView()
+                            }
                             Button("Attempt to restart SwiftTop as root", action: {
                                 let ret = spawnAsRoot(Bundle.main.path(forResource: "SwiftTop", ofType: nil)!, CommandLine.arguments)
                                 if (ret != 0) {
@@ -46,6 +53,13 @@ struct AboutView: View {
                             Button("Reset UserDefaults") {
                                 UserDefaults.standard.register(defaults: [:])
                             }
+                            Toggle("Show LocalConsole", isOn: $showConsole)
+                                .onChange(of: showConsole) {_ in
+                                    LCManager.shared.isVisible = showConsole
+                                }
+                                .tint(.accentColor)
+                            Toggle("I CAN HAZ TFP0", isOn: $iHaveTFP0)
+                                .tint(.accentColor)
                         }
                     }
                     Section {
@@ -57,6 +71,7 @@ struct AboutView: View {
                         Toggle(isOn: $autoRefresh) {
                             Label("Auto-Refresh", systemImage: "arrow.clockwise")
                         }
+                        .tint(.accentColor)
                         .onChange(of: autoRefresh) { new in
                             withAnimation(.snappy) {
                                 showInterval = new
@@ -65,12 +80,12 @@ struct AboutView: View {
                         Toggle(isOn: $debugMode) {
                             Label("Debug Mode", systemImage: "ladybug")
                         }
+                        .tint(.accentColor)
                         .onChange(of: debugMode) { new in
                             withAnimation(.snappy) {
                                 showDebug = new
                             }
                         }
-                        .tint(.accentColor)
                         if showInterval {
                             HStack {
                                 Image(systemName: "timer")
@@ -90,7 +105,7 @@ struct AboutView: View {
                     } header: { Label("Settings", systemImage: "gear").textCase(nil) }
                     Section {
                         LinkCell(title: "BomberFish", detail: "Author", link: "https://bomberfish.ca", imageURL: "https://bomberfish.ca/misc/pfps/bomberfish-picasso.png")
-                        LinkCell(title: "Donato Fiore", detail: "Processes Syscall method", link: "https://github.com/donato-fiore", imageURL: "https://cdn.discordapp.com/avatars/396496265430695947/0904860dfb31d8b1f39f0e7dc4832b1e.webp?size=160")
+                        LinkCell(title: "Donato Fiore", detail: "Processes Syscall method, help with bugfixes", link: "https://github.com/donato-fiore", imageURL: "https://cdn.discordapp.com/avatars/396496265430695947/0904860dfb31d8b1f39f0e7dc4832b1e.webp?size=160")
                     } header: { Label("Credits", systemImage: "heart.fill").textCase(nil) }
                 }
                 .listStyle(.inset)
@@ -155,6 +170,62 @@ struct LinkCell: View {
                 }
             }
         }
+    }
+}
+
+enum LogType {
+    case regular,error
+}
+
+class Log: ObservableObject {
+    static let shared = Log()
+    @Published var items: [LogItem] = []
+}
+
+struct LogItem: Identifiable, Equatable {
+    var id = UUID()
+    var type: LogType
+    var message: String
+}
+
+struct LogView: View {
+    @ObservedObject var log = Log.shared
+    var body: some View {
+        ScrollViewReader { sc in
+            ScrollView {
+                LazyVStack(alignment: .leading) {
+                    ForEach(log.items) {item in
+                        Text(item.message)
+                            .multilineTextAlignment(.leading)
+                            .font(.system(size: 15.0, design: .monospaced).weight(.light))
+                            .foregroundColor(item.type == .error ? .init(UIColor.systemRed): .init(UIColor.label))
+                    }
+                }
+                .onChange(of: log.items) {_ in
+                    withAnimation {
+                        sc.scrollTo(log.items.last!.id)
+                    }
+                }
+                .onAppear {
+                    if log.items.count > 1 {
+                        withAnimation {
+                            sc.scrollTo(log.items.last!.id)
+                        }
+                    }
+                }
+            }
+            .padding(.horizontal)
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button(action: {
+                    share([log.items.map {$0.message}.joined(separator: "\n")])
+                }, label: {
+                    Image(systemName: "square.and.arrow.up")
+                })
+            }
+        }
+        .navigationTitle("Debug Logs")
     }
 }
 

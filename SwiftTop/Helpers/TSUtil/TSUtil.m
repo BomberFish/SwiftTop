@@ -5,6 +5,10 @@
 #import <sys/sysctl.h>
 #import <mach-o/fixup-chains.h>
 
+NSString* rootHelperPath(void) {
+    return [[NSBundle mainBundle].bundlePath stringByAppendingPathComponent:@"trollstorehelper"];
+}
+
 @interface PSAppDataUsagePolicyCache : NSObject
 + (instancetype)sharedInstance;
 - (void)setUsagePoliciesForBundle:(NSString*)bundleId cellular:(BOOL)cellular wifi:(BOOL)wifi;
@@ -173,4 +177,64 @@ int spawnRoot(NSString* path, NSArray* args, NSString** stdOut, NSString** stdEr
     }
 
     return WEXITSTATUS(status);
+}
+
+/// NOTE: Returns own PID on failure.
+pid_t spawnRootButReturnPID(NSString* path, NSArray* args, NSString** stdOut, NSString** stdErr)
+{
+    NSMutableArray* argsM = args.mutableCopy ?: [NSMutableArray new];
+    [argsM insertObject:path atIndex:0];
+    
+    NSUInteger argCount = [argsM count];
+    char **argsC = (char **)malloc((argCount + 1) * sizeof(char*));
+
+    for (NSUInteger i = 0; i < argCount; i++)
+    {
+        argsC[i] = strdup([[argsM objectAtIndex:i] UTF8String]);
+    }
+    argsC[argCount] = NULL;
+
+    posix_spawnattr_t attr;
+    posix_spawnattr_init(&attr);
+
+    posix_spawnattr_set_persona_np(&attr, 99, POSIX_SPAWN_PERSONA_FLAGS_OVERRIDE);
+    posix_spawnattr_set_persona_uid_np(&attr, 0);
+    posix_spawnattr_set_persona_gid_np(&attr, 0);
+
+    posix_spawn_file_actions_t action;
+    posix_spawn_file_actions_init(&action);
+
+    int outErr[2];
+    if(stdErr)
+    {
+        pipe(outErr);
+        posix_spawn_file_actions_adddup2(&action, outErr[1], STDERR_FILENO);
+        posix_spawn_file_actions_addclose(&action, outErr[0]);
+    }
+
+    int out[2];
+    if(stdOut)
+    {
+        pipe(out);
+        posix_spawn_file_actions_adddup2(&action, out[1], STDOUT_FILENO);
+        posix_spawn_file_actions_addclose(&action, out[0]);
+    }
+    
+    pid_t task_pid;
+//    int status = -200;
+    int spawnError = posix_spawn(&task_pid, [path UTF8String], &action, &attr, (char* const*)argsC, NULL);
+    posix_spawnattr_destroy(&attr);
+    for (NSUInteger i = 0; i < argCount; i++)
+    {
+        free(argsC[i]);
+    }
+    free(argsC);
+    
+    if(spawnError != 0)
+    {
+        NSLog(@"posix_spawn error %d\n", spawnError);
+        return getpid();
+    }
+    
+    return task_pid;
 }

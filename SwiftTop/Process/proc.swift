@@ -24,47 +24,58 @@ func getProcesses() throws -> [NSDictionary] {
     return procs
 }
 
+/// Get all loaded dylibs for a given PID.
+/// Returns an array of NSDictionary: [imageName: NSString, imagePath: NSString, loadAddr: mach_header].
+/// In Swift, treat imageName and imagePath as `String` types or equivalent. loadAddr should be typecast to `mach_header` and nothing else. See `<mach-o/loader.h>` for more info.
+func getDylibs(_ pid: Int32) throws -> [NSDictionary] {
+    if pid == 0 && !UserDefaults.standard.bool(forKey: "iHaveTFP0") {
+        throw "I cannot get task_for_pid for the kernel. If you are jailbroken with a tfp0 patch (i.e. palera1n), please enable the \"I CAN HAZ TFP0\" debug setting."
+    }
+    guard let procs = getDylibsForPID(pid) as? [NSDictionary] else { throw "Unable to get loaded dylibs" }
+    return procs
+}
+
 // FIXME: Most likely broken on macOS, needs testing!
 /// What did you think this would do?
 func getAppInfoFromExecutablePath(_ path: String) -> SBApp? {
-    os_log("[AppInfo] Getting info for \(path)")
+    print("[AppInfo] Getting info for \(path)")
     let fm: FileManager = .default
     var sbapp: SBApp = .init(bundleIdentifier: "", name: "", version: "", bundleURL: URL(fileURLWithPath: ""), plistIconName: nil, pngIconPaths: [], hiddenFromSpringboard: false)
     
     // MARK: - Check if executable is in a valid application bundle
 
-    /*guard*/ let url = URL(fileURLWithPath: path) /*else { os_log("[AppInfo] \(path) was not a valid URL. Goodbye."); return nil }*/
+    /*guard*/ let url = URL(fileURLWithPath: path) /*else { print("[AppInfo] \(path) was not a valid URL. Goodbye."); return nil }*/
     let dir = url.deletingLastPathComponent()
     let infoPlistPath = dir.appendingPathComponent("Info.plist")
-//    guard let contents = try? fm.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil) else { os_log("[AppInfo] Error getting contents of parent folder for \(dir.lastPathComponent). Goodbye."); return nil }
-//    
-//    if !contents.contains(where: { $0.lastPathComponent == "Info.plist" }) { os_log("[AppInfo] Info.plist not found for \(dir.lastPathComponent). Goodbye."); return nil }
+//    guard let contents = try? fm.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil) else { print("[AppInfo] Error getting contents of parent folder for \(dir.lastPathComponent). Goodbye."); return nil }
+//
+//    if !contents.contains(where: { $0.lastPathComponent == "Info.plist" }) { print("[AppInfo] Info.plist not found for \(dir.lastPathComponent). Goodbye."); return nil }
     if !fm.fileExists(atPath: infoPlistPath.path) {
-        os_log("[AppInfo] Warning: file \(infoPlistPath.path) does not exist. This could end badly.")
+        print("[AppInfo] Warning: file \(infoPlistPath.path) does not exist. This could end badly.")
     } else {
-        os_log("[AppInfo] Found Info.plist for \(url.lastPathComponent) at \(infoPlistPath.path).")
+        print("[AppInfo] Found Info.plist for \(url.lastPathComponent) at \(infoPlistPath.path).")
     }
     
-    guard let contentsOfInfoPlist = NSDictionary(contentsOf: infoPlistPath) as? [String: AnyObject] else { os_log("[AppInfo] Error getting contents of Info.plist for \(url.lastPathComponent). Goodbye."); return nil }
-    os_log("[AppInfo] Info.plist found for \(url.lastPathComponent)")
-    guard let executableFile = contentsOfInfoPlist["CFBundleExecutable"] as? String else { os_log("[AppInfo] CFBundleExecutable not found for \(url.lastPathComponent). Goodbye."); return nil }
+    guard let contentsOfInfoPlist = NSDictionary(contentsOf: infoPlistPath) as? [String: AnyObject] else { print("[AppInfo] Error getting contents of Info.plist for \(url.lastPathComponent). Goodbye."); return nil }
+    print("[AppInfo] Info.plist found for \(url.lastPathComponent)")
+    guard contentsOfInfoPlist["CFBundleExecutable"] is String else { print("[AppInfo] CFBundleExecutable not found for \(url.lastPathComponent). Goodbye."); return nil }
     
     // MARK: - Get application info
 
-    os_log("[AppInfo] Getting application info of \(url.lastPathComponent).")
+    print("[AppInfo] Getting application info of \(url.lastPathComponent).")
     sbapp.bundleIdentifier = contentsOfInfoPlist["CFBundleIdentifier"] as! String
-    os_log("[AppInfo] Got bundle id \(sbapp.bundleIdentifier) for \(url.lastPathComponent).")
+    print("[AppInfo] Got bundle id \(sbapp.bundleIdentifier) for \(url.lastPathComponent).")
     sbapp.bundleURL = dir
-    os_log("[AppInfo] Got bundle url \(sbapp.bundleURL) for \(url.lastPathComponent).")
+    print("[AppInfo] Got bundle url \(sbapp.bundleURL) for \(url.lastPathComponent).")
     sbapp.name = contentsOfInfoPlist["CFBundleDisplayName"] as? String ?? contentsOfInfoPlist["CFBundleName"] as? String ?? "Unknown"
-    os_log("[AppInfo] Got name \(sbapp.name) for \(url.lastPathComponent).")
+    print("[AppInfo] Got name \(sbapp.name) for \(url.lastPathComponent).")
     sbapp.version = contentsOfInfoPlist["CFBundleShortVersionString"] as? String ?? "1.0"
-    os_log("[AppInfo] Got bundle version \(sbapp.version) for \(url.lastPathComponent).")
+    print("[AppInfo] Got bundle version \(sbapp.version) for \(url.lastPathComponent).")
     if let CFBundleIcons = contentsOfInfoPlist["CFBundleIcons"] {
         if let CFBundlePrimaryIcon = CFBundleIcons["CFBundlePrimaryIcon"] as? [String: AnyObject] {
             if let CFBundleIconFiles = CFBundlePrimaryIcon["CFBundleIconFiles"] as? [String] {
                 sbapp.pngIconPaths += CFBundleIconFiles.map { $0 + "@2x.png" }
-                os_log("[AppInfo] Got icon \(sbapp.pngIconPaths.count > 1 ? "files" : "file") \(sbapp.pngIconPaths.joined(separator: ", ")) for \(sbapp.name).")
+                print("[AppInfo] Got icon \(sbapp.pngIconPaths.count > 1 ? "files" : "file") \(sbapp.pngIconPaths.joined(separator: ", ")) for \(sbapp.name).")
             }
 //            if let CFBundleIconName = CFBundlePrimaryIcon["CFBundleIconName"] as? String {
 //                sbapp.plistIconName = CFBundleIconName
@@ -82,7 +93,7 @@ func getAppInfoFromExecutablePath(_ path: String) -> SBApp? {
         sbapp.hiddenFromSpringboard = true
     }
     
-    os_log("[AppInfo] We are done. Good night. (\(sbapp.name))")
+    print("[AppInfo] We are done. Good night. (\(sbapp.name))")
     return sbapp
 }
 
@@ -116,7 +127,7 @@ struct SBApp {
 
 func kill_priviledged(_ pid: Int32, _ sig: Signal = .KILL) throws {
     if let helperPath {
-        let ret = spawnAsRoot(helperPath, [pid, sig.rawValue])
+        let ret = spawnAsRoot(helperPath, ["kill", pid, sig.rawValue])
         if ret != 0 {
             throw "Priviledged kill helper returned non-zero exit code \(ret)."
         }
@@ -124,6 +135,8 @@ func kill_priviledged(_ pid: Int32, _ sig: Signal = .KILL) throws {
         throw "Could not find kill helper in bundle."
     }
 }
+
+// MARK: - Stolen from SpawnPoint (failed project :nfr:)
 
 enum MachOFileType: String {
     case thirtytwoLE = "Mach-O 32-bit Little Endian"
@@ -155,7 +168,7 @@ func parseMachO(_ file: URL) -> MachOFileType? {
             throw "File is not Mach-O"
         }
     } catch {
-        os_log("Error occurred checking: \(error). Silently failing.")
+        print("Error occurred checking: \(error). Silently failing.")
         return nil
     }
 }
@@ -182,40 +195,48 @@ func parseMachO(_ path: String) -> MachOFileType? {
             throw "File is not Mach-O"
         }
     } catch {
-        os_log("Error occurred checking: \(error). Silently failing.")
+        print("Error occurred checking: \(error). Silently failing.")
         return nil
     }
 }
 
-// TODO: IMPLEMENT THIS IN SWIFT!!!!!
-// can't implement this in swift rn
-//func getLoadedModules(_ pid: pid_t) -> [String] {
-//    defer { ptrace(PT_DETACH, pid, nil, 0) } // detach if attached
-//    // attach to pid
-//    if (ptrace(PT_ATTACH, pid, nil, 0) == -1) {
-//        os_log("[getLoadedModules] Failed to PT_ATTACH to \(pid). Is the process using PT_DENY_ATTACH?")
-//        return []
-//    }
-//    
-//    var task: mach_port_t = 0
-//    if (task_for_pid(mach_task_self_, pid, &task) == -1) {
-//        os_log("[getLoadedModules] Failed to get task for pid \(pid). Are we missing entitlements?")
-//        return []
-//    }
-//    
-//    
-//    return []
-//}
-
 public let helperPath: String? = Bundle.main.url(forResource: "roothelper", withExtension: nil)?.path
-public func spawnAsRoot(_ path: String, _ args: [Any]) -> Int {
+public func spawnAsRoot(_ path: String, _ args: [Any], silent: Bool = false) -> Int {
+    var stdout: NSString?
+    var stderr: NSString?
     let mod = chmod(path, 0755)
     let own = chown(path, 0, 0)
-    os_log("[SpawnRoot] \(mod) \(own)")
+    print("[SpawnRoot] \(mod) \(own)")
     // FIXME: There has to be a better way to do this.......
     var args_stringified: [String] = []
     for arg in args {
         args_stringified.append("\(arg)")
     }
-    return Int(spawnRoot(path, args_stringified, nil, nil))
+    if silent {
+        args_stringified.append("--silent")
+    }
+    let retval = Int(spawnRoot(path, args_stringified, &stdout, &stderr))
+    print("[SpawnRoot]" + ((stdout as? String) ?? "Nothing from stdout"))
+    print("[SpawnRoot]" + ((stderr as? String) ?? "Nothing from stderr"))
+    return retval
+}
+
+public func spawnRootWithOutput(_ path: String, _ args: [Any], silent: Bool = false) -> (ret: Int, stdout: String, stderr: String) {
+    var stdout: NSString?
+    var stderr: NSString?
+    let mod = chmod(path, 0755)
+    let own = chown(path, 0, 0)
+    print("[SpawnRoot] \(mod) \(own)")
+    // FIXME: There has to be a better way to do this.......
+    var args_stringified: [String] = []
+    for arg in args {
+        args_stringified.append("\(arg)")
+    }
+    if silent {
+        args_stringified.append("--silent")
+    }
+    let retval = Int(spawnRoot(path, args_stringified, &stdout, &stderr))
+    print("[SpawnRoot]" + ((stdout as? String) ?? "Nothing from stdout"))
+    print("[SpawnRoot]" + ((stderr as? String) ?? "Nothing from stderr"))
+    return (retval, (stdout as String?) ?? "", (stderr as String?) ?? "")
 }

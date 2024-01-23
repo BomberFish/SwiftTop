@@ -1,12 +1,12 @@
 {
   "pins" : [
     {
-      "identity" : "swiftui-cached-async-image",
+      "identity" : "localconsole",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/lorenzofiamingo/swiftui-cached-async-image",
+      "location" : "https://github.com/BomberFish/LocalConsole",
       "state" : {
-        "revision" : "467a3d17479887943ab917a379e62bbaff60ac8a",
-        "version" : "2.1.1"
+        "branch" : "main",
+        "revision" : "6565a201829e5187f75eccc430ac387e4bb9bc88"
       }
     }
   ],
