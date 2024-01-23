@@ -28,7 +28,7 @@ struct MainView: View {
                 Haptic.shared.selection()
                 sortType = 1
                 sortDirection = 0
-                filterPS()
+                filterPS2()
             }, label: {
                 HStack {
                     Label("Ascending", systemImage: "arrow.up")
@@ -41,7 +41,7 @@ struct MainView: View {
                 Haptic.shared.selection()
                 sortType = 1
                 sortDirection = 1
-                filterPS()
+                filterPS2()
             }, label: {
                 HStack {
                     Label("Descending", systemImage: "arrow.down")
@@ -62,7 +62,7 @@ struct MainView: View {
                 Haptic.shared.selection()
                 sortType = 2
                 sortDirection = 0
-                filterPS()
+                filterPS2()
             }, label: {
                 HStack {
                     Label("Ascending", systemImage: "arrow.up")
@@ -75,7 +75,7 @@ struct MainView: View {
                 Haptic.shared.selection()
                 sortType = 2
                 sortDirection = 1
-                filterPS()
+                filterPS2()
             }, label: {
                 HStack {
                     Label("Descending", systemImage: "arrow.down")
@@ -92,23 +92,24 @@ struct MainView: View {
     @ViewBuilder
     var sortMenu: some View {
         Menu(content: {
-            Button(action: {
-                Haptic.shared.selection()
-                sortType = 0
-                sortDirection = 0
-                filterPS()
-            }, label: {
-                HStack {
-                    Label("None", systemImage: "minus")
-                    if sortType == 0 && sortDirection == 0 {
-                        Image(systemName: "checkmark")
+            Section("Sort Processes") {
+                Button(action: {
+                    Haptic.shared.selection()
+                    sortType = 0
+                    sortDirection = 0
+                    filterPS2()
+                }, label: {
+                    HStack {
+                        Label("None", systemImage: "minus")
+                        if sortType == 0 && sortDirection == 0 {
+                            Image(systemName: "checkmark")
+                        }
                     }
-                }
-            })
-            
-            processNameMenu
-            pidMenu
-            
+                })
+                
+                processNameMenu
+                pidMenu
+            }
         }, label: {
             Image(systemName: sortType == 0 ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
         })
@@ -128,6 +129,7 @@ struct MainView: View {
                                     } catch {
                                         UIApplication.shared.alert(body: error.localizedDescription)
                                     }
+                                    refreshPS()
                                 }) {
                                     Text("Kill as Root")
                                 }
@@ -137,6 +139,7 @@ struct MainView: View {
                                     } catch {
                                         UIApplication.shared.alert(body: error.localizedDescription)
                                     }
+                                    refreshPS()
                                 }) {
                                     Text("Kill")
                                 }
@@ -152,7 +155,9 @@ struct MainView: View {
             filterPS()
         }
         .onChange(of: searchText) { _ in
-            filterPS()
+            withAnimation {
+                filterPS()
+            }
         }
         .onAppear {
             refreshPS()
@@ -233,7 +238,6 @@ struct MainView: View {
             }
             .onReceive(timer, perform: { _ in
                 if autoRefresh {
-//                    Haptic.shared.selection()
                     refreshPS()
                 }
             })
@@ -297,6 +301,51 @@ struct MainView: View {
             print("not filtering")
         }
     }
+    
+    func filterPS2() {
+        withAnimation {
+            if searchText.isEmpty {
+                psFiltered = ps
+            } else {
+                psFiltered = ps.filter {
+                    if titleDisplayMode == 1 {
+                        ($0["proc_name"] as! String).localizedCaseInsensitiveContains(searchText) || ($0["pid"] as! String).localizedStandardContains(searchText) || (getAppInfoFromExecutablePath($0["proc_path"] as! String)?.bundleIdentifier.localizedCaseInsensitiveContains(searchText) ?? false)
+                    } else {
+                        ($0["proc_name"] as! String).localizedCaseInsensitiveContains(searchText) || ($0["pid"] as! String).localizedStandardContains(searchText)
+                    }
+                }
+            }
+        }
+        
+        switch sortType {
+        case 1:
+            withAnimation {
+                if sortDirection == 1 {
+                    psFiltered.sort {
+                        ($0["proc_name"] as! String) > ($1["proc_name"] as! String)
+                    }
+                } else {
+                    psFiltered.sort {
+                        ($0["proc_name"] as! String) < ($1["proc_name"] as! String)
+                    }
+                }
+            }
+        case 2:
+            withAnimation {
+                if sortDirection == 1 {
+                    psFiltered.sort {
+                        Int($0["pid"] as! String)! > Int($1["pid"] as! String)!
+                    }
+                } else {
+                    psFiltered.sort {
+                        Int($0["pid"] as! String)! < Int($1["pid"] as! String)!
+                    }
+                }
+            }
+        default:
+            print("not filtering")
+        }
+    }
 }
 
 struct ProcessCell: View {
@@ -311,12 +360,12 @@ struct ProcessCell: View {
         HStack {
             var iconImage: UIImage? {
 //                if let app {
-                    if let iconFileName = app?.pngIconPaths[safe: 0] {
-                        let iconPath = app!.bundleURL.path + "/" + iconFileName
-                        return .init(contentsOfFile: iconPath)
-                    } else {
-                        return nil
-                    }
+                if let iconFileName = app?.pngIconPaths[safe: 0] {
+                    let iconPath = app!.bundleURL.path + "/" + iconFileName
+                    return .init(contentsOfFile: iconPath)
+                } else {
+                    return nil
+                }
 //                } else {
 //                    return nil
 //                }

@@ -2,10 +2,10 @@
 // ProcessView.swift – SwiftTop
 // created on 2023-12-14
 
-import SwiftUI
-import OSLog
 import Darwin
 import MachO
+import OSLog
+import SwiftUI
 
 struct ProcessView: View {
     public var proc: NSDictionary
@@ -55,24 +55,37 @@ struct ProcessView: View {
     
     @ViewBuilder
     var modules: some View {
-        List {
+        VStack {
             if let loadedModules {
-                ForEach(loadedModules, id: \.self) {dylib in
-                    HStack {
-                        Image(systemName: "building.columns.fill")
-                            .foregroundColor(Color(UIColor.label))
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 32, height: 32)
-                            .font(.system(size: 24))
-                        VStack(alignment: .leading) {
-                            Text(dylib["imageName"] as? String ?? "foo.dylib")
-                                .font(.headline)
-                            Text(dylib["imagePath"] as? String ?? "/baz/bar/foo.dylib")
-                                .font(.callout)
-                            // TODO: loadAddr
+                if loadedModules.isEmpty {
+                    Spacer()
+                    Text("Could not find any loaded modules.")
+                        .font(.title.weight(.semibold))
+                    Spacer()
+                }
+                List {
+                    ForEach(loadedModules, id: \.self) { dylib in
+                        HStack {
+                            Image(systemName: "building.columns.fill")
+                                .foregroundColor(Color(UIColor.label))
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 32, height: 32)
+                                .font(.system(size: 24))
+                            VStack(alignment: .leading) {
+                                Text(dylib["imageName"] as? String ?? "foo.dylib")
+                                    .font(.headline)
+                                Text(dylib["imagePath"] as? String ?? "/baz/bar/foo.dylib")
+                                    .font(.callout)
+                                // TODO: loadAddr
+                            }
                         }
                     }
                 }
+            } else {
+                Spacer()
+                Text("Could not find any loaded modules.")
+                    .font(.title.weight(.semibold))
+                Spacer()
             }
         }
     }
@@ -121,9 +134,9 @@ struct ProcessView: View {
                 HStack {
                     Menu {
                         Section("Info") {
-                            Button(action: {withAnimation{selectedTab=0}}, label: {Label("Info", systemImage: "info.circle")})
-                            Button(action: {withAnimation{selectedTab=1}}, label: {Label("Mapped modules", systemImage: "memorychip")})
-                            Button(action: {withAnimation{selectedTab=2}}, label: {Label("Mapped modules (RootHelper)", systemImage: "memorychip.fill")})
+                            Button(action: { withAnimation { selectedTab = 0 }}, label: { Label("Info", systemImage: "info.circle") })
+                            Button(action: { withAnimation { selectedTab = 1 }}, label: { Label("Mapped modules", systemImage: "memorychip") })
+//                            Button(action: {withAnimation{selectedTab=2}}, label: {Label("Mapped modules (RootHelper)", systemImage: "memorychip.fill")})
                         }
                         Section("Quick Actions") {
                             Button(role: .destructive, action: {
@@ -153,6 +166,9 @@ struct ProcessView: View {
                     } label: {
                         Image(systemName: "ellipsis.circle")
                     }
+                    .onTapGesture {
+                        Haptic.shared.play(.light)
+                    }
                 }
             }
         }
@@ -161,7 +177,7 @@ struct ProcessView: View {
 
 func getNameFromPID(_ pid: String?) -> String? {
     if let pid {
-        guard let procs = try? getProcesses() else {return nil}
+        guard let procs = try? getProcesses() else { return nil }
         for proc in procs {
             if proc["pid"] as? String == pid {
                 if let name = proc["proc_name"] as? String {
@@ -173,7 +189,7 @@ func getNameFromPID(_ pid: String?) -> String? {
     return nil
 }
 
-fileprivate func getIcon(_ i: Int) -> String {
+private func getIcon(_ i: Int) -> String {
     switch i {
     case 0:
         return "info.circle"
@@ -193,16 +209,16 @@ struct InfoCell: View {
                 .multilineTextAlignment(.leading)
                 .padding(.trailing, 14)
             Spacer()
-//#if canImport(UIKit)
+            // #if canImport(UIKit)
 //                MarqueeText(text: value, font: .systemFont(ofSize: UIFont.systemFontSize), leftFade: 16, rightFade: 16, startDelay: 2.0)
 //                    .multilineTextAlignment(.trailing)
 //                    .textSelection(.enabled)
 //                    .foregroundColor(.secondary)
 //            #else
-                Text(value)
-                    .multilineTextAlignment(.trailing)
-                    .font(.body.monospacedDigit())
-                    .foregroundColor(.secondary)
+            Text(value)
+                .multilineTextAlignment(.trailing)
+                .font(.body.monospacedDigit())
+                .foregroundColor(.secondary)
 //            #endif
         }
     }

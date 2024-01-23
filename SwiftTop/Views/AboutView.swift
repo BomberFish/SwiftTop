@@ -190,23 +190,40 @@ struct LogItem: Identifiable, Equatable {
 
 struct LogView: View {
     @ObservedObject var log = Log.shared
+    @State var logsCurrent: [LogItem] = []
+    @State var paused = false
+    @State var searchTerm = ""
     var body: some View {
         ScrollViewReader { sc in
             ScrollView {
                 LazyVStack(alignment: .leading) {
-                    ForEach(log.items) {item in
+                    ForEach(logsCurrent) {item in
                         Text(item.message)
                             .multilineTextAlignment(.leading)
                             .font(.system(size: 15.0, design: .monospaced).weight(.light))
                             .foregroundColor(item.type == .error ? .init(UIColor.systemRed): .init(UIColor.label))
                     }
                 }
-                .onChange(of: log.items) {_ in
+                .searchable(text: $searchTerm, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search logs")
+                .onChange(of: searchTerm) {_ in
                     withAnimation {
-                        sc.scrollTo(log.items.last!.id)
+                        logsCurrent = log.items.filter({ $0.message.localizedCaseInsensitiveContains(searchTerm) })
+                    }
+                }
+                .onChange(of: log.items) {_ in
+                    if !paused {
+                        withAnimation {
+                            logsCurrent = log.items
+                        }
+                    }
+                    withAnimation {
+                        sc.scrollTo(logsCurrent.last!.id)
                     }
                 }
                 .onAppear {
+                    withAnimation {
+                        logsCurrent = log.items
+                    }
                     if log.items.count > 1 {
                         withAnimation {
                             sc.scrollTo(log.items.last!.id)
@@ -216,13 +233,25 @@ struct LogView: View {
             }
             .padding(.horizontal)
         }
+        
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button(action: {
-                    share([log.items.map {$0.message}.joined(separator: "\n")])
-                }, label: {
-                    Image(systemName: "square.and.arrow.up")
-                })
+                HStack {
+                    Button(action: {
+                        Haptic.shared.play(.light)
+                        withAnimation {
+                            paused.toggle()
+                        }
+                    }, label: {
+                        Image(systemName: !paused ? "pause.fill" : "play.fill")
+                    })
+                    Button(action: {
+                        Haptic.shared.play(.medium)
+                        share([log.items.map {$0.message}.joined(separator: "\n")])
+                    }, label: {
+                        Image(systemName: "square.and.arrow.up")
+                    })
+                }
             }
         }
         .navigationTitle("Debug Logs")

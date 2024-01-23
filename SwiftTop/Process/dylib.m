@@ -4,6 +4,7 @@
 // I truly hate Objective-C.
 
 #include "dylib.h"
+#include <Foundation/Foundation.h>
 
 // RootHelper doesn't have TSUtil (and doesn't need it)
 #ifndef ROOTHELPER
@@ -135,7 +136,7 @@ NSArray *getDylibsForPID(pid_t pid) {
     uint8_t *data =
         readProcessMemory(task, dyld_info.all_image_info_addr, &size);
     if (!data) {
-      return [[NSMutableArray array] copy];
+      return [dylibs copy];
     }
     struct dyld_all_image_infos *infos = (struct dyld_all_image_infos *)data;
     mach_vm_size_t size2 =
@@ -143,7 +144,7 @@ NSArray *getDylibsForPID(pid_t pid) {
     uint8_t *info_addr =
         readProcessMemory(task, (mach_vm_address_t)infos->infoArray, &size2);
     if (!info_addr) {
-      return [[NSMutableArray array] copy];
+        return [dylibs copy];
     }
     struct dyld_image_info *info = (struct dyld_image_info *)info_addr;
     for (int i = 0; i < infos->infoArrayCount; i++) {
@@ -154,24 +155,27 @@ NSArray *getDylibsForPID(pid_t pid) {
         printf("path: %s %llu\n", fpath_addr, size3);
       }
 
-      if (!info[i].imageFilePath) {
-        continue;
-      }
-
       @autoreleasepool {
-        NSString *imagePath =
-            [NSString stringWithUTF8String:info[i].imageFilePath];
+        NSString *imagePath = @"/foo/bar/UnknownLibrary";
+        if (info[i].imageFilePath) {
+            imagePath = [NSString stringWithCString:info[i].imageFilePath
+                                             encoding:NSNEXTSTEPStringEncoding];
+        }
         // thanks dhinakg for fixing the horrendous syntax that used to be
         // here...
         NSString *imageName = imagePath.lastPathComponent;
-        NSDictionary *dict =
-            @{@"imageName" : imageName, @"imagePath" : imagePath};
-        [dylibs addObject:dict];
+        @try {
+          NSDictionary *dict = @{@"imageName" : imageName, @"imagePath" : imagePath};
+          [dylibs addObject:dict];
+        } @catch (NSException *exception) {
+          NSLog(@"Ignoring dylib #%d (pid %d): Got exception \"%@\" while trying to make dictionary", i, pid, exception);
+          continue;
+        }
       }
     }
   } else {
     printf("task_info failed for pid %d: %s\n", pid, mach_error_string(kr));
-    return NULL;
+    return [dylibs copy];
   }
 
   if (isTraced) {
