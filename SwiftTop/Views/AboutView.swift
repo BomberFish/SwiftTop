@@ -2,13 +2,14 @@
 // AboutView.swift – SwiftTop
 // created on 2023-12-14
 
-//import CachedAsyncImage
+import AVKit
+// import CachedAsyncImage
 import SwiftUI
-//import LocalConsole
+// import LocalConsole
 
 struct AboutView: View {
     @AppStorage("showConsole") var showConsole = false
-    
+
     @AppStorage("debugMode") var debugMode = false
     @AppStorage("autoRefresh") var autoRefresh = true
     @AppStorage("forceAutoRefreshBtn") var forceBtn = false
@@ -20,7 +21,35 @@ struct AboutView: View {
     @State var showDebug = UserDefaults.standard.bool(forKey: "debugMode")
     @Environment(\.dismiss) var dismiss
     @Environment(\.colorScheme) var cs
+
+    @State var isLobster = false
+    var player = AVPlayer()
+
     var body: some View {
+        if isLobster {
+            lobster
+        } else {
+            normal
+        }
+    }
+
+    @ViewBuilder
+    var lobster: some View {
+        VideoPlayer(player: player)
+            .onAppear {
+                if player.currentItem == nil {
+                    let item = AVPlayerItem(url: Bundle.main.url(forResource: "lobster", withExtension: "mp4")!)
+                    player.replaceCurrentItem(with: item)
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                    player.play()
+                }
+            }
+            .ignoresSafeArea()
+    }
+
+    @ViewBuilder
+    var normal: some View {
         NavigationView {
             VStack {
                 HStack {
@@ -41,23 +70,29 @@ struct AboutView: View {
                 List {
                     if showDebug {
                         Section(header: Label("Debug Settings", systemImage: "ladybug.fill")) {
+                            Button("Lobster") {
+                                withAnimation {
+                                    Haptic.shared.notify(.success)
+                                    isLobster = true
+                                }
+                            }
                             NavigationLink("Logs") {
                                 LogView()
                             }
                             Button("Attempt to restart SwiftTop as root", action: {
                                 let ret = spawnAsRoot(Bundle.main.path(forResource: "SwiftTop", ofType: nil)!, CommandLine.arguments)
-                                if (ret != 0) {
+                                if ret != 0 {
                                     UIApplication.shared.alert(body: "ret \(ret)")
                                 }
                             })
                             Button("Reset UserDefaults") {
                                 UserDefaults.standard.register(defaults: [:])
                             }
-                            Toggle("Show LocalConsole", isOn: $showConsole)
-                                .onChange(of: showConsole) {_ in
-                                    LCManager.shared.isVisible = showConsole
-                                }
-                                .tint(.accentColor)
+//                            Toggle("Show LocalConsole", isOn: $showConsole)
+//                                .onChange(of: showConsole) {_ in
+//                                    LCManager.shared.isVisible = showConsole
+//                                }
+//                                .tint(.accentColor)
                             Toggle("I CAN HAZ TFP0", isOn: $iHaveTFP0)
                                 .tint(.accentColor)
                         }
@@ -92,7 +127,7 @@ struct AboutView: View {
                                     .foregroundColor(.secondary)
                                 Slider(value: $refreshInterval, in: 0.1 ... 3.0, step: 0.1)
                                     .tint(.accentColor)
-                                    .onChange(of: refreshInterval) {new in
+                                    .onChange(of: refreshInterval) { _ in
                                         Haptic.shared.selection()
                                     }
                                 Text(String(round(refreshInterval * 10) / 10.0))
@@ -174,7 +209,7 @@ struct LinkCell: View {
 }
 
 enum LogType {
-    case regular,error
+    case regular, error
 }
 
 class Log: ObservableObject {
@@ -197,20 +232,20 @@ struct LogView: View {
         ScrollViewReader { sc in
             ScrollView {
                 LazyVStack(alignment: .leading) {
-                    ForEach(logsCurrent) {item in
+                    ForEach(logsCurrent) { item in
                         Text(item.message)
                             .multilineTextAlignment(.leading)
-                            .font(.system(size: 15.0, design: .monospaced).weight(.light))
-                            .foregroundColor(item.type == .error ? .init(UIColor.systemRed): .init(UIColor.label))
+                            .font(.system(size: 13.0, design: .monospaced).weight(.light))
+                            .foregroundColor(item.type == .error ? .init(UIColor.systemRed) : .init(UIColor.label))
                     }
                 }
                 .searchable(text: $searchTerm, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search logs")
-                .onChange(of: searchTerm) {_ in
+                .onChange(of: searchTerm) { _ in
                     withAnimation {
-                        logsCurrent = log.items.filter({ $0.message.localizedCaseInsensitiveContains(searchTerm) })
+                        logsCurrent = log.items.filter { $0.message.localizedCaseInsensitiveContains(searchTerm) }
                     }
                 }
-                .onChange(of: log.items) {_ in
+                .onChange(of: log.items) { _ in
                     if !paused {
                         withAnimation {
                             logsCurrent = log.items
@@ -223,17 +258,15 @@ struct LogView: View {
                 .onAppear {
                     withAnimation {
                         logsCurrent = log.items
-                    }
-                    if log.items.count > 1 {
-                        withAnimation {
-                            sc.scrollTo(log.items.last!.id)
+                        if log.items.count > 1 {
+                           sc.scrollTo(log.items.last!.id)
                         }
                     }
                 }
             }
             .padding(.horizontal)
         }
-        
+
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 HStack {
@@ -247,7 +280,7 @@ struct LogView: View {
                     })
                     Button(action: {
                         Haptic.shared.play(.medium)
-                        share([log.items.map {$0.message}.joined(separator: "\n")])
+                        share([log.items.map { $0.message }.joined(separator: "\n")])
                     }, label: {
                         Image(systemName: "square.and.arrow.up")
                     })

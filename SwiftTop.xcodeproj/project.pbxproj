@@ -13,12 +13,6 @@
 		D60109B02B4DA09A005F026E /* CPU.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60109AF2B4DA09A005F026E /* CPU.swift */; };
 		D60109CF2B4EEDD4005F026E /* dylib.m in Sources */ = {isa = PBXBuildFile; fileRef = D60109CE2B4EEDD4005F026E /* dylib.m */; };
 		D60636C92B5EAF1C000A1E28 /* CachedAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60636C82B5EAF1C000A1E28 /* CachedAsyncImage.swift */; };
-		D60636D12B5EB0BB000A1E28 /* ResizeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60636CB2B5EB0BB000A1E28 /* ResizeController.swift */; };
-		D60636D22B5EB0BB000A1E28 /* LCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60636CC2B5EB0BB000A1E28 /* LCManager.swift */; };
-		D60636D32B5EB0BB000A1E28 /* GestureEndpointPredictor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60636CD2B5EB0BB000A1E28 /* GestureEndpointPredictor.swift */; };
-		D60636D42B5EB0BB000A1E28 /* SystemReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60636CE2B5EB0BB000A1E28 /* SystemReport.swift */; };
-		D60636D52B5EB0BB000A1E28 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60636CF2B5EB0BB000A1E28 /* Extensions.swift */; };
-		D60636D62B5EB0BB000A1E28 /* BorderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60636D02B5EB0BB000A1E28 /* BorderManager.swift */; };
 		D60636D92B5EDDE4000A1E28 /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60636D72B5EDDE3000A1E28 /* UIDevice+Extensions.swift */; };
 		D60636DA2B5EDDE4000A1E28 /* UIApplication+firstWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60636D82B5EDDE4000A1E28 /* UIApplication+firstWindow.swift */; };
 		D60636DD2B5FF908000A1E28 /* CommonFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60636DC2B5FF908000A1E28 /* CommonFunctions.swift */; };
@@ -45,6 +39,7 @@
 		D67D2A562B2B678E00EA8D6E /* libswiftFoundation.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D67D2A552B2B678900EA8D6E /* libswiftFoundation.tbd */; };
 		D67D2A582B2B679300EA8D6E /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D67D2A572B2B679300EA8D6E /* CoreFoundation.framework */; };
 		D67D2A5A2B2B67A300EA8D6E /* libswiftCoreFoundation.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D67D2A592B2B679C00EA8D6E /* libswiftCoreFoundation.tbd */; };
+		D689C5862B606F6F00769C51 /* lobster.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = D689C5852B606F6F00769C51 /* lobster.mp4 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,12 +75,6 @@
 		D60109D02B4EF0FB005F026E /* dylib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dylib.h; sourceTree = "<group>"; };
 		D60109D32B4F7296005F026E /* procinfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = procinfo.h; sourceTree = "<group>"; };
 		D60636C82B5EAF1C000A1E28 /* CachedAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedAsyncImage.swift; sourceTree = "<group>"; };
-		D60636CB2B5EB0BB000A1E28 /* ResizeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizeController.swift; sourceTree = "<group>"; };
-		D60636CC2B5EB0BB000A1E28 /* LCManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LCManager.swift; sourceTree = "<group>"; };
-		D60636CD2B5EB0BB000A1E28 /* GestureEndpointPredictor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GestureEndpointPredictor.swift; sourceTree = "<group>"; };
-		D60636CE2B5EB0BB000A1E28 /* SystemReport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemReport.swift; sourceTree = "<group>"; };
-		D60636CF2B5EB0BB000A1E28 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		D60636D02B5EB0BB000A1E28 /* BorderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderManager.swift; sourceTree = "<group>"; };
 		D60636D72B5EDDE3000A1E28 /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
 		D60636D82B5EDDE4000A1E28 /* UIApplication+firstWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+firstWindow.swift"; sourceTree = "<group>"; };
 		D60636DC2B5FF908000A1E28 /* CommonFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonFunctions.swift; sourceTree = "<group>"; };
@@ -130,6 +119,7 @@
 		D67D2A552B2B678900EA8D6E /* libswiftFoundation.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libswiftFoundation.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/usr/lib/swift/libswiftFoundation.tbd; sourceTree = DEVELOPER_DIR; };
 		D67D2A572B2B679300EA8D6E /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
 		D67D2A592B2B679C00EA8D6E /* libswiftCoreFoundation.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libswiftCoreFoundation.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/usr/lib/swift/libswiftCoreFoundation.tbd; sourceTree = DEVELOPER_DIR; };
+		D689C5852B606F6F00769C51 /* lobster.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = lobster.mp4; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,19 +189,6 @@
 			path = net;
 			sourceTree = "<group>";
 		};
-		D60636CA2B5EB0BB000A1E28 /* LocalConsole */ = {
-			isa = PBXGroup;
-			children = (
-				D60636CB2B5EB0BB000A1E28 /* ResizeController.swift */,
-				D60636CC2B5EB0BB000A1E28 /* LCManager.swift */,
-				D60636CD2B5EB0BB000A1E28 /* GestureEndpointPredictor.swift */,
-				D60636CE2B5EB0BB000A1E28 /* SystemReport.swift */,
-				D60636CF2B5EB0BB000A1E28 /* Extensions.swift */,
-				D60636D02B5EB0BB000A1E28 /* BorderManager.swift */,
-			);
-			path = LocalConsole;
-			sourceTree = "<group>";
-		};
 		D65C3A2E2B2E1B00007B3C76 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -239,6 +216,7 @@
 				D65C3A522B2E596C007B3C76 /* proc_info.h */,
 				D65C3A542B2E596F007B3C76 /* resource.h */,
 				D65C3A562B2E5971007B3C76 /* sys_domain.h */,
+				D689C5852B606F6F00769C51 /* lobster.mp4 */,
 			);
 			path = sys;
 			sourceTree = "<group>";
@@ -342,7 +320,6 @@
 				D66BC6692B2B7A53003D8A8E /* Haptic++.swift */,
 				D66BC6672B2B7A53003D8A8E /* String+LocalizedError.swift */,
 				D65C3A2C2B2D2C96007B3C76 /* Collection+SafeIndex.swift */,
-				D60636CA2B5EB0BB000A1E28 /* LocalConsole */,
 				D60636C82B5EAF1C000A1E28 /* CachedAsyncImage.swift */,
 			);
 			path = Extensions;
@@ -471,6 +448,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D67D2A1B2B2B3FB900EA8D6E /* Preview Assets.xcassets in Resources */,
+				D689C5862B606F6F00769C51 /* lobster.mp4 in Resources */,
 				D67D2A182B2B3FB900EA8D6E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -496,11 +474,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D60636D42B5EB0BB000A1E28 /* SystemReport.swift in Sources */,
 				D60636DA2B5EDDE4000A1E28 /* UIApplication+firstWindow.swift in Sources */,
 				D60636DD2B5FF908000A1E28 /* CommonFunctions.swift in Sources */,
 				D66BC6C22B2B8AC0003D8A8E /* TSUtil.m in Sources */,
-				D60636D32B5EB0BB000A1E28 /* GestureEndpointPredictor.swift in Sources */,
 				D66BC66C2B2B7A54003D8A8E /* Haptic++.swift in Sources */,
 				D67D2A4D2B2B528D00EA8D6E /* AboutView.swift in Sources */,
 				D66BC66A2B2B7A54003D8A8E /* String+LocalizedError.swift in Sources */,
@@ -518,12 +494,8 @@
 				D60109B02B4DA09A005F026E /* CPU.swift in Sources */,
 				D67D2A142B2B3FB400EA8D6E /* SwiftTopApp.swift in Sources */,
 				D60636D92B5EDDE4000A1E28 /* UIDevice+Extensions.swift in Sources */,
-				D60636D52B5EB0BB000A1E28 /* Extensions.swift in Sources */,
-				D60636D22B5EB0BB000A1E28 /* LCManager.swift in Sources */,
 				D66BC6C62B2BBC9D003D8A8E /* Utils.swift in Sources */,
-				D60636D62B5EB0BB000A1E28 /* BorderManager.swift in Sources */,
 				D60109A92B4D9B0F005F026E /* RootView.swift in Sources */,
-				D60636D12B5EB0BB000A1E28 /* ResizeController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

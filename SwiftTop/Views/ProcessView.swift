@@ -55,36 +55,59 @@ struct ProcessView: View {
     
     @ViewBuilder
     var modules: some View {
-        VStack {
+        VStack(spacing: 12) {
             if let loadedModules {
                 if loadedModules.isEmpty {
                     Spacer()
+                    Image(systemName: "app.dashed")
+                        .font(.system(size: 84).weight(.medium))
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
                     Text("Could not find any loaded modules.")
-                        .font(.title.weight(.semibold))
+                        .font(.title2.weight(.semibold))
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                    Text("Hint: check the app logs for more information.")
+                        .font(.caption.weight(.regular))
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.top, 4)
                     Spacer()
-                }
-                List {
-                    ForEach(loadedModules, id: \.self) { dylib in
-                        HStack {
-                            Image(systemName: "building.columns.fill")
-                                .foregroundColor(Color(UIColor.label))
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 32, height: 32)
-                                .font(.system(size: 24))
-                            VStack(alignment: .leading) {
-                                Text(dylib["imageName"] as? String ?? "foo.dylib")
-                                    .font(.headline)
-                                Text(dylib["imagePath"] as? String ?? "/baz/bar/foo.dylib")
-                                    .font(.callout)
-                                // TODO: loadAddr
+                } else {
+                    List {
+                        ForEach(loadedModules, id: \.self) { dylib in
+                            HStack {
+                                Image(systemName: "building.columns.fill")
+                                    .foregroundColor(Color(UIColor.label))
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 32, height: 32)
+                                    .font(.system(size: 24))
+                                VStack(alignment: .leading) {
+                                    Text(dylib["imageName"] as? String ?? "foo.dylib")
+                                        .font(.headline)
+                                    Text(dylib["imagePath"] as? String ?? "/baz/bar/foo.dylib")
+                                        .font(.callout)
+                                    // TODO: loadAddr
+                                }
                             }
                         }
                     }
                 }
             } else {
                 Spacer()
-                Text("Could not find any loaded modules.")
-                    .font(.title.weight(.semibold))
+                Image(systemName: "app.dashed")
+                    .font(.system(size: 84).weight(.medium))
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                Text("There was an error loading the modules.")
+                    .font(.title2.weight(.semibold))
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                Text("Hint: check the app logs for more information.")
+                    .font(.caption.weight(.regular))
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 4)
                 Spacer()
             }
         }

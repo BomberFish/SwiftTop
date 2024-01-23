@@ -27,7 +27,7 @@ struct SwiftTopApp: App {
             let str = String(data: data, encoding: .ascii) ?? "<Non-ascii data of size\(data.count)>\n"
             DispatchQueue.main.async {
                 Log.shared.items.append(.init(type: .regular, message: str))
-                LCManager.shared.print(str)
+//                LCManager.shared.print(str)
             }
         }
         
@@ -36,7 +36,7 @@ struct SwiftTopApp: App {
             let str = String(data: data, encoding: .ascii) ?? "<Non-ascii data of size\(data.count)>\n"
             DispatchQueue.main.async {
                 Log.shared.items.append(.init(type: .error, message: str))
-                LCManager.shared.print(str)
+//                LCManager.shared.print(str)
             }
         }
     }
@@ -52,8 +52,8 @@ struct SwiftTopApp: App {
         if UserDefaults.standard.value(forKey: "autoRefresh") == nil {
             UserDefaults.standard.setValue(true, forKey: "autoRefresh")
         }
-        let lc = LCManager.shared
-        lc.isVisible = showConsole
+//        let lc = LCManager.shared
+//        lc.isVisible = showConsole
     }
 
     var body: some Scene {

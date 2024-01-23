@@ -199,7 +199,8 @@ struct MainView: View {
             Group {
                 list
             }
-            .navigationTitle("SwiftTop")
+//            .navigationTitle("SwiftTop")
+            .navigationTitle("Processes")
             .toolbar {
                 #if os(macOS)
                 ToolbarItem(placement: .topBarTrailing) {
