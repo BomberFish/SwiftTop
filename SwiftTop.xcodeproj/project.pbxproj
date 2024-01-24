@@ -40,6 +40,7 @@
 		D67D2A582B2B679300EA8D6E /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D67D2A572B2B679300EA8D6E /* CoreFoundation.framework */; };
 		D67D2A5A2B2B67A300EA8D6E /* libswiftCoreFoundation.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D67D2A592B2B679C00EA8D6E /* libswiftCoreFoundation.tbd */; };
 		D689C5862B606F6F00769C51 /* lobster.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = D689C5852B606F6F00769C51 /* lobster.mp4 */; };
+		D689C5882B6094BF00769C51 /* View+withHostingWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D689C5872B6094BF00769C51 /* View+withHostingWindow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,6 +121,7 @@
 		D67D2A572B2B679300EA8D6E /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
 		D67D2A592B2B679C00EA8D6E /* libswiftCoreFoundation.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libswiftCoreFoundation.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/usr/lib/swift/libswiftCoreFoundation.tbd; sourceTree = DEVELOPER_DIR; };
 		D689C5852B606F6F00769C51 /* lobster.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = lobster.mp4; sourceTree = "<group>"; };
+		D689C5872B6094BF00769C51 /* View+withHostingWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+withHostingWindow.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -269,8 +271,8 @@
 		D67D2A122B2B3FB400EA8D6E /* SwiftTop */ = {
 			isa = PBXGroup;
 			children = (
-				D67D2A3D2B2B408000EA8D6E /* SwiftTop-Bridging-Header.h */,
 				D67D2A132B2B3FB400EA8D6E /* SwiftTopApp.swift */,
+				D67D2A3D2B2B408000EA8D6E /* SwiftTop-Bridging-Header.h */,
 				D60109A52B4D956A005F026E /* Process */,
 				D65C3A2E2B2E1B00007B3C76 /* Helpers */,
 				D66BC6E42B2C98DE003D8A8E /* Views */,
@@ -312,6 +314,7 @@
 		D67D2A452B2B4F5A00EA8D6E /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				D689C5872B6094BF00769C51 /* View+withHostingWindow.swift */,
 				D60636DC2B5FF908000A1E28 /* CommonFunctions.swift */,
 				D60636D82B5EDDE4000A1E28 /* UIApplication+firstWindow.swift */,
 				D60636D72B5EDDE3000A1E28 /* UIDevice+Extensions.swift */,
@@ -477,6 +480,7 @@
 				D60636DA2B5EDDE4000A1E28 /* UIApplication+firstWindow.swift in Sources */,
 				D60636DD2B5FF908000A1E28 /* CommonFunctions.swift in Sources */,
 				D66BC6C22B2B8AC0003D8A8E /* TSUtil.m in Sources */,
+				D689C5882B6094BF00769C51 /* View+withHostingWindow.swift in Sources */,
 				D66BC66C2B2B7A54003D8A8E /* Haptic++.swift in Sources */,
 				D67D2A4D2B2B528D00EA8D6E /* AboutView.swift in Sources */,
 				D66BC66A2B2B7A54003D8A8E /* String+LocalizedError.swift in Sources */,
@@ -689,7 +693,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = ca.bomberfish.SwiftTop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -738,7 +742,7 @@
 				MARKETING_VERSION = 0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = ca.bomberfish.SwiftTop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
