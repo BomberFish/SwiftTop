@@ -2,15 +2,16 @@
 
 An elegant task manager written in SwiftUI. Works on iOS and macOS\*. Inspired by [CocoaTop](https://github.com/D0m0/CocoaTop).
 
-> \* macOS support is experimental and not guaranteed to work. It's also not very useful, since you can just use Activity Monitor.
+> \* macOS support is experimental and not guaranteed to work. It's also not very useful, since you can just use Activity Monitor :trollface:
 
 ## Features
 
-- Written in SwiftUI
-- Snappy
+- Elegant UI written in Swift
 - List processes
 - Kill processes
 - Show process details, including the app bundle the executable belongs to
+- View loaded dylibs
+- View system resource usage
 
 ## Tested on 
 
@@ -24,17 +25,17 @@ For iOS, you'll need an iPhone, iPad, or iPod Touch with TrollStore installed. D
 
 ## TODO
 
-- More process details (threads, open files, open ports, mapped modules, etc)
+- More process details (threads, open files, open ports, ~~mapped modules~~, etc)
 - Implement other features from CocoaTop
 - Test more on macOS
 
 ## Building for iOS
 
-Run `./ipabuild.sh`. It's that easy. If you want a debug build, append the `--debug` argument. You will need at least Xcode 14 (for the main app), a recent version of ldid (for fakesigning), and Theos (for the roothelper) installed.
+Run `./ipabuild.sh`. It's that easy. If you want a debug build, append the `--debug` argument. You will need at least Xcode 14 (for the main app), a modern version of ldid (for fakesigning w/ entitlements), and Theos (for the roothelper) installed.
 
 ## Building for macOS
 
-**TODO**
+### TODO
 
 ## Licencing
 
