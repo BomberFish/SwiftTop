@@ -147,13 +147,21 @@ struct AboutView: View {
             }
             .toolbar {
                 #if !os(macOS)
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         Haptic.shared.play(.light)
                         dismiss()
                     } label: {
+                        #if targetEnvironment(macCatalyst)
+                        Text("Done")
+                            .padding()
+                        #else
                         CloseButton()
+                        #endif
                     }
+#if targetEnvironment(macCatalyst)
+                    .buttonStyle(.borderedProminent)
+                    #endif
                 }
                 #else
                 ToolbarItem {
