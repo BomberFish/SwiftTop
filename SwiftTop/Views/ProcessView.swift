@@ -94,6 +94,7 @@ struct ProcessView: View {
                     }
                 }
             } else {
+                let logs = Log.shared.items.suffix(10)
                 Spacer()
                 Image(systemName: "app.dashed")
                     .font(.system(size: 84).weight(.medium))
@@ -108,6 +109,11 @@ struct ProcessView: View {
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.top, 4)
+//                ForEach(logs) {log in
+//                    Text(log.message)
+//                        .font(.system(.caption2, design: .monospaced))
+//                    
+//                }
                 Spacer()
             }
         }

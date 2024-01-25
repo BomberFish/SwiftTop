@@ -47,14 +47,14 @@ mach_port_t getAPort(void) {
 #endif
 }
 
-// Stolen from CocoaTop. Most likely a workaround for h3lix on 32-bit iOS? (See
+// (Partially) stolen from CocoaTop. Most likely a workaround for h3lix on 32-bit iOS? (See
 // https://www.theiphonewiki.com/wiki/Tfp0_patch#Jailbreaks_lacking_tfp0)
 kern_return_t _task_for_pid(pid_t pid, task_port_t *target) {
   if (pid == getpid()) {
-    *target = mach_task_self();
+    *target = mach_task_self(); // Save a step once more ;D
     return KERN_SUCCESS;
   }
-  kern_return_t ret = task_for_pid(mach_task_self(), pid, target);
+  kern_return_t ret = task_for_pid(getAPort(), pid, target);
   if (ret != KERN_SUCCESS && pid == 0) {
     fprintf(stderr, "task_for_pid failed for pid 0: %s\n",
             mach_error_string(ret));
@@ -129,14 +129,14 @@ NSArray *getDylibsForPID(pid_t pid) {
   }
   struct task_dyld_info dyld_info;
   mach_msg_type_number_t count = TASK_DYLD_INFO_COUNT;
-  kr = task_info(mach_task_self(), TASK_DYLD_INFO, (task_info_t)&dyld_info,
+  kr = task_info(getAPort(), TASK_DYLD_INFO, (task_info_t)&dyld_info,
                  &count);
   if (kr == KERN_SUCCESS) {
     mach_vm_size_t size = sizeof(struct dyld_all_image_infos);
     uint8_t *data =
         readProcessMemory(task, dyld_info.all_image_info_addr, &size);
     if (!data) {
-      return [dylibs copy];
+        return NULL;
     }
     struct dyld_all_image_infos *infos = (struct dyld_all_image_infos *)data;
     mach_vm_size_t size2 =
@@ -144,7 +144,7 @@ NSArray *getDylibsForPID(pid_t pid) {
     uint8_t *info_addr =
         readProcessMemory(task, (mach_vm_address_t)infos->infoArray, &size2);
     if (!info_addr) {
-        return [dylibs copy];
+        return NULL;
     }
     struct dyld_image_info *info = (struct dyld_image_info *)info_addr;
     for (int i = 0; i < infos->infoArrayCount; i++) {
@@ -158,8 +158,18 @@ NSArray *getDylibsForPID(pid_t pid) {
       @autoreleasepool {
         NSString *imagePath = @"/foo/bar/UnknownLibrary";
         if (info[i].imageFilePath) {
-            imagePath = [NSString stringWithCString:info[i].imageFilePath
-                                             encoding:NSNEXTSTEPStringEncoding];
+            @try {
+                NSString *imagePathTemp = [NSString stringWithCString:info[i].imageFilePath
+                                               encoding:NSNEXTSTEPStringEncoding];
+                if (imagePathTemp) {
+                    imagePath = imagePathTemp;
+                } else {
+                    @throw [NSException exceptionWithName:@"ca.bomberfish.SwiftTop.dylib" reason:@"imagePath is null" userInfo:@{}];
+                }
+            } @catch (NSException *e) {
+                NSLog(@"Ignoring dylib #%d (pid %d): Got exception \"%@\" while trying to convert imageFilePath to NSString", i, pid, e);
+                continue;
+            }
         }
         // thanks dhinakg for fixing the horrendous syntax that used to be
         // here...
@@ -168,14 +178,14 @@ NSArray *getDylibsForPID(pid_t pid) {
           NSDictionary *dict = @{@"imageName" : imageName, @"imagePath" : imagePath};
           [dylibs addObject:dict];
         } @catch (NSException *exception) {
-          NSLog(@"Ignoring dylib #%d (pid %d): Got exception \"%@\" while trying to make dictionary", i, pid, exception);
+          NSLog(@"Ignoring dylib #%d (pid %d): Got exception \"%@\" while trying to construct dictionary", i, pid, exception);
           continue;
         }
       }
     }
   } else {
     printf("task_info failed for pid %d: %s\n", pid, mach_error_string(kr));
-    return [dylibs copy];
+      return NULL;
   }
 
   if (isTraced) {
