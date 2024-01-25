@@ -1,5 +1,9 @@
 @import Foundation;
 #import "CoreServices.h"
+#import <Foundation/Foundation.h>
+#import <spawn.h>
+#import <sys/sysctl.h>
+#import <mach-o/fixup-chains.h>
 
 extern NSString* safe_getExecutablePath(void);
 extern NSString* rootHelperPath(void);

@@ -1,12 +1,7 @@
 #import "TSUtil.h"
 
-#import <Foundation/Foundation.h>
-#import <spawn.h>
-#import <sys/sysctl.h>
-#import <mach-o/fixup-chains.h>
-
 NSString* rootHelperPath(void) {
-    return [[NSBundle mainBundle].bundlePath stringByAppendingPathComponent:@"trollstorehelper"];
+    return [[NSBundle mainBundle].bundlePath stringByAppendingPathComponent:@"roothelper"];
 }
 
 @interface PSAppDataUsagePolicyCache : NSObject
@@ -100,7 +95,7 @@ int spawnRoot(NSString* path, NSArray* args, NSString** stdOut, NSString** stdEr
     
     if(spawnError != 0)
     {
-        NSLog(@"posix_spawn error %d\n", spawnError);
+        NSLog(@"posix_spawn error %d: %s\n", spawnError, strerror(spawnError));
         return spawnError;
     }
 
@@ -232,7 +227,7 @@ pid_t spawnRootButReturnPID(NSString* path, NSArray* args, NSString** stdOut, NS
     
     if(spawnError != 0)
     {
-        NSLog(@"posix_spawn error %d\n", spawnError);
+        NSLog(@"posix_spawn error %d: %s\n", spawnError, strerror(spawnError));
         return getpid();
     }
     

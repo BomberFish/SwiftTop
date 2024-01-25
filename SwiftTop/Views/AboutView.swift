@@ -245,6 +245,7 @@ struct LogView: View {
                             .multilineTextAlignment(.leading)
                             .font(.system(size: 13.0, design: .monospaced).weight(.light))
                             .foregroundColor(item.type == .error ? .init(UIColor.systemRed) : .init(UIColor.label))
+                            .padding(.horizontal)
                     }
                 }
                 .searchable(text: $searchTerm, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search logs")
@@ -272,7 +273,6 @@ struct LogView: View {
                     }
                 }
             }
-            .padding(.horizontal)
         }
 
         .toolbar {

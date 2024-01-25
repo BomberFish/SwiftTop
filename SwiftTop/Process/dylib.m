@@ -6,11 +6,15 @@
 #include "dylib.h"
 #include <Foundation/Foundation.h>
 
+#define USEHELPERFORPORT 0
+
 // RootHelper doesn't have TSUtil (and doesn't need it)
 #ifndef ROOTHELPER
 #include "TSUtil.h"
+#include "ps.h"
 #endif
 
+#ifdef USEHELPERFORROOT
 /// Call function, get port!!1
 mach_port_t getAPort(void) {
 #ifdef ROOTHELPER
@@ -46,6 +50,11 @@ mach_port_t getAPort(void) {
   }
 #endif
 }
+#else
+mach_port_t getAPort(void) {
+  return mach_task_self();
+}
+#endif
 
 // (Partially) stolen from CocoaTop. Most likely a workaround for h3lix on 32-bit iOS? (See
 // https://www.theiphonewiki.com/wiki/Tfp0_patch#Jailbreaks_lacking_tfp0)
@@ -200,6 +209,16 @@ NSArray *getDylibsForPID(pid_t pid) {
   } else {
     printf("not detaching from pid %d", pid);
   }
+
+//#ifndef ROOTHELPER
+//    NSArray *processes = sysctl_ps();
+//    for (NSDictionary *process in processes) {
+//        if ([process[@"proc_path"] stringValue] == rootHelperPath()) {
+//            printf("Killing spinning process... by spawning another instance of it?!");
+//            int ret = spawnRoot(rootHelperPath(), @[ @"kill", process[@"pid"] ], NULL, NULL);
+//        }
+//    }
+//#endif
 
   return [dylibs copy];
 }

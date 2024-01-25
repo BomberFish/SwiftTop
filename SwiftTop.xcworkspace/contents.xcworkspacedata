@@ -11,6 +11,24 @@
       location = "group:RootHelper"
       name = "RootHelper">
       <FileRef
+         location = "group:dylib.h">
+      </FileRef>
+      <FileRef
+         location = "group:dylib.m">
+      </FileRef>
+      <FileRef
+         location = "group:mach.h">
+      </FileRef>
+      <FileRef
+         location = "group:procinfo.h">
+      </FileRef>
+      <FileRef
+         location = "group:ps.h">
+      </FileRef>
+      <FileRef
+         location = "group:ps.m">
+      </FileRef>
+      <FileRef
          location = "group:Makefile">
       </FileRef>
       <FileRef
