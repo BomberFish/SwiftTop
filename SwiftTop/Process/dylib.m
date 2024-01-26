@@ -180,16 +180,26 @@ NSArray *getDylibsForPID(pid_t pid) {
                 continue;
             }
         }
-        // thanks dhinakg for fixing the horrendous syntax that used to be
-        // here...
-        NSString *imageName = imagePath.lastPathComponent;
-        @try {
-          NSDictionary *dict = @{@"imageName" : imageName, @"imagePath" : imagePath};
-          [dylibs addObject:dict];
-        } @catch (NSException *exception) {
-          NSLog(@"Ignoring dylib #%d (pid %d): Got exception \"%@\" while trying to construct dictionary", i, pid, exception);
-          continue;
-        }
+          
+          
+@try { // this block is literally unsightreadable i swear
+        [dylibs                addObject:[[NSDictionary
+        alloc]                 initWithObjects: // ////////
+                               [NSArray // /////////////////
+                               arrayWithObjects: // ////////
+                            [imagePath lastPathComponent] //
+                            ,imagePath, nil] // ////////////
+                               forKeys:[NSArray // /////////
+                               arrayWithObjects:@"imageName",
+@"imagePath", nil ] ] ] ; } // /
+            
+          
+                            @catch                                                  (
+                        NSException *exception) { NSLog(@"PID%d: Got exception \"%@\"",
+                                                                                       
+ // ok back to regular formatting :nfr:
+      
+    pid, exception); continue; }
       }
     }
   } else {
