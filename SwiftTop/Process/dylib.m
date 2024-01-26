@@ -183,15 +183,15 @@ NSArray *getDylibsForPID(pid_t pid) {
           
           
 @try { // this block is literally unsightreadable i swear
-        [dylibs                addObject:[[NSDictionary
-        alloc]                 initWithObjects: // ////////
-                               [NSArray // /////////////////
-                               arrayWithObjects: // ////////
+        [dylibs                addObject:[[NSDictionary// //
+        alloc]                 initWithObjects:// //////////
+                               [NSArray// //////////////////
+                               arrayWithObjects:// /////////
                             [imagePath lastPathComponent] //
-                            ,imagePath, nil] // ////////////
-                               forKeys:[NSArray // /////////
+                            ,imagePath, nil]// /////////////
+                               forKeys:[NSArray// //////////
                                arrayWithObjects:@"imageName",
-@"imagePath", nil ] ] ] ; } // /
+@"imagePath", nil ] ] ] ; }// ///
             
           
                             @catch                                                  (

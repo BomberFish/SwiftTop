@@ -10,11 +10,14 @@ import SwiftUI
 struct ProcessView: View {
     public var proc: NSDictionary
     @State var loadedModules: [NSDictionary]?
+    @State var currentModules: [NSDictionary]?
     
     @State var selectedTab = 0
     
     @State var stdout: String = ""
     @State var stderr: String = ""
+    
+    @State var searchText: String = ""
     
     init(proc: NSDictionary) {
         self.proc = proc
@@ -92,6 +95,14 @@ struct ProcessView: View {
                             }
                         }
                     }
+                    .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search loaded modules")
+                    .onChange(of: searchText) { _ in
+                        currentModules = loadedModules.filter({ dylib in
+                            let name = dylib["imageName"] as? String ?? "foo.dylib"
+                            let path = dylib["imagePath"] as? String ?? "/baz/bar/foo.dylib"
+                            return name.localizedCaseInsensitiveContains(searchText) || path.localizedCaseInsensitiveContains(searchText)
+                        })
+                    }
                 }
             } else {
                 let logs = Log.shared.items.suffix(10)
@@ -131,6 +142,7 @@ struct ProcessView: View {
                             do {
                                 if let pid = Int32(pidString) {
                                     loadedModules = try getDylibs(pid)
+                                    currentModules = loadedModules
                                 } else {
                                     print("Could not typecast pid \(pidString)!")
                                 }
