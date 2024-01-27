@@ -59,7 +59,8 @@ struct ProcessView: View {
     @ViewBuilder
     var modules: some View {
         VStack(spacing: 12) {
-            if let loadedModules {
+            if let loadedModules,
+                let currentModules {
                 if loadedModules.isEmpty {
                     Spacer()
                     Image(systemName: "app.dashed")
@@ -78,7 +79,7 @@ struct ProcessView: View {
                     Spacer()
                 } else {
                     List {
-                        ForEach(loadedModules, id: \.self) { dylib in
+                        ForEach(currentModules, id: \.self) { dylib in
                             HStack {
                                 Image(systemName: "building.columns.fill")
                                     .foregroundColor(Color(UIColor.label))
@@ -96,13 +97,6 @@ struct ProcessView: View {
                         }
                     }
                     .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search loaded modules")
-                    .onChange(of: searchText) { _ in
-                        currentModules = loadedModules.filter({ dylib in
-                            let name = dylib["imageName"] as? String ?? "foo.dylib"
-                            let path = dylib["imagePath"] as? String ?? "/baz/bar/foo.dylib"
-                            return name.localizedCaseInsensitiveContains(searchText) || path.localizedCaseInsensitiveContains(searchText)
-                        })
-                    }
                 }
             } else {
                 let logs = Log.shared.items.suffix(10)
@@ -166,6 +160,21 @@ struct ProcessView: View {
                     }
             default:
                 Text("Not Implemented :(")
+            }
+        }
+        .onChange(of: searchText) { _ in
+            if let loadedModules {
+                withAnimation {
+                    if searchText == "" {
+                        currentModules = loadedModules
+                    } else {
+                        currentModules = loadedModules.filter({ dylib in
+                            let name = dylib["imageName"] as? String ?? "foo.dylib"
+                            let path = dylib["imagePath"] as? String ?? "/baz/bar/foo.dylib"
+                            return name.localizedCaseInsensitiveContains(searchText) || path.localizedCaseInsensitiveContains(searchText)
+                        })
+                    }
+                }
             }
         }
         .listStyle(.plain)
