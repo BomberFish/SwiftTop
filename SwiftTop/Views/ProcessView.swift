@@ -99,7 +99,7 @@ struct ProcessView: View {
                     .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search loaded modules")
                 }
             } else {
-                let logs = Log.shared.items.suffix(10)
+//                let logs = Log.shared.items.suffix(10)
                 Spacer()
                 Image(systemName: "app.dashed")
                     .font(.system(size: 84).weight(.medium))

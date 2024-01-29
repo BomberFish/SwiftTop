@@ -8,3 +8,4 @@
 #include "RemoteLog.h"
 #include "CoreServices.h"
 #include "mach.h"
+#import "UIImage+Private.h"

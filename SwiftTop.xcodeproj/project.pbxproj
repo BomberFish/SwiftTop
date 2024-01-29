@@ -17,6 +17,8 @@
 		D60636DA2B5EDDE4000A1E28 /* UIApplication+firstWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60636D82B5EDDE4000A1E28 /* UIApplication+firstWindow.swift */; };
 		D60636DD2B5FF908000A1E28 /* CommonFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60636DC2B5FF908000A1E28 /* CommonFunctions.swift */; };
 		D64D3D232B2C9F6C00EBEDCB /* UIColorAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64D3D222B2C9F6C00EBEDCB /* UIColorAdapter.swift */; };
+		D65438EE2B6831D4007BDBF0 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65438ED2B6831D4007BDBF0 /* IconView.swift */; };
+		D65438F12B685BC9007BDBF0 /* LogsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65438F02B685BC9007BDBF0 /* LogsView.swift */; };
 		D65C3A2D2B2D2C96007B3C76 /* Collection+SafeIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65C3A2C2B2D2C96007B3C76 /* Collection+SafeIndex.swift */; };
 		D66BC66A2B2B7A54003D8A8E /* String+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66BC6672B2B7A53003D8A8E /* String+LocalizedError.swift */; };
 		D66BC66B2B2B7A54003D8A8E /* Alert++.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66BC6682B2B7A53003D8A8E /* Alert++.swift */; };
@@ -81,6 +83,10 @@
 		D60636DC2B5FF908000A1E28 /* CommonFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonFunctions.swift; sourceTree = "<group>"; };
 		D60E2EA72B2F3D0E007891F4 /* mach.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mach.h; sourceTree = "<group>"; };
 		D64D3D222B2C9F6C00EBEDCB /* UIColorAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorAdapter.swift; sourceTree = "<group>"; };
+		D65438ED2B6831D4007BDBF0 /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
+		D65438EF2B68439A007BDBF0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		D65438F02B685BC9007BDBF0 /* LogsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsView.swift; sourceTree = "<group>"; };
+		D65438F22B68646B007BDBF0 /* UIImage+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Private.h"; path = "../../../TrolleyStore/TrolleyStore/UIImage+Private.h"; sourceTree = "<group>"; };
 		D65C3A2C2B2D2C96007B3C76 /* Collection+SafeIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+SafeIndex.swift"; sourceTree = "<group>"; };
 		D65C3A4A2B2E39BA007B3C76 /* bootstrap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bootstrap.h; sourceTree = "<group>"; };
 		D65C3A512B2E5957007B3C76 /* dyld64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dyld64.h; sourceTree = "<group>"; };
@@ -191,6 +197,16 @@
 			path = net;
 			sourceTree = "<group>";
 		};
+		D65438EC2B6831C6007BDBF0 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				D67D2A4C2B2B528D00EA8D6E /* AboutView.swift */,
+				D65438ED2B6831D4007BDBF0 /* IconView.swift */,
+				D65438F02B685BC9007BDBF0 /* LogsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		D65C3A2E2B2E1B00007B3C76 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -226,6 +242,7 @@
 		D66BC6D42B2C91FF003D8A8E /* Private APIs */ = {
 			isa = PBXGroup;
 			children = (
+				D65438F22B68646B007BDBF0 /* UIImage+Private.h */,
 				D60109C02B4EEC0E005F026E /* net */,
 				D65C3A502B2E5942007B3C76 /* sys */,
 				D66BC6D32B2C906F003D8A8E /* CoreServices.h */,
@@ -241,7 +258,7 @@
 				D60109A82B4D9B0F005F026E /* RootView.swift */,
 				D67D2A152B2B3FB400EA8D6E /* MainView.swift */,
 				D60109AA2B4D9B5D005F026E /* ResMonView.swift */,
-				D67D2A4C2B2B528D00EA8D6E /* AboutView.swift */,
+				D65438EC2B6831C6007BDBF0 /* Settings */,
 				D67D2A422B2B44C700EA8D6E /* ProcessView.swift */,
 			);
 			path = Views;
@@ -271,6 +288,7 @@
 		D67D2A122B2B3FB400EA8D6E /* SwiftTop */ = {
 			isa = PBXGroup;
 			children = (
+				D65438EF2B68439A007BDBF0 /* Info.plist */,
 				D67D2A132B2B3FB400EA8D6E /* SwiftTopApp.swift */,
 				D67D2A3D2B2B408000EA8D6E /* SwiftTop-Bridging-Header.h */,
 				D60109A52B4D956A005F026E /* Process */,
@@ -490,6 +508,8 @@
 				D66BC66F2B2B85EF003D8A8E /* proc.swift in Sources */,
 				D60636C92B5EAF1C000A1E28 /* CachedAsyncImage.swift in Sources */,
 				D66BC66B2B2B7A54003D8A8E /* Alert++.swift in Sources */,
+				D65438F12B685BC9007BDBF0 /* LogsView.swift in Sources */,
+				D65438EE2B6831D4007BDBF0 /* IconView.swift in Sources */,
 				D65C3A2D2B2D2C96007B3C76 /* Collection+SafeIndex.swift in Sources */,
 				D60109AD2B4D9FD3005F026E /* Memory.swift in Sources */,
 				D67D2A432B2B44C700EA8D6E /* ProcessView.swift in Sources */,
@@ -662,10 +682,12 @@
 					"$(ARCHS_STANDARD)",
 					arm64e,
 				);
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Beta2 AppIcon-Normal AppIcon-Skeuo AppIcon-Noir";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Beta";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = SwiftTop/SwiftTop.entitlements;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
@@ -675,8 +697,9 @@
 				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SwiftTop/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SwiftTop;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -712,10 +735,12 @@
 					"$(ARCHS_STANDARD)",
 					arm64e,
 				);
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Beta2 AppIcon-Normal AppIcon-Skeuo AppIcon-Noir";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = SwiftTop/SwiftTop.entitlements;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
@@ -725,8 +750,9 @@
 				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SwiftTop/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SwiftTop;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

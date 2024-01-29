@@ -381,11 +381,12 @@ struct ProcessCell: View {
                         .frame(width: 32, height: 32)
                         .cornerRadius(8)
                 } else {
-                    Image(systemName: "app.dashed")
-                        .foregroundColor(Color(UIColor.label))
+                    Image(uiImage: ._applicationIconImage(forBundleIdentifier: app?.bundleIdentifier ?? "com.apple.nothing-oiwhrcp9q34nr391y4x139th1340", format: (UIDevice.current.userInterfaceIdiom == .pad ? 8 : 10), scale: UIScreen.main.scale))
+                        .interpolation(.none)
+                        .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 32, height: 32)
-                        .font(.system(size: 32))
+                        .cornerRadius(8)
                 }
             } else {
                 Image(systemName: "terminal")

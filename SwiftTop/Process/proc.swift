@@ -71,6 +71,18 @@ func getAppInfoFromExecutablePath(_ path: String) -> SBApp? {
     print("[AppInfo] Got name \(sbapp.name) for \(url.lastPathComponent).")
     sbapp.version = contentsOfInfoPlist["CFBundleShortVersionString"] as? String ?? "1.0"
     print("[AppInfo] Got bundle version \(sbapp.version) for \(url.lastPathComponent).")
+    
+    if let SBAppTags = contentsOfInfoPlist["SBAppTags"] as? [String], !SBAppTags.isEmpty {
+        if SBAppTags.contains("hidden") {
+            sbapp.hiddenFromSpringboard = true
+        }
+    }
+    
+    if let _ = contentsOfInfoPlist["LSApplicationLaunchProhibited"] {
+        sbapp.hiddenFromSpringboard = true
+    }
+    
+    // MARK: - Icons
     if let CFBundleIcons = contentsOfInfoPlist["CFBundleIcons"] {
         if let CFBundlePrimaryIcon = CFBundleIcons["CFBundlePrimaryIcon"] as? [String: AnyObject] {
             if let CFBundleIconFiles = CFBundlePrimaryIcon["CFBundleIconFiles"] as? [String] {
@@ -81,16 +93,9 @@ func getAppInfoFromExecutablePath(_ path: String) -> SBApp? {
 //                sbapp.plistIconName = CFBundleIconName
 //            }
         }
-    }
-    
-    if let SBAppTags = contentsOfInfoPlist["SBAppTags"] as? [String], !SBAppTags.isEmpty {
-        if SBAppTags.contains("hidden") {
-            sbapp.hiddenFromSpringboard = true
-        }
-    }
-    
-    if let _ = contentsOfInfoPlist["LSApplicationLaunchProhibited"] {
-        sbapp.hiddenFromSpringboard = true
+    } else if let CFBundleIconFilesTopLevel = contentsOfInfoPlist["CFBundleIconFiles"] as? [String] {
+        print("[AppInfo] Got legacy icon \(sbapp.pngIconPaths.count > 1 ? "files" : "file") \(sbapp.pngIconPaths.joined(separator: ", ")) for \(sbapp.name).")
+        sbapp.pngIconPaths += CFBundleIconFilesTopLevel
     }
     
     print("[AppInfo] We are done. Good night. (\(sbapp.name))")
