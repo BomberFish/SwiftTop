@@ -23,6 +23,9 @@ struct ProcessView: View {
         self.proc = proc
     }
     
+    /// 0: process name, 1: bundle id (when available), 2: app name (when available)
+    @AppStorage("titleDisplayMode") var titleDisplayMode = 0
+    
     @ViewBuilder
     var info: some View {
         List {
@@ -178,7 +181,7 @@ struct ProcessView: View {
             }
         }
         .listStyle(.plain)
-        .navigationTitle(proc["proc_name"] as? String ?? "Unknown")
+        .navigationTitle((getBundleIDFromExecutablePath(proc["proc_path"] as? String ?? "") != nil ? (titleDisplayMode == 0 ? proc["proc_name"] as? String ?? "" : (titleDisplayMode == 2 ? (getNameFromExecutablePath(proc["proc_path"] as? String ?? "") ?? proc["proc_name"] as? String ?? "") : getBundleIDFromExecutablePath(proc["proc_path"] as? String ?? "")!)) : proc["proc_name"] as? String ?? ""))
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 HStack {

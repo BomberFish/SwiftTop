@@ -270,7 +270,9 @@ struct MainView: View {
         } else {
             psFiltered = ps.filter {
                 if titleDisplayMode == 1 {
-                    ($0["proc_name"] as! String).localizedCaseInsensitiveContains(searchText) || ($0["pid"] as! String).localizedStandardContains(searchText) || (getAppInfoFromExecutablePath($0["proc_path"] as! String)?.bundleIdentifier.localizedCaseInsensitiveContains(searchText) ?? false)
+                    ($0["proc_name"] as! String).localizedCaseInsensitiveContains(searchText) || ($0["pid"] as! String).localizedStandardContains(searchText) || (
+                        getBundleIDFromExecutablePath($0["proc_path"] as! String)?.localizedCaseInsensitiveContains(searchText) ?? false
+                    )
                 } else {
                     ($0["proc_name"] as! String).localizedCaseInsensitiveContains(searchText) || ($0["pid"] as! String).localizedStandardContains(searchText)
                 }
@@ -310,7 +312,9 @@ struct MainView: View {
             } else {
                 psFiltered = ps.filter {
                     if titleDisplayMode == 1 {
-                        ($0["proc_name"] as! String).localizedCaseInsensitiveContains(searchText) || ($0["pid"] as! String).localizedStandardContains(searchText) || (getAppInfoFromExecutablePath($0["proc_path"] as! String)?.bundleIdentifier.localizedCaseInsensitiveContains(searchText) ?? false)
+                        ($0["proc_name"] as! String).localizedCaseInsensitiveContains(searchText) || ($0["pid"] as! String).localizedStandardContains(searchText) || (
+                            getBundleIDFromExecutablePath($0["proc_path"] as! String)?.localizedCaseInsensitiveContains(searchText) ?? false
+                        )
                     } else {
                         ($0["proc_name"] as! String).localizedCaseInsensitiveContains(searchText) || ($0["pid"] as! String).localizedStandardContains(searchText)
                     }
@@ -357,37 +361,16 @@ struct ProcessCell: View {
         let name: String = proc["proc_name"] as? String ?? "Unknown"
         let path: String = proc["proc_path"] as! String
         let pid: String = proc["pid"] as! String
-        let app: SBApp? = getAppInfoFromExecutablePath(path)
+        let appName = getNameFromExecutablePath(proc["proc_path"] as! String)
+        let bundleid = getBundleIDFromExecutablePath(proc["proc_path"] as! String)
         HStack {
-            var iconImage: UIImage? {
-//                if let app {
-                if let iconFileName = app?.pngIconPaths[safe: 0] {
-                    let iconPath = app!.bundleURL.path + "/" + iconFileName
-                    return .init(contentsOfFile: iconPath)
-                } else {
-                    return nil
-                }
-//                } else {
-//                    return nil
-//                }
-            }
-            
-            if app != nil {
-                if let iconImage {
-                    Image(uiImage: iconImage)
-                        .interpolation(.none)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 32, height: 32)
-                        .cornerRadius(8)
-                } else {
-                    Image(uiImage: ._applicationIconImage(forBundleIdentifier: app?.bundleIdentifier ?? "com.apple.nothing-oiwhrcp9q34nr391y4x139th1340", format: (UIDevice.current.userInterfaceIdiom == .pad ? 8 : 10), scale: UIScreen.main.scale))
-                        .interpolation(.none)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 32, height: 32)
-                        .cornerRadius(8)
-                }
+            if bundleid != nil {
+                Image(uiImage: ._applicationIconImage(forBundleIdentifier: bundleid!, format: (UIDevice.current.userInterfaceIdiom == .pad ? 8 : 10), scale: UIScreen.main.scale))
+                    .interpolation(.none)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 32, height: 32)
+                    .cornerRadius(8)
             } else {
                 Image(systemName: "terminal")
                     .foregroundColor(Color(UIColor.label))
@@ -396,7 +379,7 @@ struct ProcessCell: View {
                     .font(.system(size: 24))
             }
             VStack(alignment: .leading) {
-                Text(app != nil ? (titleDisplayMode == 0 ? name : (titleDisplayMode == 2 ? app!.name : app!.bundleIdentifier)) : name) // ternary black magic
+                Text(bundleid != nil ? (titleDisplayMode == 0 ? name : (titleDisplayMode == 2 ? (appName ?? name) : bundleid!)) : name) // ternary black magic
                     .font(.headline)
                     .lineLimit(1)
                 Text(path)

@@ -35,100 +35,122 @@ func getDylibs(_ pid: Int32) throws -> [NSDictionary] {
     return procs
 }
 
-// FIXME: Most likely broken on macOS, needs testing!
-/// What did you think this would do?
-func getAppInfoFromExecutablePath(_ path: String) -> SBApp? {
+func getNameFromExecutablePath(_ path: String) -> String? {
     print("[AppInfo] Getting info for \(path)")
-    let fm: FileManager = .default
-    var sbapp: SBApp = .init(bundleIdentifier: "", name: "", version: "", bundleURL: URL(fileURLWithPath: ""), plistIconName: nil, pngIconPaths: [], hiddenFromSpringboard: false)
-    
-    // MARK: - Check if executable is in a valid application bundle
-
-    /*guard*/ let url = URL(fileURLWithPath: path) /*else { print("[AppInfo] \(path) was not a valid URL. Goodbye."); return nil }*/
+    let url = URL(fileURLWithPath: path)
     let dir = url.deletingLastPathComponent()
     let infoPlistPath = dir.appendingPathComponent("Info.plist")
-//    guard let contents = try? fm.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil) else { print("[AppInfo] Error getting contents of parent folder for \(dir.lastPathComponent). Goodbye."); return nil }
-//
-//    if !contents.contains(where: { $0.lastPathComponent == "Info.plist" }) { print("[AppInfo] Info.plist not found for \(dir.lastPathComponent). Goodbye."); return nil }
-    if !fm.fileExists(atPath: infoPlistPath.path) {
-        print("[AppInfo] Warning: file \(infoPlistPath.path) does not exist. This could end badly.")
-    } else {
-        print("[AppInfo] Found Info.plist for \(url.lastPathComponent) at \(infoPlistPath.path).")
-    }
-    
     guard let contentsOfInfoPlist = NSDictionary(contentsOf: infoPlistPath) as? [String: AnyObject] else { print("[AppInfo] Error getting contents of Info.plist for \(url.lastPathComponent). Goodbye."); return nil }
     print("[AppInfo] Info.plist found for \(url.lastPathComponent)")
     guard contentsOfInfoPlist["CFBundleExecutable"] is String else { print("[AppInfo] CFBundleExecutable not found for \(url.lastPathComponent). Goodbye."); return nil }
-    
-    // MARK: - Get application info
-
-    print("[AppInfo] Getting application info of \(url.lastPathComponent).")
-    sbapp.bundleIdentifier = contentsOfInfoPlist["CFBundleIdentifier"] as! String
-    print("[AppInfo] Got bundle id \(sbapp.bundleIdentifier) for \(url.lastPathComponent).")
-    sbapp.bundleURL = dir
-    print("[AppInfo] Got bundle url \(sbapp.bundleURL) for \(url.lastPathComponent).")
-    sbapp.name = contentsOfInfoPlist["CFBundleDisplayName"] as? String ?? contentsOfInfoPlist["CFBundleName"] as? String ?? "Unknown"
-    print("[AppInfo] Got name \(sbapp.name) for \(url.lastPathComponent).")
-    sbapp.version = contentsOfInfoPlist["CFBundleShortVersionString"] as? String ?? "1.0"
-    print("[AppInfo] Got bundle version \(sbapp.version) for \(url.lastPathComponent).")
-    
-    if let SBAppTags = contentsOfInfoPlist["SBAppTags"] as? [String], !SBAppTags.isEmpty {
-        if SBAppTags.contains("hidden") {
-            sbapp.hiddenFromSpringboard = true
-        }
-    }
-    
-    if let _ = contentsOfInfoPlist["LSApplicationLaunchProhibited"] {
-        sbapp.hiddenFromSpringboard = true
-    }
-    
-    // MARK: - Icons
-    if let CFBundleIcons = contentsOfInfoPlist["CFBundleIcons"] {
-        if let CFBundlePrimaryIcon = CFBundleIcons["CFBundlePrimaryIcon"] as? [String: AnyObject] {
-            if let CFBundleIconFiles = CFBundlePrimaryIcon["CFBundleIconFiles"] as? [String] {
-                sbapp.pngIconPaths += CFBundleIconFiles.map { $0 + "@2x.png" }
-                print("[AppInfo] Got icon \(sbapp.pngIconPaths.count > 1 ? "files" : "file") \(sbapp.pngIconPaths.joined(separator: ", ")) for \(sbapp.name).")
-            }
-//            if let CFBundleIconName = CFBundlePrimaryIcon["CFBundleIconName"] as? String {
-//                sbapp.plistIconName = CFBundleIconName
-//            }
-        }
-    } else if let CFBundleIconFilesTopLevel = contentsOfInfoPlist["CFBundleIconFiles"] as? [String] {
-        print("[AppInfo] Got legacy icon \(sbapp.pngIconPaths.count > 1 ? "files" : "file") \(sbapp.pngIconPaths.joined(separator: ", ")) for \(sbapp.name).")
-        sbapp.pngIconPaths += CFBundleIconFilesTopLevel
-    }
-    
-    print("[AppInfo] We are done. Good night. (\(sbapp.name))")
-    return sbapp
+    return contentsOfInfoPlist["CFBundleDisplayName"] as? String ?? contentsOfInfoPlist["CFBundleName"] as? String
 }
+
+func getBundleIDFromExecutablePath(_ path: String) -> String? {
+    print("[AppInfo] Getting info for \(path)")
+    let url = URL(fileURLWithPath: path)
+    let dir = url.deletingLastPathComponent()
+    let infoPlistPath = dir.appendingPathComponent("Info.plist")
+    guard let contentsOfInfoPlist = NSDictionary(contentsOf: infoPlistPath) as? [String: AnyObject] else { print("[AppInfo] Error getting contents of Info.plist for \(url.lastPathComponent). Goodbye."); return nil }
+    print("[AppInfo] Info.plist found for \(url.lastPathComponent)")
+    guard contentsOfInfoPlist["CFBundleExecutable"] is String else { print("[AppInfo] CFBundleExecutable not found for \(url.lastPathComponent). Goodbye."); return nil }
+    return contentsOfInfoPlist["CFBundleIdentifier"] as? String
+}
+
+// FIXME: Most likely broken on macOS, needs testing!
+/// What did you think this would do?
+//func getAppInfoFromExecutablePath(_ path: String) -> SBApp? {
+//    print("[AppInfo] Getting info for \(path)")
+//    let fm: FileManager = .default
+//    var sbapp: SBApp = .init(bundleIdentifier: "", name: "", version: "", bundleURL: URL(fileURLWithPath: ""), plistIconName: nil, pngIconPaths: [], hiddenFromSpringboard: false)
+//    
+//    // MARK: - Check if executable is in a valid application bundle
+//
+//    /*guard*/ let url = URL(fileURLWithPath: path) /*else { print("[AppInfo] \(path) was not a valid URL. Goodbye."); return nil }*/
+//    let dir = url.deletingLastPathComponent()
+//    let infoPlistPath = dir.appendingPathComponent("Info.plist")
+////    guard let contents = try? fm.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil) else { print("[AppInfo] Error getting contents of parent folder for \(dir.lastPathComponent). Goodbye."); return nil }
+////
+////    if !contents.contains(where: { $0.lastPathComponent == "Info.plist" }) { print("[AppInfo] Info.plist not found for \(dir.lastPathComponent). Goodbye."); return nil }
+//    if !fm.fileExists(atPath: infoPlistPath.path) {
+//        print("[AppInfo] Warning: file \(infoPlistPath.path) does not exist. This could end badly.")
+//    } else {
+//        print("[AppInfo] Found Info.plist for \(url.lastPathComponent) at \(infoPlistPath.path).")
+//    }
+//    
+//    guard let contentsOfInfoPlist = NSDictionary(contentsOf: infoPlistPath) as? [String: AnyObject] else { print("[AppInfo] Error getting contents of Info.plist for \(url.lastPathComponent). Goodbye."); return nil }
+//    print("[AppInfo] Info.plist found for \(url.lastPathComponent)")
+//    guard contentsOfInfoPlist["CFBundleExecutable"] is String else { print("[AppInfo] CFBundleExecutable not found for \(url.lastPathComponent). Goodbye."); return nil }
+//    
+//    // MARK: - Get application info
+//
+//    print("[AppInfo] Getting application info of \(url.lastPathComponent).")
+//    sbapp.bundleIdentifier = contentsOfInfoPlist["CFBundleIdentifier"] as! String
+//    print("[AppInfo] Got bundle id \(sbapp.bundleIdentifier) for \(url.lastPathComponent).")
+//    sbapp.bundleURL = dir
+//    print("[AppInfo] Got bundle url \(sbapp.bundleURL) for \(url.lastPathComponent).")
+//    sbapp.name = contentsOfInfoPlist["CFBundleDisplayName"] as? String ?? contentsOfInfoPlist["CFBundleName"] as? String ?? "Unknown"
+//    print("[AppInfo] Got name \(sbapp.name) for \(url.lastPathComponent).")
+//    sbapp.version = contentsOfInfoPlist["CFBundleShortVersionString"] as? String ?? "1.0"
+//    print("[AppInfo] Got bundle version \(sbapp.version) for \(url.lastPathComponent).")
+//    
+//    if let SBAppTags = contentsOfInfoPlist["SBAppTags"] as? [String], !SBAppTags.isEmpty {
+//        if SBAppTags.contains("hidden") {
+//            sbapp.hiddenFromSpringboard = true
+//        }
+//    }
+//    
+//    if let _ = contentsOfInfoPlist["LSApplicationLaunchProhibited"] {
+//        sbapp.hiddenFromSpringboard = true
+//    }
+//    
+//    // MARK: - Icons
+//    if let CFBundleIcons = contentsOfInfoPlist["CFBundleIcons"] {
+//        if let CFBundlePrimaryIcon = CFBundleIcons["CFBundlePrimaryIcon"] as? [String: AnyObject] {
+//            if let CFBundleIconFiles = CFBundlePrimaryIcon["CFBundleIconFiles"] as? [String] {
+//                sbapp.pngIconPaths += CFBundleIconFiles.map { $0 + "@2x.png" }
+//                print("[AppInfo] Got icon \(sbapp.pngIconPaths.count > 1 ? "files" : "file") \(sbapp.pngIconPaths.joined(separator: ", ")) for \(sbapp.name).")
+//            }
+////            if let CFBundleIconName = CFBundlePrimaryIcon["CFBundleIconName"] as? String {
+////                sbapp.plistIconName = CFBundleIconName
+////            }
+//        }
+//    } else if let CFBundleIconFilesTopLevel = contentsOfInfoPlist["CFBundleIconFiles"] as? [String] {
+//        print("[AppInfo] Got legacy icon \(sbapp.pngIconPaths.count > 1 ? "files" : "file") \(sbapp.pngIconPaths.joined(separator: ", ")) for \(sbapp.name).")
+//        sbapp.pngIconPaths += CFBundleIconFilesTopLevel
+//    }
+//    
+//    print("[AppInfo] We are done. Good night. (\(sbapp.name))")
+//    return sbapp
+//}
 
 // this has been bounced between so many projects its wild
 // i think it came from cowabunga first :trol:
 /// Application
-struct SBApp {
-    private let fm = FileManager.default
-    
-    var bundleIdentifier: String
-    var name: String
-    var version: String
-    var bundleURL: URL
-    
-    var plistIconName: String?
-    var pngIconPaths: [String]
-    var hiddenFromSpringboard: Bool
-    
-    var isSystem: Bool {
-        bundleURL.pathComponents.count >= 2 && bundleURL.pathComponents[1] == "Applications"
-    }
-    
-    func catalogIconName() -> String? {
-        if bundleIdentifier == "com.apple.mobiletimer" {
-            return "ClockIconBackgroundSquare"
-        } else {
-            return plistIconName
-        }
-    }
-}
+//struct SBApp {
+//    private let fm = FileManager.default
+//    
+//    var bundleIdentifier: String
+//    var name: String
+//    var version: String
+//    var bundleURL: URL
+//    
+//    var plistIconName: String?
+//    var pngIconPaths: [String]
+//    var hiddenFromSpringboard: Bool
+//    
+//    var isSystem: Bool {
+//        bundleURL.pathComponents.count >= 2 && bundleURL.pathComponents[1] == "Applications"
+//    }
+//    
+//    func catalogIconName() -> String? {
+//        if bundleIdentifier == "com.apple.mobiletimer" {
+//            return "ClockIconBackgroundSquare"
+//        } else {
+//            return plistIconName
+//        }
+//    }
+//}
 
 func kill_priviledged(_ pid: Int32, _ sig: Signal = .KILL) throws {
     if let helperPath {
