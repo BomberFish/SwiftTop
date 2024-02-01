@@ -67,7 +67,7 @@ struct ResMonView: View {
                 .font(.headline.weight(.regular))
                 .padding([.horizontal, .top])
         }
-        ProgressView(value: Float(memUsage) / Float(totalMem))
+        ProgressView(value: battery)
             .progressViewStyle(.linear)
             .padding()
             .tint(.accentColor)
