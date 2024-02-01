@@ -39,7 +39,7 @@ struct ResMonView: View {
             Spacer()
             Text("\(cpuUsage.user + cpuUsage.system + cpuUsage.nice, specifier: "%.2f")%")
                 .font(.headline.weight(.regular))
-                .padding()
+                .padding([.horizontal, .top])
         }
         ProgressView(value: (cpuUsage.user + cpuUsage.system + cpuUsage.nice) / 100.00)
             .progressViewStyle(.linear)
@@ -52,7 +52,7 @@ struct ResMonView: View {
             Spacer()
             Text(ByteCountFormatter.string(fromByteCount: memUsage, countStyle: .memory) + "/" + ByteCountFormatter.string(fromByteCount: totalMem, countStyle: .memory))
                 .font(.headline.weight(.regular))
-                .padding()
+                .padding([.horizontal, .top])
         }
         ProgressView(value: Float(memUsage) / Float(totalMem))
             .progressViewStyle(.linear)
