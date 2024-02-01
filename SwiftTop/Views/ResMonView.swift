@@ -65,7 +65,7 @@ struct ResMonView: View {
             Spacer()
             Text("\(battery * 100, specifier: "%.2f")% (\(batteryState.prettyName))")
                 .font(.headline.weight(.regular))
-                .padding()
+                .padding([.horizontal, .top])
         }
         ProgressView(value: Float(memUsage) / Float(totalMem))
             .progressViewStyle(.linear)
