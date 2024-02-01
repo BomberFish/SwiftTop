@@ -14,20 +14,28 @@ struct ResMonView: View {
     let totalMem = Int64(Memory().getTotalMemory())
     @State var cpuChartData: [(type: String, value: Double)] = []
     @State var memChartData: [(type: String, value: Double)] = []
+    @State var chargeData: [(type: String, value: Double)] = []
     @State var timer = Timer.publish(every: 1.0, on: .main, in: .common).autoconnect()
 
     @State var forceOld = false
     let columns = [
         GridItem(.adaptive(minimum: 275))
     ]
+    
+    init() {
+        UIDevice.current.isBatteryMonitoringEnabled = true // enable battery monitoring
+    }
+    
+    @State var battery: Float = 1.00
+    @State var batteryState: UIDevice.BatteryState = .unknown
 
     @available(iOS, introduced: 15.0, deprecated: 17.0, message: "ffs use the graphs")
     @ViewBuilder
     var legacy: some View {
         HStack(alignment: .bottom) {
-            Text("CPU Usage")
+            Text("CPU")
                 .font(.title3)
-                .padding()
+                .padding([.horizontal, .top])
             Spacer()
             Text("\(cpuUsage.user + cpuUsage.system + cpuUsage.nice, specifier: "%.2f")%")
                 .font(.headline.weight(.regular))
@@ -36,10 +44,11 @@ struct ResMonView: View {
         ProgressView(value: (cpuUsage.user + cpuUsage.system + cpuUsage.nice) / 100.00)
             .progressViewStyle(.linear)
             .padding()
+            .tint(.init(UIColor.systemRed))
         HStack(alignment: .bottom) {
-            Text("Memory Usage")
+            Text("Memory")
                 .font(.title3)
-                .padding()
+                .padding([.horizontal, .top])
             Spacer()
             Text(ByteCountFormatter.string(fromByteCount: memUsage, countStyle: .memory) + "/" + ByteCountFormatter.string(fromByteCount: totalMem, countStyle: .memory))
                 .font(.headline.weight(.regular))
@@ -48,6 +57,20 @@ struct ResMonView: View {
         ProgressView(value: Float(memUsage) / Float(totalMem))
             .progressViewStyle(.linear)
             .padding()
+            .tint(.init(UIColor.systemBlue))
+        HStack(alignment: .bottom) {
+            Text("Battery")
+                .font(.title3)
+                .padding([.horizontal, .top])
+            Spacer()
+            Text("\(battery * 100, specifier: "%.2f")% (\(batteryState.prettyName))")
+                .font(.headline.weight(.regular))
+                .padding()
+        }
+        ProgressView(value: Float(memUsage) / Float(totalMem))
+            .progressViewStyle(.linear)
+            .padding()
+            .tint(.accentColor)
     }
 
     @available(iOS 17.0, *)
@@ -56,15 +79,16 @@ struct ResMonView: View {
         LazyVGrid(columns: columns, spacing: 20) {
             HStack(alignment: .center, spacing: 20) {
                 ZStack {
-                    VStack(alignment: .center) {
-                        Text("CPU Usage")
+                    VStack(alignment: .leading) {
+                        Text("CPU")
                             .font(.title.weight(.heavy))
-                            .padding()
+                            .padding([.top, .leading, .trailing])
+                            .padding(.bottom, 2)
                         Text("\(cpuUsage.user + cpuUsage.system + cpuUsage.nice, specifier: "%.2f")%")
                             .font(.headline.weight(.regular))
-                            .padding()
+                            .padding([.bottom, .leading, .trailing])
                     }
-                    .frame(width: 175, height: 175)
+                    .frame(width: 175, height: 175, alignment: .center)
                     Chart(cpuChartData, id: \.type) { item in
                         SectorMark(angle: .value("Type", item.value),
                                    innerRadius: .ratio(0.75),
@@ -86,30 +110,60 @@ struct ResMonView: View {
             }
             HStack(alignment: .center, spacing: 20) {
                 ZStack {
-                    VStack(alignment: .center) {
-                        Text("Memory Usage")
+                    VStack(alignment: .leading) {
+                        Text("Memory")
                             .font(.title.weight(.heavy))
-                            .padding()
+                            .padding([.top, .leading, .trailing])
+                            .padding(.bottom, 2)
                         Text(ByteCountFormatter.string(fromByteCount: memUsage, countStyle: .memory) + "/" + ByteCountFormatter.string(fromByteCount: totalMem, countStyle: .memory))
                             .font(.headline.weight(.regular))
-                            .padding()
+                            .padding([.bottom, .leading, .trailing])
                     }
-                    .frame(width: 175, height: 175)
+                    .frame(width: 175, height: 175, alignment: .center)
                     Chart(memChartData, id: \.type) { item in
                         SectorMark(angle: .value("Type", item.value),
                                    innerRadius: .ratio(0.75),
                                    angularInset: 2.5)
                             .cornerRadius(8)
                             .opacity(item.type != "Free" ? 1 : 0.5)
-                            .foregroundStyle(.accent)
+                            .foregroundStyle(Color(UIColor.systemBlue))
                     }
                     .padding()
                     .frame(width: 275, height: 275)
                 }
                 .frame(width: 275, height: 275)
                 VStack(alignment: .trailing) {
-                    ColorChip(label: "Used", color: .accent)
-                    ColorChip(label: "Free", color: .accent.withAlphaComponent(0.5))
+                    ColorChip(label: "Used", color: .systemBlue)
+                    ColorChip(label: "Free", color: .systemBlue.withAlphaComponent(0.5))
+                }
+            }
+            
+            HStack(alignment: .center, spacing: 20) {
+                ZStack {
+                    VStack(alignment: .leading) {
+                        Text("Battery")
+                            .font(.title.weight(.heavy))
+                            .padding([.top, .leading, .trailing])
+                            .padding(.bottom, 2)
+                        Text("\(battery * 100, specifier: "%.2f")% (\(batteryState.prettyName))")
+                            .font(.headline.weight(.regular))
+                            .padding([.bottom, .leading, .trailing])
+                    }
+                    .frame(width: 175, height: 175, alignment: .center)
+                    Chart(chargeData, id: \.type) { item in
+                        SectorMark(angle: .value("Type", item.value),
+                                   innerRadius: .ratio(0.75),
+                                   angularInset: 2.5)
+                        .cornerRadius(8)
+                        .opacity(item.type != "" ? 1 : 0.5)
+                        .foregroundStyle(Color.accentColor)
+                    }
+                    .padding()
+                    .frame(width: 275, height: 275)
+                }
+                .frame(width: 275, height: 275)
+                VStack(alignment: .trailing) {
+                    ColorChip(label: "Full", color: .accent)
                 }
             }
         }
@@ -118,17 +172,19 @@ struct ResMonView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                LazyVStack {
                     if #available(iOS 17.0, *) {
                         if forceOld {
-                            legacy
+                            LazyVStack {
+                                legacy
+                            }
                         } else {
-                            graph
+                            LazyVStack(alignment: .leading) {
+                                graph
+                            }
                         }
                     } else {
                         legacy
                     }
-                }
             }
             #if DEBUG
             .toolbar {
@@ -171,6 +227,8 @@ struct ResMonView: View {
         cpuUsage = cpu.usageCPU()
         memUsage = mem.getUsedMemory()
         freeMem = mem.getFreeMemory()
+        battery = UIDevice.current.batteryLevel
+        batteryState = UIDevice.current.batteryState
         cpuChartData = [
             (type: "User", cpuUsage.user),
             (type: "System", cpuUsage.system),
@@ -180,6 +238,10 @@ struct ResMonView: View {
         memChartData = [
             (type: "Used", Double(memUsage)),
             (type: "Free", Double(totalMem - memUsage))
+        ]
+        chargeData = [
+            (type: "Full", Double(battery)),
+            (type: "", Double(1.00 - battery))
         ]
     }
 }

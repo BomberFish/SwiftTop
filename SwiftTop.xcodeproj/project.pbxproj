@@ -19,6 +19,7 @@
 		D64D3D232B2C9F6C00EBEDCB /* UIColorAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64D3D222B2C9F6C00EBEDCB /* UIColorAdapter.swift */; };
 		D65438EE2B6831D4007BDBF0 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65438ED2B6831D4007BDBF0 /* IconView.swift */; };
 		D65438F12B685BC9007BDBF0 /* LogsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65438F02B685BC9007BDBF0 /* LogsView.swift */; };
+		D65438F42B6B299A007BDBF0 /* battteryStatus+prettyName.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65438F32B6B299A007BDBF0 /* battteryStatus+prettyName.swift */; };
 		D65C3A2D2B2D2C96007B3C76 /* Collection+SafeIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65C3A2C2B2D2C96007B3C76 /* Collection+SafeIndex.swift */; };
 		D66BC66A2B2B7A54003D8A8E /* String+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66BC6672B2B7A53003D8A8E /* String+LocalizedError.swift */; };
 		D66BC66B2B2B7A54003D8A8E /* Alert++.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66BC6682B2B7A53003D8A8E /* Alert++.swift */; };
@@ -87,6 +88,7 @@
 		D65438EF2B68439A007BDBF0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D65438F02B685BC9007BDBF0 /* LogsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsView.swift; sourceTree = "<group>"; };
 		D65438F22B68646B007BDBF0 /* UIImage+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Private.h"; path = "../../../TrolleyStore/TrolleyStore/UIImage+Private.h"; sourceTree = "<group>"; };
+		D65438F32B6B299A007BDBF0 /* battteryStatus+prettyName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "battteryStatus+prettyName.swift"; sourceTree = "<group>"; };
 		D65C3A2C2B2D2C96007B3C76 /* Collection+SafeIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+SafeIndex.swift"; sourceTree = "<group>"; };
 		D65C3A4A2B2E39BA007B3C76 /* bootstrap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bootstrap.h; sourceTree = "<group>"; };
 		D65C3A512B2E5957007B3C76 /* dyld64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dyld64.h; sourceTree = "<group>"; };
@@ -342,6 +344,7 @@
 				D66BC6672B2B7A53003D8A8E /* String+LocalizedError.swift */,
 				D65C3A2C2B2D2C96007B3C76 /* Collection+SafeIndex.swift */,
 				D60636C82B5EAF1C000A1E28 /* CachedAsyncImage.swift */,
+				D65438F32B6B299A007BDBF0 /* battteryStatus+prettyName.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -504,6 +507,7 @@
 				D66BC66A2B2B7A54003D8A8E /* String+LocalizedError.swift in Sources */,
 				D67D2A162B2B3FB400EA8D6E /* MainView.swift in Sources */,
 				D67D2A3F2B2B408100EA8D6E /* ps.m in Sources */,
+				D65438F42B6B299A007BDBF0 /* battteryStatus+prettyName.swift in Sources */,
 				D60109CF2B4EEDD4005F026E /* dylib.m in Sources */,
 				D66BC66F2B2B85EF003D8A8E /* proc.swift in Sources */,
 				D60636C92B5EAF1C000A1E28 /* CachedAsyncImage.swift in Sources */,

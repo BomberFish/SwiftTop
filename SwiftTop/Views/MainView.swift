@@ -28,7 +28,7 @@ struct MainView: View {
                 Haptic.shared.selection()
                 sortType = 1
                 sortDirection = 0
-                filterPS2()
+                filterPSwithAnimation()
             }, label: {
                 HStack {
                     Label("Ascending", systemImage: "arrow.up")
@@ -41,7 +41,7 @@ struct MainView: View {
                 Haptic.shared.selection()
                 sortType = 1
                 sortDirection = 1
-                filterPS2()
+                filterPSwithAnimation()
             }, label: {
                 HStack {
                     Label("Descending", systemImage: "arrow.down")
@@ -62,7 +62,7 @@ struct MainView: View {
                 Haptic.shared.selection()
                 sortType = 2
                 sortDirection = 0
-                filterPS2()
+                filterPSwithAnimation()
             }, label: {
                 HStack {
                     Label("Ascending", systemImage: "arrow.up")
@@ -75,7 +75,7 @@ struct MainView: View {
                 Haptic.shared.selection()
                 sortType = 2
                 sortDirection = 1
-                filterPS2()
+                filterPSwithAnimation()
             }, label: {
                 HStack {
                     Label("Descending", systemImage: "arrow.down")
@@ -97,7 +97,7 @@ struct MainView: View {
                     Haptic.shared.selection()
                     sortType = 0
                     sortDirection = 0
-                    filterPS2()
+                    filterPSwithAnimation()
                 }, label: {
                     HStack {
                         Label("None", systemImage: "minus")
@@ -129,7 +129,9 @@ struct MainView: View {
                                     } catch {
                                         UIApplication.shared.alert(body: error.localizedDescription)
                                     }
-                                    refreshPS()
+                                    withAnimation {
+                                        refreshPS()
+                                    }
                                 }) {
                                     Text("Kill as Root")
                                 }
@@ -139,7 +141,9 @@ struct MainView: View {
                                     } catch {
                                         UIApplication.shared.alert(body: error.localizedDescription)
                                     }
-                                    refreshPS()
+                                    withAnimation {
+                                        refreshPS()
+                                    }
                                 }) {
                                     Text("Kill")
                                 }
@@ -305,7 +309,7 @@ struct MainView: View {
         }
     }
     
-    func filterPS2() {
+    func filterPSwithAnimation() {
         withAnimation {
             if searchText.isEmpty {
                 psFiltered = ps
