@@ -141,13 +141,13 @@ struct ProcessView: View {
                                     loadedModules = try getDylibs(pid)
                                     currentModules = loadedModules
                                 } else {
-                                    print("Could not typecast pid \(pidString)!")
+                                    print("(\(#file):\(#line)) Could not typecast pid \(pidString)!")
                                 }
                             } catch {
-                                print("Could not get loaded modules for pid \(pidString)")
+                                print("(\(#file):\(#line)) Could not get loaded modules for pid \(pidString)")
                             }
                         } else {
-                            print("Could not get pid?!")
+                            print("(\(#file):\(#line)) Could not get pid?!")
                         }
                     }
             case 2:

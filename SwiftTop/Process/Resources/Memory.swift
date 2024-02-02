@@ -24,7 +24,7 @@ struct Memory {
         
         #if DEBUG
             if result != KERN_SUCCESS {
-                print("ERROR - \(#file):\(#function) - kern_result_t = "
+                print("(\(#file):\(#line)) ERROR - \(#file):\(#function) - kern_result_t = "
                     + "\(result)")
             }
         #endif

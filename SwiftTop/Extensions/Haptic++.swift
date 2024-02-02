@@ -43,15 +43,15 @@ class Haptic {
     }
     #else
     func play(_ feedbackStyle: FeedbackStyleShim) {
-        print("Haptics not supported on macOS")
+        print("(\(#file):\(#line)) Haptics not supported on macOS")
     }
     
     func notify(_ feedbackType: FeedbackTypeShim) {
-        print("Haptics not supported on macOS")
+        print("(\(#file):\(#line)) Haptics not supported on macOS")
     }
     
     func selection() {
-        print("Haptics not supported on macOS")
+        print("(\(#file):\(#line)) Haptics not supported on macOS")
     }
     #endif
 }

@@ -58,7 +58,7 @@ struct CPU {
             
         let data = hostInfo.move()
         if result != KERN_SUCCESS {
-            print("ERROR - \(#file):\(#function) - kern_result_t = " + "\(result)")
+            print("(\(#file):\(#line)) ERROR - \(#file):\(#function) - kern_result_t = " + "\(result)")
         }
 
         return data

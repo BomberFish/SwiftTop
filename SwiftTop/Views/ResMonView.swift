@@ -63,7 +63,7 @@ struct ResMonView: View {
                 .font(.title3)
                 .padding([.horizontal, .top])
             Spacer()
-            Text("\(battery * 100, specifier: "%.2f")% (\(batteryState.prettyName))")
+            Text("\(Int(battery * 100))% (\(batteryState.prettyName))")
                 .font(.headline.weight(.regular))
                 .padding([.horizontal, .top])
         }
@@ -145,7 +145,7 @@ struct ResMonView: View {
                             .font(.title.weight(.heavy))
                             .padding([.top, .leading, .trailing])
                             .padding(.bottom, 2)
-                        Text("\(battery * 100, specifier: "%.2f")% (\(batteryState.prettyName))")
+                        Text("\(Int(battery * 100))% (\(batteryState.prettyName))")
                             .font(.headline.weight(.regular))
                             .padding([.bottom, .leading, .trailing])
                     }

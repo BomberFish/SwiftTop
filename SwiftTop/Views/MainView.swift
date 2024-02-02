@@ -305,7 +305,7 @@ struct MainView: View {
                 }
             }
         default:
-            print("not filtering")
+            print("(\(#file):\(#line)) not filtering")
         }
     }
     
@@ -352,7 +352,7 @@ struct MainView: View {
                 }
             }
         default:
-            print("not filtering")
+            print("(\(#file):\(#line)) not filtering")
         }
     }
 }
