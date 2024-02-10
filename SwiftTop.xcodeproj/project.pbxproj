@@ -87,7 +87,6 @@
 		D65438ED2B6831D4007BDBF0 /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
 		D65438EF2B68439A007BDBF0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D65438F02B685BC9007BDBF0 /* LogsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsView.swift; sourceTree = "<group>"; };
-		D65438F22B68646B007BDBF0 /* UIImage+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Private.h"; path = "../../../TrolleyStore/TrolleyStore/UIImage+Private.h"; sourceTree = "<group>"; };
 		D65438F32B6B299A007BDBF0 /* battteryStatus+prettyName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "battteryStatus+prettyName.swift"; sourceTree = "<group>"; };
 		D65C3A2C2B2D2C96007B3C76 /* Collection+SafeIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+SafeIndex.swift"; sourceTree = "<group>"; };
 		D65C3A4A2B2E39BA007B3C76 /* bootstrap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bootstrap.h; sourceTree = "<group>"; };
@@ -130,6 +129,7 @@
 		D67D2A592B2B679C00EA8D6E /* libswiftCoreFoundation.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libswiftCoreFoundation.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/usr/lib/swift/libswiftCoreFoundation.tbd; sourceTree = DEVELOPER_DIR; };
 		D689C5852B606F6F00769C51 /* lobster.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = lobster.mp4; sourceTree = "<group>"; };
 		D689C5872B6094BF00769C51 /* View+withHostingWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+withHostingWindow.swift"; sourceTree = "<group>"; };
+		D6C7A87D2B77DECA00241A4F /* UIImage+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+Private.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -244,7 +244,7 @@
 		D66BC6D42B2C91FF003D8A8E /* Private APIs */ = {
 			isa = PBXGroup;
 			children = (
-				D65438F22B68646B007BDBF0 /* UIImage+Private.h */,
+				D6C7A87D2B77DECA00241A4F /* UIImage+Private.h */,
 				D60109C02B4EEC0E005F026E /* net */,
 				D65C3A502B2E5942007B3C76 /* sys */,
 				D66BC6D32B2C906F003D8A8E /* CoreServices.h */,
