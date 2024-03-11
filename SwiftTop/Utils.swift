@@ -5,9 +5,22 @@
 import Foundation
 
 func killProcess(_ pid: Int32, _ sig: Signal = .KILL) throws {
-    let ret = kill(pid, sig.rawValue)
-    if ret != 0 {
-        throw "kill() returned a non-zero exit code"
+    let uid = getProcessOwner(pid)
+    let myUID = getuid()
+    if myUID != 0 && myUID != uid {
+        let ret = spawnRootWithOutput(helperPath!, ["kill", String(pid), String(sig.rawValue)])
+        if ret.ret != 0 {
+            var error = "kill() returned a non-zero exit code"
+            #if DEBUG
+            error += "\n\nstdout:\(ret.stdout)\n stderr:\(ret.stderr)"
+            #endif
+            throw error
+        }
+    } else {
+        let ret = kill(pid, sig.rawValue)
+        if ret != 0 {
+            throw "kill() returned a non-zero exit code"
+        }
     }
 }
 
@@ -17,7 +30,7 @@ func log(_ objs: Any...) { // stolen from cardculator :trol:
     withVaList(args) { RLogv("%@", $0) }
 }
 
-// signal.h
+// From signal.h
 /// A signal to send to a process
 enum Signal: Int32 {
     /// hangup

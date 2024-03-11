@@ -5,7 +5,6 @@
 // import LocalConsole
 import SwiftUI
 
-@main
 struct SwiftTopApp: App {
     /// stdout
     var pipe = Pipe()

@@ -9,5 +9,5 @@
 #import <mach-o/dyld_images.h>
 #import <libgen.h>
 NSArray *sysctl_ps(void);
-
+int getProcessOwner(pid_t pid);
 #endif /* proc_h */

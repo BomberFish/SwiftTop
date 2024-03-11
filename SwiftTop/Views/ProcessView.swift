@@ -200,19 +200,19 @@ struct ProcessView: View {
                                     UIApplication.shared.alert(body: error.localizedDescription)
                                 }
                             }) {
-                                Label("Kill process", systemImage: "xmark")
+                                Label("SIGKILL", systemImage: "xmark")
                                     .foregroundColor(Color(UIColor.systemRed))
                             }
                             
                             Button(role: .destructive, action: {
                                 Haptic.shared.play(.heavy)
                                 do {
-                                    try kill_priviledged(Int32(proc["pid"] as! String)!) // idk if i can typecast in one shot
+                                    try kill_priviledged(Int32(proc["pid"] as! String)!, .TERM) // idk if i can typecast in one shot
                                 } catch {
                                     UIApplication.shared.alert(body: error.localizedDescription)
                                 }
                             }) {
-                                Label("Kill process (root)", systemImage: "xmark")
+                                Label("SIGTERM", systemImage: "xmark")
                                     .foregroundColor(Color(UIColor.systemRed))
                             }
                         }

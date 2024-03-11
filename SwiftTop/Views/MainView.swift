@@ -123,21 +123,9 @@ struct MainView: View {
                     NavigationLink(destination: ProcessView(proc: proc)) {
                         ProcessCell(proc: proc, titleDisplayMode: $titleDisplayMode)
                             .swipeActions {
-                                Button(role: .cancel, action: {
-                                    do {
-                                        try kill_priviledged(Int32(proc["pid"] as! String)!) // idk if i can typecast in one shot
-                                    } catch {
-                                        UIApplication.shared.alert(body: error.localizedDescription)
-                                    }
-                                    withAnimation {
-                                        refreshPS()
-                                    }
-                                }) {
-                                    Text("Kill as Root")
-                                }
                                 Button(role: .destructive, action: {
                                     do {
-                                        try killProcess(Int32(proc["pid"] as! String)!) // idk if i can typecast in one shot
+                                        try killProcess(Int32(proc["pid"] as! String)!, .KILL) // idk if i can typecast in one shot
                                     } catch {
                                         UIApplication.shared.alert(body: error.localizedDescription)
                                     }
@@ -145,7 +133,19 @@ struct MainView: View {
                                         refreshPS()
                                     }
                                 }) {
-                                    Text("Kill")
+                                    Text("SIGKILL")
+                                }
+                                Button(role: .cancel, action: {
+                                    do {
+                                        try killProcess(Int32(proc["pid"] as! String)!, .TERM) // idk if i can typecast in one shot
+                                    } catch {
+                                        UIApplication.shared.alert(body: error.localizedDescription)
+                                    }
+                                    withAnimation {
+                                        refreshPS()
+                                    }
+                                }) {
+                                    Text("SIGTERM")
                                 }
                             }
                     }

@@ -1,6 +1,9 @@
 #!/bin/bash
 
 set -e
+if [[ $* == *--scriptdebug* ]]; then
+    set -x
+fi
 
 cd "$(dirname "$0")"
 
@@ -18,6 +21,7 @@ if [[ $* == *--clean* ]]; then
     echo "[*] Deleting previous packages..."
     rm -rf "build/$APPLICATION_NAME.ipa"
     rm -rf "build/$APPLICATION_NAME.tipa"
+        rm -rf "build/Payload"
 fi
 
 if [[ $* == *--deepclean* ]]; then
@@ -58,40 +62,40 @@ fi
 echo "[*] Adding entitlements"
 ldid -S"$WORKING_LOCATION/$APPLICATION_NAME/$APPLICATION_NAME.entitlements" "$TARGET_APP/$APPLICATION_NAME"
 
-echo "[*] Building RootHelper..."
-cd $WORKING_LOCATION/RootHelper
-if ! type "gmake" > /dev/null; then
-    echo "[!] gmake not found, using macOS bundled make instead"
-    make clean
-    if [[ $* == *--debug* ]]; then
-    make
-    else
-    make FINALPACKAGE=1
-    fi
-else
-    gmake clean
-    if [[ $* == *--debug* ]]; then
-    gmake -j"$(sysctl -n machdep.cpu.thread_count)"
-    else
-    gmake -j"$(sysctl -n machdep.cpu.thread_count)" FINALPACKAGE=1
-    fi
-fi
+#echo "[*] Building RootHelper..."
+#cd $WORKING_LOCATION/RootHelper
+#if ! type "gmake" > /dev/null; then
+#    echo "[!] gmake not found, using macOS bundled make instead"
+#    make clean
+#    if [[ $* == *--debug* ]]; then
+#    make
+#    else
+#    make FINALPACKAGE=1
+#    fi
+#else
+#    gmake clean
+#    if [[ $* == *--debug* ]]; then
+#    gmake -j"$(sysctl -n machdep.cpu.thread_count)"
+#    else
+#    gmake -j"$(sysctl -n machdep.cpu.thread_count)" FINALPACKAGE=1
+#    fi
+#fi
 
-if [[ $* == *--debug* ]]; then
-    cp "$WORKING_LOCATION/RootHelper/.theos/obj/debug/RootHelper" "$TARGET_APP/roothelper"
-else
-    cp "$WORKING_LOCATION/RootHelper/.theos/obj/RootHelper" "$TARGET_APP/roothelper"
-fi
+#if [[ $* == *--debug* ]]; then
+#    cp "$WORKING_LOCATION/RootHelper/.theos/obj/debug/RootHelper" "$TARGET_APP/roothelper"
+#else
+#    cp "$WORKING_LOCATION/RootHelper/.theos/obj/RootHelper" "$TARGET_APP/roothelper"
+#fi
 
-cd -
+#cd -
 
 echo "[*] Packaging..."
 mkdir Payload
 cp -r $APPLICATION_NAME.app Payload/$APPLICATION_NAME.app
 
-if [[ $* != *--debug* ]]; then
-strip Payload/$APPLICATION_NAME.app/$APPLICATION_NAME
-fi
+#if [[ $* != *--debug* ]]; then
+#strip Payload/$APPLICATION_NAME.app/$APPLICATION_NAME
+#fi
 
 zip -vr $APPLICATION_NAME.tipa Payload
 rm -rf $APPLICATION_NAME.app

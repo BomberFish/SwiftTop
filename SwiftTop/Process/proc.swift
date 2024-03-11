@@ -127,8 +127,9 @@ func parseMachO(_ path: String) -> MachOFileType? {
     }
 }
 
-public let helperPath: String? = Bundle.main.url(forResource: "roothelper", withExtension: nil)?.path
+public let helperPath: String? = Bundle.main.executablePath /*url(forResource: "roothelper", withExtension: nil)?.path*/
 public func spawnAsRoot(_ path: String, _ args: [Any], silent: Bool = false) -> Int {
+    
     var stdout: NSString?
     var stderr: NSString?
     let mod = chmod(path, 0755)
@@ -136,6 +137,9 @@ public func spawnAsRoot(_ path: String, _ args: [Any], silent: Bool = false) -> 
     print("(\(#file):\(#line)) [SpawnRoot] \(mod) \(own)")
     // FIXME: There has to be a better way to do this.......
     var args_stringified: [String] = []
+    if path == Bundle.main.executablePath {
+        args_stringified.append("--cli")
+    }
     for arg in args {
         args_stringified.append("\(arg)")
     }

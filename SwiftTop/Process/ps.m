@@ -11,6 +11,11 @@
 #include <pwd.h>
 #include "procinfo.h"
 
+int getProcessOwner(pid_t pid) {
+    struct proc_bsdinfo procInfo;
+    proc_pidinfo(pid, PROC_PIDTBSDINFO, 0, &procInfo, sizeof(procInfo));
+    return procInfo.pbi_uid;
+}
 
 NSArray *sysctl_ps(void) {
     NSMutableArray *array = [[NSMutableArray alloc] init];
